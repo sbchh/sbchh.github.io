@@ -417,7 +417,7 @@ git checkout C2			<span class="hljs-comment"># 当前HEAD指向C2</span></code><
 <p><code>git fetch</code> 将本地仓库中的远程分支更新成了远程仓库相应分支最新的状态，通常通过互联网（使用 <code>http://</code> 或 <code>git://</code> 协议) 与远程仓库通信。</p>
 <p><code>git fetch</code> 只是执行单纯的下载操作，<strong>不会</strong>改变你本地仓库的状态，<strong>不会</strong>更新你的 <code>master</code> 分支，也<strong>不会</strong>修改你磁盘上的文件。</p>
 <p><strong>git fetch 示例</strong></p>
-<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201009123552.png" srcset="/img/loading.gif"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201009124543.png" srcset="/img/loading.gif"></p>
 <h3 id="3-Git-Pull"><a href="#3-Git-Pull" class="headerlink" title="3. Git Pull"></a>3. Git Pull</h3><p>Git Pull 实际上执行了两个操作， <strong>先抓取更新(git fetch)，再合并到本地分支(git <u>merge/base/cherry-pick</u> o/master)</strong> 。</p>
 <p>先来看看 <code>fetch</code>、<code>merge</code> 依次执行的效果</p>
 <p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201009124543.png" srcset="/img/loading.gif" alt="image-20201009124542415"></p>

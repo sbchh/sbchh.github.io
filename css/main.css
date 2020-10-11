@@ -243,7 +243,7 @@ sup > a::before,
 html,
 body {
   font-size: 18px;
-  font-family: Noto Serif SC;
+  font-family: Noto Serif SC, Arial;
 }
 html,
 body,
@@ -287,9 +287,9 @@ img[srcset] {
   --color-mode: 'light';
   --body-bg-color: #eee;
   --board-bg-color: #fff;
-  --text-color: #3c4858;
+  --text-color: #1E1E1E;
   --sec-text-color: #718096;
-  --post-text-color: #2c3e50;
+  --post-text-color: #000;
   --post-heading-color: #1a202c;
   --post-link-color: #0366d6;
   --link-hover-color: #00af2c;
@@ -856,7 +856,7 @@ img[srcset] {
 .markdown-body {
   font-size: 1rem;
   margin-bottom: 2rem;
-  font-family: Noto Serif SC;
+  font-family: Noto Serif SC, Arial;
   color: var(--post-text-color);
 }
 .markdown-body h1,
@@ -1526,10 +1526,10 @@ post-content strong {
   border-left: 0.35rem solid;
   border-radius: 0.25rem;
   margin: 1.5rem 0;
-  color: #3c4858;
+  color: #1E1E1E;
 }
 .note a {
-  color: #3c4858;
+  color: #1E1E1E;
 }
 .note *:last-child {
   margin-bottom: 0;
@@ -1568,7 +1568,7 @@ post-content strong {
   font-size: 85%;
   margin: 0;
   padding: 0.2em 0.4em;
-  color: #3c4858;
+  color: #1E1E1E;
 }
 .label-default {
   background: #e7e3e3;

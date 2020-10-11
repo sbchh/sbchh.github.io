@@ -1,6 +1,239 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Git 学习笔记</title>
+    <url>/2020/10/07/2020-10-07-Study-Git-Note/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近发现了一个学习 Git 命令的好网站，是通过玩游戏的方式来可视化 git 命令的操作，方便上手掌握！</p>
+<p>网址：<a href="https://git.mo.mk/">https://git.mo.mk/</a></p>
+<p>参考攻略：<a href="https://www.cnblogs.com/WMCH/p/7876056.html">https://www.cnblogs.com/WMCH/p/7876056.html</a></p>
+<h1 id="本地操作"><a href="#本地操作" class="headerlink" title="本地操作"></a>本地操作</h1><h2 id="1-Git基础篇"><a href="#1-Git基础篇" class="headerlink" title="1. Git基础篇"></a>1. Git基础篇</h2><p>循序渐进地介绍 Git 主要命令</p>
+<h3 id="1-Git-Commit"><a href="#1-Git-Commit" class="headerlink" title="1. Git Commit"></a>1. Git Commit</h3><p>Git 仓库中的提交记录保存的是你的目录下所有文件的快照，它会将当前版本与仓库中的上一个版本进行对比，并把所有的差异打包到一起作为一个提交记录。</p>
+<p>由于 Git 需要保存提交了的历史记录，因此大多数提交记录的上面都有父节点。</p>
+<p><code>练习代码 &amp; 执行效果</code></p>
+<pre><code class="hljs bash"><span class="hljs-comment"># 执行两次提交</span>
+git commit
+git commit</code></pre>
+
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201007224325.png" alt="image-20201007224322645"></p>
+<h3 id="2-Git-Branch"><a href="#2-Git-Branch" class="headerlink" title="2. Git Branch"></a>2. Git Branch</h3><p>Git 的分支也非常轻量。它们只是简单地指向某个提交纪录，不会造成储存或内存上的开销，而是按逻辑分解工作到不同的分支上。</p>
+<p><strong>早建分支！多用分支！</strong></p>
+<p>将分支和提交记录结合起来，即基于这个提交以及它所有的父提交进行新的工作。</p>
+<p><code>练习代码 &amp; 执行效果</code></p>
+<pre><code class="hljs bash"><span class="hljs-comment"># 方式1</span>
+git checkout -b bugFix	<span class="hljs-comment"># 创建并切换到 bugFix 分支</span>
+
+<span class="hljs-comment"># 方式2</span>
+git branch bugFix 		<span class="hljs-comment"># 创建 bugFix 分支</span>
+git checkout bugFix 	<span class="hljs-comment"># 切换到 bugFix 分支</span></code></pre>
+
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201007231735.png" alt="Git Branch"></p>
+<h3 id="3-Git-Merge"><a href="#3-Git-Merge" class="headerlink" title="3. Git Merge"></a>3. Git Merge</h3><p>Git 合并分支：将两个分支合并到一起。就是说我们新建一个分支，在其上开发某个新功能，开发完成后再合并回主线。</p>
+<p>Git Merge：在 Git 中合并两个分支时会产生一个有两个父节点的提交记录，具体流程如下图所示：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201007234844.png" alt="image-20201007233914469"></p>
+<p><code>练习代码 &amp; 执行效果</code></p>
+<pre><code class="hljs bash">git checkout -b bugFix		<span class="hljs-comment"># 创建并切换到 bugFix 分支</span>
+git commit					<span class="hljs-comment"># 提交一次</span>
+git checkout master			<span class="hljs-comment"># 切换到 master 分支</span>
+git commit					<span class="hljs-comment"># 再提交一次</span>
+git merge bugFix			<span class="hljs-comment"># 将 bugFix 分支合并到 master 分支</span></code></pre>
+
+
+
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201007234625.png" alt="image-20201007234623565"></p>
+<h3 id="4-Git-Rebase"><a href="#4-Git-Rebase" class="headerlink" title="4. Git Rebase"></a>4. Git Rebase</h3><p>相较于 Merge 操作，Git Rebase 实际上就是取出一系列的提交记录，“复制”它们，然后在另外一个地方逐个的放下去。</p>
+<p>其优势就是可以创造更线性的提交历史，让代码库的提交历史将会变得异常清晰。</p>
+<p>具体流程，如下图所示</p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008000250.png" alt="image-20201007235434578"></p>
+<p><code>练习代码 &amp; 执行效果</code></p>
+<pre><code class="hljs bash">git checkout -b bugFix			<span class="hljs-comment"># 创建并切换到 bugFix 分支</span>
+git commit						<span class="hljs-comment"># 提交一次</span>
+git checkout master				<span class="hljs-comment"># 切换到 master 分支</span>
+git commit						<span class="hljs-comment"># 再提交一次</span>
+git checkout bugFix				<span class="hljs-comment"># 切换到 bugFix 分支</span>
+git rebase master				<span class="hljs-comment"># 将 bugFix 分支合并到 master 分支</span></code></pre>
+
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201007235900.png" alt="image-20201007235854007"></p>
+<h2 id="2-Git高级篇"><a href="#2-Git高级篇" class="headerlink" title="2. Git高级篇"></a>2. Git高级篇</h2><p>来体验 Git 的超棒特性</p>
+<h3 id="1-分离-HEAD"><a href="#1-分离-HEAD" class="headerlink" title="1. 分离 HEAD"></a>1. 分离 HEAD</h3><p><strong>HEAD</strong>： 指向<strong>当前分支上最近一次提交记录</strong>，大多数修改提交树的 Git 命令都是从改变 HEAD 的指向开始的，即分离 HEAD。</p>
+<p>更改 HEAD 指向</p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008143329.png" alt="image-20201008143326919"></p>
+<p>分离 HEAD 实例如下</p>
+<p><code>练习代码 &amp; 执行效果</code></p>
+<pre><code class="hljs bash">git checkout c1</code></pre>
+
+
+
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008142007.png" alt="image-20201008142005424"></p>
+<h3 id="2-相对引用"><a href="#2-相对引用" class="headerlink" title="2. 相对引用"></a>2. 相对引用</h3><p>上一小结，我们学习到通过改变提交记录的哈希值来改变 HEAD 分支，而通过 <code>git log</code> 命令来获取提交记录的哈希值(可取前几位)，但通过指定提交记录哈希值的方式在 Git 中移动不太方便，因此 Git 加入了<strong>相对引用</strong>的方式来引用。</p>
+<p><strong>相对引用有两种方式：</strong></p>
+<ul>
+<li>使用 <code>^</code> 向上移动 1 个提交记录</li>
+<li>使用 <code>~&lt;num&gt;</code> 向上移动 n 个提交记录</li>
+</ul>
+<p><strong>相对引用(^) 示例</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008150146.png" alt="image-20201008150144666"></p>
+<p><strong>相对引用(~) 示例</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008164048.png" alt="image-20201008164046820"></p>
+<p><strong>强制修改分支位置</strong></p>
+<p>使用 <code>-f</code> 让指定分支指向另一个提交，即修改分支位置。</p>
+<p>让 master 分支强制指向 HEAD 的第 3 级父提交，如下图所示</p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008164816.png" alt="image-20201008164814954"></p>
+<p>相对引用之(^)的<code>练习代码 &amp; 执行效果</code></p>
+<pre><code class="hljs bash">git checkout bugFix^	<span class="hljs-comment"># 提交到 bugFix 的父提交</span></code></pre>
+
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008151014.png" alt="image-20201008151012184"></p>
+<p>相对引用之(~)的<code>练习代码 &amp; 执行效果</code></p>
+<pre><code class="hljs bash">git checkout HEAD~1				<span class="hljs-comment"># HEAD指向C1</span>
+git branch -f master C6			<span class="hljs-comment"># 分支master直接指向C6</span>
+git branch -f bugFix HEAD^		<span class="hljs-comment"># 分支bugFix指向HEAD的上一级</span></code></pre>
+
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008173214.png" alt="image-20201008173212358"></p>
+<h3 id="3-撤销变更"><a href="#3-撤销变更" class="headerlink" title="3. 撤销变更"></a>3. 撤销变更</h3><p>撤销变更由底层部分（暂存区的独立文件或者片段）和<strong>上层部分</strong>（变更到底是通过<strong>哪种方式被撤销</strong>的）组成。我们这个应用主要关注的是后者。</p>
+<p>两种方法用来撤销变更，分别是 <code>git reset</code>，还有就是 <code>git revert</code>。</p>
+<ul>
+<li><strong>git reset</strong>：通过把分支记录回退几个提交记录来实现撤销改动，原来指向的提交记录就跟从来没有提交过一样。（仅本地使用）</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008185948.png" alt="image-20201008185946102"></p>
+<ul>
+<li><p><strong>git revert</strong>：git reset 是无法更改远程分支的，为了撤销更改并<strong>分享</strong>给别人，Git 引入了更改机制，推送到远程分支，实现撤销上一个提交记录。</p>
+<p>如下图，<strong>C1 的状态与 C2’ 是相同的</strong></p>
+</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008190215.png" alt="image-20201008190213601"></p>
+<p><code>练习代码 &amp; 执行效果</code></p>
+<pre><code class="hljs bash">git reset <span class="hljs-built_in">local</span>^		<span class="hljs-comment"># 撤销本地分支(还原到上一个提交分支)</span>
+
+git checkout pushed		<span class="hljs-comment"># 先切换到远程分支</span>
+git revert pushed		<span class="hljs-comment"># 撤销远程分支(向远程分支推送更改的C2&#x27;, 状态与C1一样)</span></code></pre>
+
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008201908.png" alt="image-20201008201907199"></p>
+<hr>
+<p>​        到这里，我们已经学习了 Git 的基础知识 —— <strong>提交、分支以及在提交树上移动</strong>。 这些概念涵盖了 Git 90% 的功能，同样也足够满足开发者的日常需求，剩余的 10%的是<strong>整理提交记录</strong>， 在处理复杂的工作流时(或者当你陷入困惑时）可能就显示尤为重要了。</p>
+<h2 id="3-移动提交记录"><a href="#3-移动提交记录" class="headerlink" title="3. 移动提交记录"></a>3. 移动提交记录</h2><p>自由修改提交树</p>
+<h3 id="1-Git-Cherry-pick"><a href="#1-Git-Cherry-pick" class="headerlink" title="1. Git Cherry-pick"></a>1. Git Cherry-pick</h3><p>Cherry-pick 能将<strong>一些提交复制到当前所在的位置（<code>HEAD</code>）的下面</strong>，命令格式为 <code>git cherry-pick &lt;提交号&gt;...</code>，如下图</p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008205915.png" alt="image-20201008205807863"></p>
+<p><code>练习代码 &amp; 执行效果</code></p>
+<pre><code class="hljs bash">git cherry-pick C3 C4 C7			<span class="hljs-comment"># 把&lt;提交号&gt;抓过来放到当前分支下</span></code></pre>
+
+<img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008210545.png" alt="image-20201008210521787" style="zoom:90%;" />
+
+
+
+<h3 id="2-图形交互式的-rebase"><a href="#2-图形交互式的-rebase" class="headerlink" title="2. 图形交互式的 rebase"></a>2. 图形交互式的 rebase</h3><p>当知道提交记录的<strong>哈希值</strong>时, 用 <strong>cherry-pick</strong> 再好不过了，而若不清楚哈希值时，采用<strong>图形交互式的 rebase</strong> 则是最好的方法。</p>
+<p>交互式 rebase 指的是使用带参数 <code>--interactive</code> 的 rebase 命令, 简写为 <code>-i</code>，命令格式为 <code>git rebase -i HEAD~&lt;num&gt;</code>。</p>
+<p>Git 会打开一个 UI 界面，并列出将要被复制到目标分支的备选提交记录，它还会显示每个提交记录的哈希值和提交说明，提交说明有助于你理解这个提交进行了哪些更改。</p>
+<p>当 rebase UI界面打开时, 你能做3件事：</p>
+<ul>
+<li>调整提交记录的顺序</li>
+<li>删除你不想要的提交 (通过切换 <code>pick</code> 的状态完成，关闭即代表不提交该记录)</li>
+<li>合并提交 (多个提交记录合并成一个)</li>
+</ul>
+<p><code>练习代码 &amp; 执行效果</code></p>
+<pre><code class="hljs bash">git rebase -i HEAD~4</code></pre>
+
+<p>Rebase UI 界面</p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008212326.png" alt="image-20201008212245262"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008212336.png" alt="image-20201008212254864"></p>
+<h2 id="4-杂项"><a href="#4-杂项" class="headerlink" title="4. 杂项"></a>4. 杂项</h2><p>Git 技术、技巧与贴士大集合</p>
+<h3 id="1-只取一个提交记录"><a href="#1-只取一个提交记录" class="headerlink" title="1. 只取一个提交记录"></a>1. 只取一个提交记录</h3><p><strong>本地栈式提交</strong>，在开发中经常会遇到的情况：我正在解决某个特别棘手的 Bug，这个过程中顺带在代码中加了一些调试命令和打印语句(在各自的提交记录里)，Bug 解决完后就打算把 <code>bugFix</code> 分支里的工作合并回 <code>master</code> 分支了，但<strong>不想将调试语句和打印语句也一并提交</strong>。</p>
+<p><code>练习代码 &amp; 执行效果</code></p>
+<pre><code class="hljs bash">git rebase -i C2 C3		<span class="hljs-comment"># 将C2,C3分支先挂起，另做处理</span>
+git checkout master		<span class="hljs-comment"># 切换到master分支</span>
+git merge bugFix		<span class="hljs-comment"># 将bugFix分支与master分支合并</span></code></pre>
+
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008231357.png" alt="image-20201008231035992"></p>
+<h3 id="2-提交的技巧-1"><a href="#2-提交的技巧-1" class="headerlink" title="2. 提交的技巧 #1"></a>2. 提交的技巧 #1</h3><p>使用场景：之前在 A 分支上进行了一次提交，然后又基于它创建了 <code>C1</code> 分支，然后又提交了一次，而此时你想<strong>对某个以前的提交记录进行修改</strong>。</p>
+<p>具体操作可分为四个步骤：</p>
+<ul>
+<li>先用 <strong>git rebase -i</strong> 将提交<strong>重新排序</strong>，然后把我们想要修改的提交记录挪到最前</li>
+<li>然后用 <strong>git commit –amend</strong> 来做一些小修改后重新提交</li>
+<li>接着再用 <strong>git rebase -i</strong> 来还原提交记录的顺序</li>
+<li>最后我们<strong>把 master 移到最新</strong>，就大功告成啦！</li>
+</ul>
+<p><code>练习代码 &amp; 执行效果</code></p>
+<pre><code class="hljs bash">git rebase -i HEAD~2 	<span class="hljs-comment"># 调整c2c3，得到c3&#x27; c2&#x27;</span>
+git commit --amend 		<span class="hljs-comment"># 修改c2&#x27;后重新提交，得到c2&#x27;&#x27;</span>
+git rebase -i HEAD~2 	<span class="hljs-comment"># 调整c2&#x27;&#x27; c3&#x27;，得到c2&#x27;&#x27;&#x27; c3&#x27;&#x27;</span>
+git checkout master		<span class="hljs-comment"># 切换到master分支</span>
+git merge caption 		<span class="hljs-comment"># caption指向c3&#x27;&#x27;，合并到master</span></code></pre>
+
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008235222.png" alt="image-20201008235222"></p>
+<h3 id="3-提交的技巧-2"><a href="#3-提交的技巧-2" class="headerlink" title="3. 提交的技巧 #2"></a>3. 提交的技巧 #2</h3><p>使用 <strong>cherry-pick</strong> 实现上述操作的相同效果，而且更便捷！</p>
+<p>操作演示</p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201009095433.png" alt="image-20201009095425126"></p>
+<p><code>练习代码 &amp; 执行效果</code></p>
+<pre><code class="hljs bash">git checkout master		<span class="hljs-comment"># 先切换到master分支</span>
+git cherry-pick C2		<span class="hljs-comment"># 把C2转到master分支下，得到C2&#x27;</span>
+git commit --amend		<span class="hljs-comment"># 重新提交C2&#x27;,得到C2&#x27;&#x27;</span>
+git cherry-pick C3		<span class="hljs-comment"># 把C3转到master分支(C2&#x27;&#x27;)下，得到C3&#x27;</span></code></pre>
+
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201009095938.png" alt="image-20201009095936449"></p>
+<h3 id="4-Git-Tag"><a href="#4-Git-Tag" class="headerlink" title="4. Git Tag"></a>4. Git Tag</h3><p>不难得出，分支的缺点主要是<strong>易被人为移动、改变</strong>，而且大部分分支还只是临时的，并且还一直在变。</p>
+<p>而 <strong>标签</strong> 可以 <strong><em>永远</em> 指向某个提交记录的标识</strong>，它就像是提交树上的一个锚点，标识了某个特定的位置。</p>
+<p>用途也很广，例如软件发布新的大版本，或者是修正一些重要的 Bug 或是增加了某些新特性等。</p>
+<p>命名语法为 <code>git tag &lt;标签名&gt; &lt;commit号&gt;</code>，如下图</p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201009103006.png" alt="image-20201009102800288"></p>
+<p><code>练习代码 &amp; 执行效果</code></p>
+<pre><code class="hljs bash">git tag v0 C1			<span class="hljs-comment"># 给C1添加标签v0</span>
+git tag v1 C2			<span class="hljs-comment"># 给C2添加标签v1</span>
+git checkout C2			<span class="hljs-comment"># 当前HEAD指向C2</span></code></pre>
+
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201009103455.png" alt="git tag"></p>
+<h3 id="5-Git-Describe"><a href="#5-Git-Describe" class="headerlink" title="5. Git Describe"></a>5. Git Describe</h3><p><strong>Git Describe</strong>：用来<strong>描述</strong>离你最近的标签(锚点)，能帮你在提交历史中移动了多次以后找到方向。</p>
+<p>命令语法是<code>git describe &lt;ref&gt;</code>，<code>&lt;ref&gt;</code> 可以是任何能<strong>被 Git 识别成提交记录的引用</strong>，Git 默认会以你目前所检出的位置<strong>（<code>HEAD</code>）</strong>。</p>
+<p>输出的结果是 <code>&lt;tag&gt;_&lt;numCommits&gt;_g&lt;hash&gt;</code>，其中</p>
+<ul>
+<li><p><code>tag</code> 表示的是离 <code>ref</code> 最近的标签</p>
+</li>
+<li><p><code>numCommits</code> 是表示这个 <code>ref</code> 与 <code>tag</code> 相差有多少个提交记录</p>
+</li>
+<li><p><code>hash</code> 表示的是提交记录哈希值的前几位</p>
+</li>
+</ul>
+<h1 id="远程操作"><a href="#远程操作" class="headerlink" title="远程操作"></a>远程操作</h1><h2 id="Git-远程仓库-Push-amp-Pull-及高级操作"><a href="#Git-远程仓库-Push-amp-Pull-及高级操作" class="headerlink" title="Git 远程仓库(Push &amp; Pull)及高级操作"></a>Git 远程仓库(Push &amp; Pull)及高级操作</h2><p>是时候分享你的代码了，让编码变得社交化吧</p>
+<h3 id="1-Git-Clone-与-远程分支"><a href="#1-Git-Clone-与-远程分支" class="headerlink" title="1. Git Clone 与 远程分支"></a>1. Git Clone 与 远程分支</h3><p><code>git clone</code> 命令在真实的环境下的作用是在<strong>本地</strong>创建一个远程仓库的拷贝，命令语法为<code>git clone &lt;url&gt;</code>。</p>
+<p>通过 <code>git clone</code>，我们在本地的仓库多了一个名为 <code>o/master</code> 的分支, 这种类型的分支就叫<strong>远程</strong>分支。</p>
+<p>远程分支反映了远程仓库在你<strong>最后一次和它通信时的状态</strong>，有助于理解本地的工作与公共工作的差别。</p>
+<p>远程分支的命名规范是 <code>&lt;remote name&gt;/&lt;branch name&gt;</code>，因此 <code>o/master</code> 分支中，分支名为 <code>master</code>，远程仓库的名称为 <code>origin</code>(为了简化用’o’代替)。</p>
+<h3 id="2-Git-Fetch"><a href="#2-Git-Fetch" class="headerlink" title="2. Git Fetch"></a>2. Git Fetch</h3><p>Git 远程仓库相当的操作实际可以归纳为两点：<strong>向远程仓库传输数据</strong>(git push) 以及<strong>从远程仓库获取数据</strong>(git fetch)。</p>
+<p><code>git fetch</code> 完成了仅有的但是很<strong>重要的两步</strong>:</p>
+<ul>
+<li>从远程仓库下载本地仓库中缺失的提交记录</li>
+<li>更新远程分支指针(如 <code>o/master</code>)</li>
+</ul>
+<p><code>git fetch</code> 将本地仓库中的远程分支更新成了远程仓库相应分支最新的状态，通常通过互联网（使用 <code>http://</code> 或 <code>git://</code> 协议) 与远程仓库通信。</p>
+<p><code>git fetch</code> 只是执行单纯的下载操作，<strong>不会</strong>改变你本地仓库的状态，<strong>不会</strong>更新你的 <code>master</code> 分支，也<strong>不会</strong>修改你磁盘上的文件。</p>
+<p><strong>git fetch 示例</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201009124543.png"></p>
+<h3 id="3-Git-Pull"><a href="#3-Git-Pull" class="headerlink" title="3. Git Pull"></a>3. Git Pull</h3><p>Git Pull 实际上执行了两个操作， <strong>先抓取更新(git fetch)，再合并到本地分支(git <u>merge/base/cherry-pick</u> o/master)</strong> 。</p>
+<p>先来看看 <code>fetch</code>、<code>merge</code> 依次执行的效果</p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201009124543.png" alt="image-20201009124542415"></p>
+<p>使用 <code>git pull</code> 的效果</p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201009124552.png"></p>
+<p>结论： <strong><code>git pull</code> 就是 git fetch 和 git merge <just-fetched-branch> 的缩写！</strong></p>
+<h3 id="4-Git-Push"><a href="#4-Git-Push" class="headerlink" title="4. Git Push"></a>4. Git Push</h3><p><code>git push</code> 即<strong>向远程仓库传输数据</strong>，负责将<strong>本地的</strong>变更上传到指定的远程仓库，并在远程仓库上合并你的新提交记录。</p>
+<p>命令语法为：<code>git push &lt;remote&gt; &lt;place&gt;</code>。</p>
+<p>例如：<code>git push origin master</code> 翻译过来是：切到本地仓库中的“master”分支，获取所有的提交，再到远程仓库“origin”中找到“master”分支，将远程仓库中没有的提交记录都添加上去。</p>
+<p>其中 <code>&lt;place&gt;</code>可以划分为 <code>&lt;source&gt;:&lt;destination&gt;</code>，同时指定 <strong>源地址</strong> 和 <strong>目的地(若不存在则新建该分支)</strong> 。</p>
+<p><strong>git push 示例</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201009125524.png" alt="image-20201009125523139"></p>
+<p><strong>git push <remote> <place> 示例</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201009132449.png" alt="image-20201009132447363"></p>
+<p><strong>git push origin <code>&lt;source&gt;:&lt;destination&gt;</code> 示例</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201009133122.png" alt="image-20201009133117183"></p>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><p>分享其他不错的 Git 学习网站</p>
+<ul>
+<li><a href="https://try.github.io/">https://try.github.io</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hexo 全局字体之思源宋体</title>
     <url>/2020/10/01/2020-10-01-Change-Global-Font/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>一直想更换默认的博客文章字体，参考了众多大佬的博客设计，想换点不一样的字体。</p>
@@ -260,237 +493,22 @@ git push -f origin &lt;branch&gt;			  <span class="hljs-comment"># 强制推送�
       </tags>
   </entry>
   <entry>
-    <title>Git 学习笔记</title>
-    <url>/2020/10/07/2020-10-07-Study-Git-Note/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近发现了一个学习 Git 命令的好网站，是通过玩游戏的方式来可视化 git 命令的操作，方便上手掌握！</p>
-<p>网址：<a href="https://git.mo.mk/">https://git.mo.mk/</a></p>
-<p>参考攻略：<a href="https://www.cnblogs.com/WMCH/p/7876056.html">https://www.cnblogs.com/WMCH/p/7876056.html</a></p>
-<h1 id="本地操作"><a href="#本地操作" class="headerlink" title="本地操作"></a>本地操作</h1><h2 id="1-Git基础篇"><a href="#1-Git基础篇" class="headerlink" title="1. Git基础篇"></a>1. Git基础篇</h2><p>循序渐进地介绍 Git 主要命令</p>
-<h3 id="1-Git-Commit"><a href="#1-Git-Commit" class="headerlink" title="1. Git Commit"></a>1. Git Commit</h3><p>Git 仓库中的提交记录保存的是你的目录下所有文件的快照，它会将当前版本与仓库中的上一个版本进行对比，并把所有的差异打包到一起作为一个提交记录。</p>
-<p>由于 Git 需要保存提交了的历史记录，因此大多数提交记录的上面都有父节点。</p>
-<p><code>练习代码 &amp; 执行效果</code></p>
-<pre><code class="hljs bash"><span class="hljs-comment"># 执行两次提交</span>
-git commit
-git commit</code></pre>
+    <title>Hello World</title>
+    <url>/2020/09/19/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre><code class="hljs bash">$ hexo new <span class="hljs-string">&quot;My New Post&quot;</span></code></pre>
 
-<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201007224325.png" alt="image-20201007224322645"></p>
-<h3 id="2-Git-Branch"><a href="#2-Git-Branch" class="headerlink" title="2. Git Branch"></a>2. Git Branch</h3><p>Git 的分支也非常轻量。它们只是简单地指向某个提交纪录，不会造成储存或内存上的开销，而是按逻辑分解工作到不同的分支上。</p>
-<p><strong>早建分支！多用分支！</strong></p>
-<p>将分支和提交记录结合起来，即基于这个提交以及它所有的父提交进行新的工作。</p>
-<p><code>练习代码 &amp; 执行效果</code></p>
-<pre><code class="hljs bash"><span class="hljs-comment"># 方式1</span>
-git checkout -b bugFix	<span class="hljs-comment"># 创建并切换到 bugFix 分支</span>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre><code class="hljs bash">$ hexo server</code></pre>
 
-<span class="hljs-comment"># 方式2</span>
-git branch bugFix 		<span class="hljs-comment"># 创建 bugFix 分支</span>
-git checkout bugFix 	<span class="hljs-comment"># 切换到 bugFix 分支</span></code></pre>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre><code class="hljs bash">$ hexo generate</code></pre>
 
-<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201007231735.png" alt="Git Branch"></p>
-<h3 id="3-Git-Merge"><a href="#3-Git-Merge" class="headerlink" title="3. Git Merge"></a>3. Git Merge</h3><p>Git 合并分支：将两个分支合并到一起。就是说我们新建一个分支，在其上开发某个新功能，开发完成后再合并回主线。</p>
-<p>Git Merge：在 Git 中合并两个分支时会产生一个有两个父节点的提交记录，具体流程如下图所示：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201007234844.png" alt="image-20201007233914469"></p>
-<p><code>练习代码 &amp; 执行效果</code></p>
-<pre><code class="hljs bash">git checkout -b bugFix		<span class="hljs-comment"># 创建并切换到 bugFix 分支</span>
-git commit					<span class="hljs-comment"># 提交一次</span>
-git checkout master			<span class="hljs-comment"># 切换到 master 分支</span>
-git commit					<span class="hljs-comment"># 再提交一次</span>
-git merge bugFix			<span class="hljs-comment"># 将 bugFix 分支合并到 master 分支</span></code></pre>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre><code class="hljs bash">$ hexo deploy</code></pre>
 
-
-
-<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201007234625.png" alt="image-20201007234623565"></p>
-<h3 id="4-Git-Rebase"><a href="#4-Git-Rebase" class="headerlink" title="4. Git Rebase"></a>4. Git Rebase</h3><p>相较于 Merge 操作，Git Rebase 实际上就是取出一系列的提交记录，“复制”它们，然后在另外一个地方逐个的放下去。</p>
-<p>其优势就是可以创造更线性的提交历史，让代码库的提交历史将会变得异常清晰。</p>
-<p>具体流程，如下图所示</p>
-<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008000250.png" alt="image-20201007235434578"></p>
-<p><code>练习代码 &amp; 执行效果</code></p>
-<pre><code class="hljs bash">git checkout -b bugFix			<span class="hljs-comment"># 创建并切换到 bugFix 分支</span>
-git commit						<span class="hljs-comment"># 提交一次</span>
-git checkout master				<span class="hljs-comment"># 切换到 master 分支</span>
-git commit						<span class="hljs-comment"># 再提交一次</span>
-git checkout bugFix				<span class="hljs-comment"># 切换到 bugFix 分支</span>
-git rebase master				<span class="hljs-comment"># 将 bugFix 分支合并到 master 分支</span></code></pre>
-
-<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201007235900.png" alt="image-20201007235854007"></p>
-<h2 id="2-Git高级篇"><a href="#2-Git高级篇" class="headerlink" title="2. Git高级篇"></a>2. Git高级篇</h2><p>来体验 Git 的超棒特性</p>
-<h3 id="1-分离-HEAD"><a href="#1-分离-HEAD" class="headerlink" title="1. 分离 HEAD"></a>1. 分离 HEAD</h3><p><strong>HEAD</strong>： 指向<strong>当前分支上最近一次提交记录</strong>，大多数修改提交树的 Git 命令都是从改变 HEAD 的指向开始的，即分离 HEAD。</p>
-<p>更改 HEAD 指向</p>
-<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008143329.png" alt="image-20201008143326919"></p>
-<p>分离 HEAD 实例如下</p>
-<p><code>练习代码 &amp; 执行效果</code></p>
-<pre><code class="hljs bash">git checkout c1</code></pre>
-
-
-
-<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008142007.png" alt="image-20201008142005424"></p>
-<h3 id="2-相对引用"><a href="#2-相对引用" class="headerlink" title="2. 相对引用"></a>2. 相对引用</h3><p>上一小结，我们学习到通过改变提交记录的哈希值来改变 HEAD 分支，而通过 <code>git log</code> 命令来获取提交记录的哈希值(可取前几位)，但通过指定提交记录哈希值的方式在 Git 中移动不太方便，因此 Git 加入了<strong>相对引用</strong>的方式来引用。</p>
-<p><strong>相对引用有两种方式：</strong></p>
-<ul>
-<li>使用 <code>^</code> 向上移动 1 个提交记录</li>
-<li>使用 <code>~&lt;num&gt;</code> 向上移动 n 个提交记录</li>
-</ul>
-<p><strong>相对引用(^) 示例</strong></p>
-<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008150146.png" alt="image-20201008150144666"></p>
-<p><strong>相对引用(~) 示例</strong></p>
-<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008164048.png" alt="image-20201008164046820"></p>
-<p><strong>强制修改分支位置</strong></p>
-<p>使用 <code>-f</code> 让指定分支指向另一个提交，即修改分支位置。</p>
-<p>让 master 分支强制指向 HEAD 的第 3 级父提交，如下图所示</p>
-<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008164816.png" alt="image-20201008164814954"></p>
-<p>相对引用之(^)的<code>练习代码 &amp; 执行效果</code></p>
-<pre><code class="hljs bash">git checkout bugFix^	<span class="hljs-comment"># 提交到 bugFix 的父提交</span></code></pre>
-
-<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008151014.png" alt="image-20201008151012184"></p>
-<p>相对引用之(~)的<code>练习代码 &amp; 执行效果</code></p>
-<pre><code class="hljs bash">git checkout HEAD~1				<span class="hljs-comment"># HEAD指向C1</span>
-git branch -f master C6			<span class="hljs-comment"># 分支master直接指向C6</span>
-git branch -f bugFix HEAD^		<span class="hljs-comment"># 分支bugFix指向HEAD的上一级</span></code></pre>
-
-<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008173214.png" alt="image-20201008173212358"></p>
-<h3 id="3-撤销变更"><a href="#3-撤销变更" class="headerlink" title="3. 撤销变更"></a>3. 撤销变更</h3><p>撤销变更由底层部分（暂存区的独立文件或者片段）和<strong>上层部分</strong>（变更到底是通过<strong>哪种方式被撤销</strong>的）组成。我们这个应用主要关注的是后者。</p>
-<p>两种方法用来撤销变更，分别是 <code>git reset</code>，还有就是 <code>git revert</code>。</p>
-<ul>
-<li><strong>git reset</strong>：通过把分支记录回退几个提交记录来实现撤销改动，原来指向的提交记录就跟从来没有提交过一样。（仅本地使用）</li>
-</ul>
-<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008185948.png" alt="image-20201008185946102"></p>
-<ul>
-<li><p><strong>git revert</strong>：git reset 是无法更改远程分支的，为了撤销更改并<strong>分享</strong>给别人，Git 引入了更改机制，推送到远程分支，实现撤销上一个提交记录。</p>
-<p>如下图，<strong>C1 的状态与 C2’ 是相同的</strong></p>
-</li>
-</ul>
-<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008190215.png" alt="image-20201008190213601"></p>
-<p><code>练习代码 &amp; 执行效果</code></p>
-<pre><code class="hljs bash">git reset <span class="hljs-built_in">local</span>^		<span class="hljs-comment"># 撤销本地分支(还原到上一个提交分支)</span>
-
-git checkout pushed		<span class="hljs-comment"># 先切换到远程分支</span>
-git revert pushed		<span class="hljs-comment"># 撤销远程分支(向远程分支推送更改的C2&#x27;, 状态与C1一样)</span></code></pre>
-
-<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008201908.png" alt="image-20201008201907199"></p>
-<hr>
-<p>​        到这里，我们已经学习了 Git 的基础知识 —— <strong>提交、分支以及在提交树上移动</strong>。 这些概念涵盖了 Git 90% 的功能，同样也足够满足开发者的日常需求，剩余的 10%的是<strong>整理提交记录</strong>， 在处理复杂的工作流时(或者当你陷入困惑时）可能就显示尤为重要了。</p>
-<h2 id="3-移动提交记录"><a href="#3-移动提交记录" class="headerlink" title="3. 移动提交记录"></a>3. 移动提交记录</h2><p>自由修改提交树</p>
-<h3 id="1-Git-Cherry-pick"><a href="#1-Git-Cherry-pick" class="headerlink" title="1. Git Cherry-pick"></a>1. Git Cherry-pick</h3><p>Cherry-pick 能将<strong>一些提交复制到当前所在的位置（<code>HEAD</code>）的下面</strong>，命令格式为 <code>git cherry-pick &lt;提交号&gt;...</code>，如下图</p>
-<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008205915.png" alt="image-20201008205807863"></p>
-<p><code>练习代码 &amp; 执行效果</code></p>
-<pre><code class="hljs bash">git cherry-pick C3 C4 C7			<span class="hljs-comment"># 把&lt;提交号&gt;抓过来放到当前分支下</span></code></pre>
-
-<img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008210545.png" alt="image-20201008210521787" style="zoom:90%;" />
-
-
-
-<h3 id="2-图形交互式的-rebase"><a href="#2-图形交互式的-rebase" class="headerlink" title="2. 图形交互式的 rebase"></a>2. 图形交互式的 rebase</h3><p>当知道提交记录的<strong>哈希值</strong>时, 用 <strong>cherry-pick</strong> 再好不过了，而若不清楚哈希值时，采用<strong>图形交互式的 rebase</strong> 则是最好的方法。</p>
-<p>交互式 rebase 指的是使用带参数 <code>--interactive</code> 的 rebase 命令, 简写为 <code>-i</code>，命令格式为 <code>git rebase -i HEAD~&lt;num&gt;</code>。</p>
-<p>Git 会打开一个 UI 界面，并列出将要被复制到目标分支的备选提交记录，它还会显示每个提交记录的哈希值和提交说明，提交说明有助于你理解这个提交进行了哪些更改。</p>
-<p>当 rebase UI界面打开时, 你能做3件事：</p>
-<ul>
-<li>调整提交记录的顺序</li>
-<li>删除你不想要的提交 (通过切换 <code>pick</code> 的状态完成，关闭即代表不提交该记录)</li>
-<li>合并提交 (多个提交记录合并成一个)</li>
-</ul>
-<p><code>练习代码 &amp; 执行效果</code></p>
-<pre><code class="hljs bash">git rebase -i HEAD~4</code></pre>
-
-<p>Rebase UI 界面</p>
-<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008212326.png" alt="image-20201008212245262"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008212336.png" alt="image-20201008212254864"></p>
-<h2 id="4-杂项"><a href="#4-杂项" class="headerlink" title="4. 杂项"></a>4. 杂项</h2><p>Git 技术、技巧与贴士大集合</p>
-<h3 id="1-只取一个提交记录"><a href="#1-只取一个提交记录" class="headerlink" title="1. 只取一个提交记录"></a>1. 只取一个提交记录</h3><p><strong>本地栈式提交</strong>，在开发中经常会遇到的情况：我正在解决某个特别棘手的 Bug，这个过程中顺带在代码中加了一些调试命令和打印语句(在各自的提交记录里)，Bug 解决完后就打算把 <code>bugFix</code> 分支里的工作合并回 <code>master</code> 分支了，但<strong>不想将调试语句和打印语句也一并提交</strong>。</p>
-<p><code>练习代码 &amp; 执行效果</code></p>
-<pre><code class="hljs bash">git rebase -i C2 C3		<span class="hljs-comment"># 将C2,C3分支先挂起，另做处理</span>
-git checkout master		<span class="hljs-comment"># 切换到master分支</span>
-git merge bugFix		<span class="hljs-comment"># 将bugFix分支与master分支合并</span></code></pre>
-
-<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008231357.png" alt="image-20201008231035992"></p>
-<h3 id="2-提交的技巧-1"><a href="#2-提交的技巧-1" class="headerlink" title="2. 提交的技巧 #1"></a>2. 提交的技巧 #1</h3><p>使用场景：之前在 A 分支上进行了一次提交，然后又基于它创建了 <code>C1</code> 分支，然后又提交了一次，而此时你想<strong>对某个以前的提交记录进行修改</strong>。</p>
-<p>具体操作可分为四个步骤：</p>
-<ul>
-<li>先用 <strong>git rebase -i</strong> 将提交<strong>重新排序</strong>，然后把我们想要修改的提交记录挪到最前</li>
-<li>然后用 <strong>git commit –amend</strong> 来做一些小修改后重新提交</li>
-<li>接着再用 <strong>git rebase -i</strong> 来还原提交记录的顺序</li>
-<li>最后我们<strong>把 master 移到最新</strong>，就大功告成啦！</li>
-</ul>
-<p><code>练习代码 &amp; 执行效果</code></p>
-<pre><code class="hljs bash">git rebase -i HEAD~2 	<span class="hljs-comment"># 调整c2c3，得到c3&#x27; c2&#x27;</span>
-git commit --amend 		<span class="hljs-comment"># 修改c2&#x27;后重新提交，得到c2&#x27;&#x27;</span>
-git rebase -i HEAD~2 	<span class="hljs-comment"># 调整c2&#x27;&#x27; c3&#x27;，得到c2&#x27;&#x27;&#x27; c3&#x27;&#x27;</span>
-git checkout master		<span class="hljs-comment"># 切换到master分支</span>
-git merge caption 		<span class="hljs-comment"># caption指向c3&#x27;&#x27;，合并到master</span></code></pre>
-
-<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008235222.png" alt="image-20201008235222"></p>
-<h3 id="3-提交的技巧-2"><a href="#3-提交的技巧-2" class="headerlink" title="3. 提交的技巧 #2"></a>3. 提交的技巧 #2</h3><p>使用 <strong>cherry-pick</strong> 实现上述操作的相同效果，而且更便捷！</p>
-<p>操作演示</p>
-<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201009095433.png" alt="image-20201009095425126"></p>
-<p><code>练习代码 &amp; 执行效果</code></p>
-<pre><code class="hljs bash">git checkout master		<span class="hljs-comment"># 先切换到master分支</span>
-git cherry-pick C2		<span class="hljs-comment"># 把C2转到master分支下，得到C2&#x27;</span>
-git commit --amend		<span class="hljs-comment"># 重新提交C2&#x27;,得到C2&#x27;&#x27;</span>
-git cherry-pick C3		<span class="hljs-comment"># 把C3转到master分支(C2&#x27;&#x27;)下，得到C3&#x27;</span></code></pre>
-
-<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201009095938.png" alt="image-20201009095936449"></p>
-<h3 id="4-Git-Tag"><a href="#4-Git-Tag" class="headerlink" title="4. Git Tag"></a>4. Git Tag</h3><p>不难得出，分支的缺点主要是<strong>易被人为移动、改变</strong>，而且大部分分支还只是临时的，并且还一直在变。</p>
-<p>而 <strong>标签</strong> 可以 <strong><em>永远</em> 指向某个提交记录的标识</strong>，它就像是提交树上的一个锚点，标识了某个特定的位置。</p>
-<p>用途也很广，例如软件发布新的大版本，或者是修正一些重要的 Bug 或是增加了某些新特性等。</p>
-<p>命名语法为 <code>git tag &lt;标签名&gt; &lt;commit号&gt;</code>，如下图</p>
-<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201009103006.png" alt="image-20201009102800288"></p>
-<p><code>练习代码 &amp; 执行效果</code></p>
-<pre><code class="hljs bash">git tag v0 C1			<span class="hljs-comment"># 给C1添加标签v0</span>
-git tag v1 C2			<span class="hljs-comment"># 给C2添加标签v1</span>
-git checkout C2			<span class="hljs-comment"># 当前HEAD指向C2</span></code></pre>
-
-<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201009103455.png" alt="git tag"></p>
-<h3 id="5-Git-Describe"><a href="#5-Git-Describe" class="headerlink" title="5. Git Describe"></a>5. Git Describe</h3><p><strong>Git Describe</strong>：用来<strong>描述</strong>离你最近的标签(锚点)，能帮你在提交历史中移动了多次以后找到方向。</p>
-<p>命令语法是<code>git describe &lt;ref&gt;</code>，<code>&lt;ref&gt;</code> 可以是任何能<strong>被 Git 识别成提交记录的引用</strong>，Git 默认会以你目前所检出的位置<strong>（<code>HEAD</code>）</strong>。</p>
-<p>输出的结果是 <code>&lt;tag&gt;_&lt;numCommits&gt;_g&lt;hash&gt;</code>，其中</p>
-<ul>
-<li><p><code>tag</code> 表示的是离 <code>ref</code> 最近的标签</p>
-</li>
-<li><p><code>numCommits</code> 是表示这个 <code>ref</code> 与 <code>tag</code> 相差有多少个提交记录</p>
-</li>
-<li><p><code>hash</code> 表示的是提交记录哈希值的前几位</p>
-</li>
-</ul>
-<h1 id="远程操作"><a href="#远程操作" class="headerlink" title="远程操作"></a>远程操作</h1><h2 id="Git-远程仓库-Push-amp-Pull-及高级操作"><a href="#Git-远程仓库-Push-amp-Pull-及高级操作" class="headerlink" title="Git 远程仓库(Push &amp; Pull)及高级操作"></a>Git 远程仓库(Push &amp; Pull)及高级操作</h2><p>是时候分享你的代码了，让编码变得社交化吧</p>
-<h3 id="1-Git-Clone-与-远程分支"><a href="#1-Git-Clone-与-远程分支" class="headerlink" title="1. Git Clone 与 远程分支"></a>1. Git Clone 与 远程分支</h3><p><code>git clone</code> 命令在真实的环境下的作用是在<strong>本地</strong>创建一个远程仓库的拷贝，命令语法为<code>git clone &lt;url&gt;</code>。</p>
-<p>通过 <code>git clone</code>，我们在本地的仓库多了一个名为 <code>o/master</code> 的分支, 这种类型的分支就叫<strong>远程</strong>分支。</p>
-<p>远程分支反映了远程仓库在你<strong>最后一次和它通信时的状态</strong>，有助于理解本地的工作与公共工作的差别。</p>
-<p>远程分支的命名规范是 <code>&lt;remote name&gt;/&lt;branch name&gt;</code>，因此 <code>o/master</code> 分支中，分支名为 <code>master</code>，远程仓库的名称为 <code>origin</code>(为了简化用’o’代替)。</p>
-<h3 id="2-Git-Fetch"><a href="#2-Git-Fetch" class="headerlink" title="2. Git Fetch"></a>2. Git Fetch</h3><p>Git 远程仓库相当的操作实际可以归纳为两点：<strong>向远程仓库传输数据</strong>(git push) 以及<strong>从远程仓库获取数据</strong>(git fetch)。</p>
-<p><code>git fetch</code> 完成了仅有的但是很<strong>重要的两步</strong>:</p>
-<ul>
-<li>从远程仓库下载本地仓库中缺失的提交记录</li>
-<li>更新远程分支指针(如 <code>o/master</code>)</li>
-</ul>
-<p><code>git fetch</code> 将本地仓库中的远程分支更新成了远程仓库相应分支最新的状态，通常通过互联网（使用 <code>http://</code> 或 <code>git://</code> 协议) 与远程仓库通信。</p>
-<p><code>git fetch</code> 只是执行单纯的下载操作，<strong>不会</strong>改变你本地仓库的状态，<strong>不会</strong>更新你的 <code>master</code> 分支，也<strong>不会</strong>修改你磁盘上的文件。</p>
-<p><strong>git fetch 示例</strong></p>
-<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201009123552.png"></p>
-<h3 id="3-Git-Pull"><a href="#3-Git-Pull" class="headerlink" title="3. Git Pull"></a>3. Git Pull</h3><p>Git Pull 实际上执行了两个操作， <strong>先抓取更新(git fetch)，再合并到本地分支(git <u>merge/base/cherry-pick</u> o/master)</strong> 。</p>
-<p>先来看看 <code>fetch</code>、<code>merge</code> 依次执行的效果</p>
-<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201009124543.png" alt="image-20201009124542415"></p>
-<p>使用 <code>git pull</code> 的效果</p>
-<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201009124552.png"></p>
-<p>结论： <strong><code>git pull</code> 就是 git fetch 和 git merge <just-fetched-branch> 的缩写！</strong></p>
-<h3 id="4-Git-Push"><a href="#4-Git-Push" class="headerlink" title="4. Git Push"></a>4. Git Push</h3><p><code>git push</code> 即<strong>向远程仓库传输数据</strong>，负责将<strong>本地的</strong>变更上传到指定的远程仓库，并在远程仓库上合并你的新提交记录。</p>
-<p>命令语法为：<code>git push &lt;remote&gt; &lt;place&gt;</code>。</p>
-<p>例如：<code>git push origin master</code> 翻译过来是：切到本地仓库中的“master”分支，获取所有的提交，再到远程仓库“origin”中找到“master”分支，将远程仓库中没有的提交记录都添加上去。</p>
-<p>其中 <code>&lt;place&gt;</code>可以划分为 <code>&lt;source&gt;:&lt;destination&gt;</code>，同时指定 <strong>源地址</strong> 和 <strong>目的地(若不存在则新建该分支)</strong> 。</p>
-<p><strong>git push 示例</strong></p>
-<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201009125524.png" alt="image-20201009125523139"></p>
-<p><strong>git push <remote> <place> 示例</strong></p>
-<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201009132449.png" alt="image-20201009132447363"></p>
-<p><strong>git push origin <code>&lt;source&gt;:&lt;destination&gt;</code> 示例</strong></p>
-<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201009133122.png" alt="image-20201009133117183"></p>
-<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><p>分享其他不错的 Git 学习网站</p>
-<ul>
-<li><a href="https://try.github.io/">https://try.github.io</a></li>
-</ul>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 ]]></content>
-      <categories>
-        <category>技术</category>
-      </categories>
-      <tags>
-        <tag>Git</tag>
-      </tags>
   </entry>
   <entry>
     <title>多线程之 ThreadLocal</title>
@@ -582,24 +600,6 @@ sThreadLocal.get()</code></pre>
       <tags>
         <tag>面试</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2020/09/19/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre><code class="hljs bash">$ hexo new <span class="hljs-string">&quot;My New Post&quot;</span></code></pre>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre><code class="hljs bash">$ hexo server</code></pre>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre><code class="hljs bash">$ hexo generate</code></pre>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre><code class="hljs bash">$ hexo deploy</code></pre>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
   </entry>
   <entry>
     <title>我的博客</title>
@@ -1009,31 +1009,38 @@ explain select * from &#39;表名&#39;</code></pre>
 
 <p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010143050.png" alt="image-20201010141215496"></p>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近正在准备面试，借由此来复习一下 Java 集合类的基础知识及相关面试题，常学常新。</p>
-<h2 id="面试"><a href="#面试" class="headerlink" title="面试"></a>面试</h2><h3 id="1-Arraylist与LinkedList区别"><a href="#1-Arraylist与LinkedList区别" class="headerlink" title="1. Arraylist与LinkedList区别"></a>1. Arraylist与LinkedList区别</h3><p>可以从它们的底层数据结构、效率、开销进行阐述哈</p>
+<h2 id="集合-Collection"><a href="#集合-Collection" class="headerlink" title="集合 Collection"></a>集合 Collection</h2><blockquote>
+<p><a href="https://segmentfault.com/a/1190000023856654">https://segmentfault.com/a/1190000023856654</a></p>
+<p><a href="https://mp.weixin.qq.com/s/7WA1k31xmatsYTEfyMdLEQ">https://mp.weixin.qq.com/s/7WA1k31xmatsYTEfyMdLEQ</a></p>
+<p><a href="https://segmentfault.com/a/1190000023081145">https://segmentfault.com/a/1190000023081145</a></p>
+<p><a href="https://segmentfault.com/a/1190000023199039">https://segmentfault.com/a/1190000023199039</a></p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010235450.png" alt="image-20201010235448614"></p>
+<h2 id="映射-Map"><a href="#映射-Map" class="headerlink" title="映射 Map"></a>映射 Map</h2><h2 id="集合工具-Collections-amp-Arrays"><a href="#集合工具-Collections-amp-Arrays" class="headerlink" title="集合工具 Collections &amp; Arrays"></a>集合工具 Collections &amp; Arrays</h2><h2 id="面试"><a href="#面试" class="headerlink" title="面试"></a>面试</h2><h3 id="1-Arraylist-与-LinkedList-区别"><a href="#1-Arraylist-与-LinkedList-区别" class="headerlink" title="1. Arraylist 与 LinkedList 区别"></a>1. Arraylist 与 LinkedList 区别</h3><p>可以从它们的底层数据结构、效率、开销进行阐述哈</p>
 <ul>
 <li>ArrayList是<strong>数组</strong>的数据结构，LinkedList是<strong>链表</strong>的数据结构。</li>
 <li>随机访问的时候，ArrayList的效率比较高，因为LinkedList要移动指针，而ArrayList是基于索引(index)的数据结构，可以直接映射到。</li>
 <li>插入、删除数据时，LinkedList的效率比较高，因为ArrayList删除数据时索引后的元素都需要移动。</li>
 <li>LinkedList比ArrayList开销更大，因为LinkedList的节点除了存储数据，还需要存储引用。</li>
 </ul>
-<h3 id="2-Collections-sort和Arrays-sort的实现原理"><a href="#2-Collections-sort和Arrays-sort的实现原理" class="headerlink" title="2. Collections.sort和Arrays.sort的实现原理"></a>2. Collections.sort和Arrays.sort的实现原理</h3><p><strong>Collection.sort是对 <em>list</em> 进行排序</strong>，<strong>Arrays.sort是对 <em>数组</em> 进行排序</strong>。</p>
-<h4 id="Collections-sort底层实现"><a href="#Collections-sort底层实现" class="headerlink" title="Collections.sort底层实现"></a>Collections.sort底层实现</h4><p>Collections.sort方法调用了list.sort方法<br><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010152717"><br>list.sort方法调用了Arrays.sort的方法<br><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010152735"><br>因此，<strong>Collections.sort方法底层就是调用的Array.sort方法</strong></p>
-<h4 id="Arrays-sort底层实现"><a href="#Arrays-sort底层实现" class="headerlink" title="Arrays.sort底层实现"></a>Arrays.sort底层实现</h4><p>Arrays的sort方法，如下：<br><img src="img/17253551bc95b431"><br>如果比较器为null，进入sort（a）方法。如下：<br><img src="img/17253549f9433160"><br>因此，Arrays的sort方法底层就是：</p>
+<h3 id="2-Collections-和-Arrays-的-sort-实现原理"><a href="#2-Collections-和-Arrays-的-sort-实现原理" class="headerlink" title="2. Collections 和 Arrays 的 sort 实现原理"></a>2. Collections 和 Arrays 的 sort 实现原理</h3><p><strong>Collection.sort是对 <em>list</em> 进行排序</strong>，<strong>Arrays.sort 是对 <em>数组</em> 进行排序</strong>。</p>
+<h4 id="Collections-sort底层实现"><a href="#Collections-sort底层实现" class="headerlink" title="Collections.sort底层实现"></a>Collections.sort底层实现</h4><p>Collections.sort方法调用了list.sort方法<br><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010152717.png"><br>list.sort方法调用了Arrays.sort的方法<br><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010152735.png"><br>因此，<strong>Collections.sort方法底层就是调用的Array.sort方法</strong></p>
+<h4 id="Arrays-sort底层实现"><a href="#Arrays-sort底层实现" class="headerlink" title="Arrays.sort底层实现"></a>Arrays.sort底层实现</h4><p>Arrays的sort方法，如下：<br><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010161759.png"><br>如果比较器为null，进入sort（a）方法。如下：<br><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010162002.png"><br>因此，Arrays的sort方法底层就是：</p>
 <ul>
 <li>legacyMergeSort(a)，归并排序，</li>
 <li>ComparableTimSort.sort()：即Timsort排序。</li>
 </ul>
 <h4 id="Timesort排序"><a href="#Timesort排序" class="headerlink" title="Timesort排序"></a>Timesort排序</h4><p>Timsort排序是结合了合并排序（merge.sort）和插入排序（insertion sort）而得出的排序方法；</p>
 <p>1.当数组长度小于某个值，采用的是<strong>二分插入排序算法</strong>，如下：</p>
-<p><img src="img/172567bc65ac1d96"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010162757.png"></p>
 <ol start="2">
 <li>找到各个run，并入栈。</li>
 </ol>
-<p><img src="img/172568f27aa6725d"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010162927.png"></p>
 <ol start="3">
 <li>按规则合并run。</li>
 </ol>
-<p><img src="img/172568e815ffcd33"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010162940.png"></p>
 <h3 id="3-HashMap原理，java8做了什么改变"><a href="#3-HashMap原理，java8做了什么改变" class="headerlink" title="3. HashMap原理，java8做了什么改变"></a>3. HashMap原理，java8做了什么改变</h3><ul>
 <li>HashMap是以键值对存储数据的集合容器</li>
 <li>HashMap是非线性安全的。</li>
@@ -1041,21 +1048,21 @@ explain select * from &#39;表名&#39;</code></pre>
 <li>Hashmap数组的默认初始长度是16，<strong>key和value都允许null</strong>的存在</li>
 <li>HashMap的内部实现数组是<strong>Node&lt;K,V&gt;数组</strong>，上面存放的是key-value键值对的节点。HashMap通过put和get方法存储和获取。</li>
 </ul>
-<p><img src="img/1331009-20180226181941200-488125874.png" alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010162948.png" alt="img"></p>
 <ul>
 <li><p>jdk7的HashMap的put方法，<strong>首先计算key的hashcode值，定位到对应的数组索引</strong>，然后再在<strong>该索引的单向链表上进行循环遍历，用equals比较key是否存在</strong>，如果<strong>存在</strong>则用新的value覆盖原值，如果<strong>没有则头插法追加</strong>。</p>
 </li>
-<li><p>jdk8中HashMap的put方法：先判断Hashmap是否为空，<strong>为空就设置初始容量16(扩容操作)**，首先</strong>计算出key的hash值(hash = h ^ (h&gt;&gt;&gt;16))<strong>，再根据寻址算法 **hash &amp; (n-1)</strong> 得到数组索引 <strong>i</strong> ，然后看table[i]是否为空，为空就直接插入，不为空判断<strong>当前位置的key和table[i]是否相同</strong>，相同就覆盖，不相同就查看table[i]是否是红黑树节点，如果是的话就用红黑树直接插入键值对，如果不是开始遍历链表插入，如果遇到重复值就覆盖，否则直接插入，如果链表长度大于8，转为红黑树结构，执行完成后，判断*<em>tableSize是否大于阈值 threshold(即 capacity * 装载因子)，大于就扩容，否则直接结束*</em>。</p>
+<li><p>jdk8中HashMap的put方法：先判断Hashmap是否为空，<strong>为空就设置初始容量16(扩容操作)</strong> ，首先 <strong>计算出key的hash值(hash = h ^ (h&gt;&gt;&gt;16))</strong> ，再根据寻址算法 <strong>hash &amp; (n-1)</strong> 得到数组索引 <strong>i</strong> ，然后看table[i]是否为空，为空就直接插入，不为空判断<strong>当前位置的key和table[i]是否相同</strong>，相同就覆盖，不相同就查看table[i]是否是红黑树节点，如果是的话就用红黑树直接插入键值对，如果不是开始遍历链表插入，如果遇到重复值就覆盖，否则直接插入，如果链表长度大于8，转为红黑树结构，执行完成后，判断*<em>tableSize是否大于阈值 threshold(即 capacity * 装载因子)，大于就扩容，否则直接结束*</em>。</p>
 <ul>
 <li>计算 hashcode 与 数组索引 i 方法，其中 <strong>&gt;&gt;&gt; 表示右移后，高位的空位补零</strong></li>
 </ul>
-<p><img src="img/image-20200908194529785.png" alt="image-20200908194529785"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010163149.png" alt="image-20200908194529785"></p>
 <ul>
 <li>put方法 总体流程如下图</li>
 </ul>
 </li>
 </ul>
-<p><img src="img/image-20200908193340642.png" alt="image-20200908193340642"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010163054.png" alt="image-20200908193340642"></p>
 <ul>
 <li><p>Hashmap<strong>解决hash冲突</strong>，使用的是链地址法，即<strong>数组+链表的形式来解决</strong>。put执行首先判断table[i]位置，如果为空就直接插入，不为空判断和当前值是否相等，相等就覆盖，如果不相等的话，判断是否是红黑树节点，如果不是，就从table[i]位置开始遍历链表，相等覆盖，不相等插入。</p>
 </li>
@@ -1063,14 +1070,14 @@ explain select * from &#39;表名&#39;</code></pre>
 </li>
 <li><p>HashMap的<strong>扩容机制</strong>，Hashmap的扩容中主要进行两步，第一步把数组长度变为原来的两倍，第二部把旧数组的元素重新计算hash插入到新数组中，jdk8时，不用重新计算hash，只用看看原来的hash值新增的一位是零还是1，如果是1这个元素在新数组中的位置，是原数组的位置加原数组长度，如果是零就插入到原数组中。扩容过程第二部一个非常重要的方法是transfer方法，采用头插法，把旧数组的元素插入到新数组中。</p>
 <ul>
-<li><strong>扩容机制</strong>，threshold(即 capacity * 装载因子)，oldCap 为旧的 map 容量</li>
+<li><strong>扩容机制</strong> ，threshold(即 capacity * 装载因子)，oldCap 为旧的 map 容量</li>
 </ul>
-<img src="C:/Users/Lin/Desktop/面试/面试笔记/JavaHome/Java面试题集结号/Java集合/img/090821532570_0HashMap扩容原理_1.Jpeg" alt="090821532570_0HashMap扩容原理_1" style="zoom: 80%;" />
+<img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010165232.jpg" alt="090821532570_0HashMap扩容原理_1" style="zoom: 80%;" />
 
 <ul>
 <li>e.hash &amp; oldCap 迁移老数据到新map时采用 <strong>高低链算法</strong></li>
 </ul>
-<p><img src="img/image-20200908221813030.png" alt="image-20200908221813030"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010163237.png" alt="image-20200908221813030"></p>
 </li>
 <li><p>HashMap大小为什么是2的幂次方？<strong>效率高+空间分布均匀</strong></p>
 </li>
@@ -1130,7 +1137,7 @@ explain select * from &#39;表名&#39;</code></pre>
 <li>ConcurrentHashMap使用锁分段技术确保线性安全</li>
 <li>JDK8为何又放弃分段锁，是因为<strong>多个分段锁浪费内存空间</strong>，竞争同一个锁的概率非常小，分段锁反而会造成效率低。</li>
 </ul>
-<p><img src="img/image-20200908222118187.png" alt="image-20200908222118187"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010163246.png" alt="image-20200908222118187"></p>
 <h3 id="7-写一段代码在遍历-ArrayList-时移除一个元素"><a href="#7-写一段代码在遍历-ArrayList-时移除一个元素" class="headerlink" title="7. 写一段代码在遍历 ArrayList 时移除一个元素"></a>7. 写一段代码在遍历 ArrayList 时移除一个元素</h3><p>因为foreach删除会导致快速失败问题，fori顺序遍历会导致重复元素没删除，所以正确解法如下：</p>
 <p>第一种遍历，<strong>倒叙遍历删除</strong></p>
 <pre><code class="hljs java"><span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=list.size()-<span class="hljs-number">1</span>; i&gt;-<span class="hljs-number">1</span>; i--)&#123;
@@ -1185,7 +1192,7 @@ boy</code></pre>
 <li>TreeMap<strong>底层数据结构</strong>是一个==<strong>红黑树</strong>==，每个key-value都作为一个红黑树的节点。</li>
 <li>如果在调用TreeMap的构造函数时没有指定比较器，则<strong>根据key执行自然排序</strong>。</li>
 </ul>
-<p><img src="img/172a4245313c7162"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010163415.png"></p>
 <h3 id="10-HashMap-的扩容过程"><a href="#10-HashMap-的扩容过程" class="headerlink" title="10. HashMap 的扩容过程"></a>10. HashMap 的扩容过程</h3><p>Hashmap的扩容：</p>
 <ul>
 <li><p>第一步把数组长度变为原来的两倍，</p>
@@ -1193,7 +1200,7 @@ boy</code></pre>
 <li><p>第二步把旧数组的元素重新计算hash插入到新数组中。</p>
 </li>
 <li><p>jdk1.8时，不用重新计算hash，只用看看原来的hash值新增的一位是零还是1，如果是1这个元素在新数组中的位置，是原数组的位置加原数组长度，如果是零就插入到原数组中。扩容过程第二步一个非常重要的方法是transfer方法，<strong>采用尾插法，把旧数组的元素插入到新数组中</strong>。</p>
-<p><img src="img/image-20200908224119460.png" alt="image-20200908224119460"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010163427.png" alt="image-20200908224119460"></p>
 </li>
 </ul>
 <h3 id="11-HashSet是如何保证不重复的"><a href="#11-HashSet是如何保证不重复的" class="headerlink" title="11. HashSet是如何保证不重复的"></a>11. HashSet是如何保证不重复的</h3><p>可以看一下HashSet的add方法，元素E作为HashMap的key，我们都知道HashMap的可以是不允许重复的，哈哈。</p>
@@ -1228,7 +1235,7 @@ boy</code></pre>
 <li>ArrayList在底层数组不够用时在原来的基础上扩展0.5倍，Vector是扩展1倍。</li>
 <li>Vector只要是关键性的操作，方法前面都加了synchronized关键字，来保证线程的安全性。</li>
 </ul>
-<p><img src="img/172588218a417dc8"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010163434.png"></p>
 <h3 id="16-Collection与Collections的区别是什么？"><a href="#16-Collection与Collections的区别是什么？" class="headerlink" title="16. Collection与Collections的区别是什么？"></a>16. Collection与Collections的区别是什么？</h3><ul>
 <li><strong>Collection<E>是Java集合框架中的基本接口</strong>，如List接口也是继承于它</li>
 </ul>
@@ -1243,7 +1250,7 @@ boy</code></pre>
 
 <h3 id="17-如何决定使用-HashMap-还是TreeMap？"><a href="#17-如何决定使用-HashMap-还是TreeMap？" class="headerlink" title="17. 如何决定使用 HashMap 还是TreeMap？"></a>17. 如何决定使用 HashMap 还是TreeMap？</h3><p>这个点，主要考察HashMap和TreeMap的区别。</p>
 <p>TreeMap实现SortMap接口，能够把它保存的记录根据键排序，默认是按key的升序排序，也可以指定排序的比较器。当用Iterator遍历TreeMap时，得到的记录是排过序的。</p>
-<h3 id="18-如何实现数组和-List之间的转换？"><a href="#18-如何实现数组和-List之间的转换？" class="headerlink" title="18. 如何实现数组和 List之间的转换？"></a>18. 如何实现数组和 List之间的转换？</h3><h4 id="List-转-Array"><a href="#List-转-Array" class="headerlink" title="List 转 Array"></a>List 转 Array</h4><p><strong>List 转Array</strong>，必须使用集合的 **toArray(T[] array)**，如下：</p>
+<h3 id="18-如何实现数组和-List之间的转换？"><a href="#18-如何实现数组和-List之间的转换？" class="headerlink" title="18. 如何实现数组和 List之间的转换？"></a>18. 如何实现数组和 List之间的转换？</h3><h4 id="List-转-Array"><a href="#List-转-Array" class="headerlink" title="List 转 Array"></a>List 转 Array</h4><p><strong>List 转Array</strong>，必须使用集合的 <strong>toArray(T[] array)</strong> ，如下：</p>
 <pre><code class="hljs java">List&lt;String&gt; list = <span class="hljs-keyword">new</span> ArrayList&lt;String&gt;();
 list.add(<span class="hljs-string">&quot;jay&quot;</span>);
 list.add(<span class="hljs-string">&quot;tianluo&quot;</span>);
@@ -1275,7 +1282,7 @@ list.add(<span class="hljs-string">&quot;boy&quot;</span>);</code></pre>
 	at java.util.AbstractList.add(AbstractList.java:<span class="hljs-number">108</span>)
 	at Test.main(Test.java:<span class="hljs-number">13</span>)</code></pre>
 
-<p>因为 <strong>Arrays.asList</strong> 不是返回java.util.ArrayList,而是一个内部类ArrayList。<br><img src="img/1726a89f75bf8725"></p>
+<p>因为 <strong>Arrays.asList</strong> 不是返回java.util.ArrayList,而是一个内部类ArrayList。<br><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010163448.png"></p>
 <p>可以这样使用弥补这个缺点，例如 **new ArrayList&lt;&gt;(Arrays.asList(xxx))**：</p>
 <pre><code class="hljs java"><span class="hljs-comment">//方式一：</span>
 ArrayList&lt; String&gt; arrayList = <span class="hljs-keyword">new</span> ArrayList&lt;String&gt;(strArray.length);
@@ -1302,8 +1309,8 @@ Iterator&lt;String&gt; it = list. iterator();
   System. out. println(obj);
 &#125;</code></pre>
 
-<h3 id="20-Iterator-和-ListIterator-有什么区别？"><a href="#20-Iterator-和-ListIterator-有什么区别？" class="headerlink" title="20. Iterator 和 ListIterator 有什么区别？"></a>20. Iterator 和 ListIterator 有什么区别？</h3><p><img src="img/1728696f00e6cc3e"></p>
-<p><img src="img/1728698274a8137f"></p>
+<h3 id="20-Iterator-和-ListIterator-有什么区别？"><a href="#20-Iterator-和-ListIterator-有什么区别？" class="headerlink" title="20. Iterator 和 ListIterator 有什么区别？"></a>20. Iterator 和 ListIterator 有什么区别？</h3><p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010163454.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010163500.png"></p>
 <ul>
 <li>ListIterator 比 Iterator有更多的方法。</li>
 <li><strong>ListIterator只能用于遍历List及其子类</strong>，Iterator可用来遍历所有集合，</li>
@@ -1437,7 +1444,7 @@ isEmpty()<span class="hljs-comment">//判断队列是否为空，为空返回tru
 <h3 id="24-JAVA8的ConcurrentHashMap为什么放弃了分段锁，有什么问题吗，如果你来设计，你如何设计。"><a href="#24-JAVA8的ConcurrentHashMap为什么放弃了分段锁，有什么问题吗，如果你来设计，你如何设计。" class="headerlink" title="24. JAVA8的ConcurrentHashMap为什么放弃了分段锁，有什么问题吗，如果你来设计，你如何设计。"></a>24. JAVA8的ConcurrentHashMap为什么放弃了分段锁，有什么问题吗，如果你来设计，你如何设计。</h3><p>jdk8 放弃了分段锁而是<strong>用了Node锁，减低锁的粒度，提高性能，并使用CAS操作来确保Node的一些操作的原子性，取代了锁</strong>。</p>
 <p>可以跟面试官聊聊 <strong>悲观锁和CAS乐观锁 的区别</strong>，<strong>优缺点</strong>哈~</p>
 <h3 id="25-阻塞队列的实现，ArrayBlockingQueue的底层实现？"><a href="#25-阻塞队列的实现，ArrayBlockingQueue的底层实现？" class="headerlink" title="25. 阻塞队列的实现，ArrayBlockingQueue的底层实现？"></a>25. 阻塞队列的实现，ArrayBlockingQueue的底层实现？</h3><p>ArrayBlockingQueue是数组实现的<strong>线程安全的有界的阻塞队列</strong>，继承自<strong>AbstractBlockingQueue</strong>,间接的实现了Queue接口和Collection接口。底层以数组的形式保存数据(实际上可看作一个<strong>循环数组</strong>)。常用的操作包括 add ,offer,put，remove,poll,take,peek。</p>
-<p><img src="img/172a58069511d5db"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010163508.png"></p>
 <p>可以结合线程池跟面试官讲一下哦~</p>
 <h3 id="26-Java-中的-LinkedList是单向链表还是双向链表？"><a href="#26-Java-中的-LinkedList是单向链表还是双向链表？" class="headerlink" title="26. Java 中的 LinkedList是单向链表还是双向链表？"></a>26. Java 中的 LinkedList是单向链表还是双向链表？</h3><p>哈哈，看源码吧，是双向链表</p>
 <pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Node</span>&lt;<span class="hljs-title">E</span>&gt; </span>&#123;
@@ -1454,7 +1461,7 @@ isEmpty()<span class="hljs-comment">//判断队列是否为空，为空返回tru
 
 <h3 id="27-说一说ArrayList-的扩容机制吧"><a href="#27-说一说ArrayList-的扩容机制吧" class="headerlink" title="27. 说一说ArrayList 的扩容机制吧"></a>27. 说一说ArrayList 的扩容机制吧</h3><p>ArrayList扩容的本质就是计算出新的扩容数组的size后实例化，并将<strong>原有数组内容复制到新数组</strong>中去。</p>
 <p><strong>ArrayList 的扩容流程图如下</strong></p>
-<img src="C:/Users/Lin/Desktop/面试/面试笔记/JavaHome/Java面试题集结号/Java集合/img/image-20200908233859464.png" alt="image-20200908233859464" style="zoom: 80%;" />
+<img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010163606.png" alt="image-20200908233859464" style="zoom: 80%;" />
 
 <pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">add</span><span class="hljs-params">(E e)</span> </span>&#123;
     <span class="hljs-comment">//扩容</span>
@@ -1658,7 +1665,7 @@ isEmpty()<span class="hljs-comment">//判断队列是否为空，为空返回tru
 <li>LinkedList,使用双向链表实现存储,按索引数据需要进行前向或后向遍历，查询相对ArrayList慢一点；但是插入数据速度较快。</li>
 <li>LinkedList比ArrayList开销更大，因为LinkedList的节点除了<strong>存储数据</strong>，还需要<strong>存储引用</strong>。</li>
 </ul>
-<h3 id="45-HashMap在JDK1-7和JDK1-8中有哪些不同？"><a href="#45-HashMap在JDK1-7和JDK1-8中有哪些不同？" class="headerlink" title="45. HashMap在JDK1.7和JDK1.8中有哪些不同？"></a>45. HashMap在JDK1.7和JDK1.8中有哪些不同？</h3><p>互联网上这个答案太详细啦（来源<a href="https://www.jianshu.com/p/939b8a672070">Java集合必会14问</a>）<br><img src="img/172a5cecccd07908"></p>
+<h3 id="45-HashMap在JDK1-7和JDK1-8中有哪些不同？"><a href="#45-HashMap在JDK1-7和JDK1-8中有哪些不同？" class="headerlink" title="45. HashMap在JDK1.7和JDK1.8中有哪些不同？"></a>45. HashMap在JDK1.7和JDK1.8中有哪些不同？</h3><p>互联网上这个答案太详细啦（来源<a href="https://www.jianshu.com/p/939b8a672070">Java集合必会14问</a>）<br><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010170050.png"></p>
 <h3 id="46-ArrayList集合加入1万条数据，应该怎么提高效率"><a href="#46-ArrayList集合加入1万条数据，应该怎么提高效率" class="headerlink" title="46. ArrayList集合加入1万条数据，应该怎么提高效率"></a>46. ArrayList集合加入1万条数据，应该怎么提高效率</h3><blockquote>
 <p>因为ArrayList的底层是数组实现,并且数组的默认值是10,如果插入10000条要不断的扩容,耗费时间,所以我们调用ArrayList的==指定容量==的构造器方法ArrayList(int size) 就可以实现不扩容,就提高了性能。</p>
 </blockquote>

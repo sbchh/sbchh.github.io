@@ -183,7 +183,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      98
+      99
        分钟
     </span>
   
@@ -220,31 +220,38 @@
 
 <p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010143050.png" srcset="/img/loading.gif" alt="image-20201010141215496"></p>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近正在准备面试，借由此来复习一下 Java 集合类的基础知识及相关面试题，常学常新。</p>
-<h2 id="面试"><a href="#面试" class="headerlink" title="面试"></a>面试</h2><h3 id="1-Arraylist与LinkedList区别"><a href="#1-Arraylist与LinkedList区别" class="headerlink" title="1. Arraylist与LinkedList区别"></a>1. Arraylist与LinkedList区别</h3><p>可以从它们的底层数据结构、效率、开销进行阐述哈</p>
+<h2 id="集合-Collection"><a href="#集合-Collection" class="headerlink" title="集合 Collection"></a>集合 Collection</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000023856654">https://segmentfault.com/a/1190000023856654</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/7WA1k31xmatsYTEfyMdLEQ">https://mp.weixin.qq.com/s/7WA1k31xmatsYTEfyMdLEQ</a></p>
+<p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000023081145">https://segmentfault.com/a/1190000023081145</a></p>
+<p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000023199039">https://segmentfault.com/a/1190000023199039</a></p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010235450.png" srcset="/img/loading.gif" alt="image-20201010235448614"></p>
+<h2 id="映射-Map"><a href="#映射-Map" class="headerlink" title="映射 Map"></a>映射 Map</h2><h2 id="集合工具-Collections-amp-Arrays"><a href="#集合工具-Collections-amp-Arrays" class="headerlink" title="集合工具 Collections &amp; Arrays"></a>集合工具 Collections &amp; Arrays</h2><h2 id="面试"><a href="#面试" class="headerlink" title="面试"></a>面试</h2><h3 id="1-Arraylist-与-LinkedList-区别"><a href="#1-Arraylist-与-LinkedList-区别" class="headerlink" title="1. Arraylist 与 LinkedList 区别"></a>1. Arraylist 与 LinkedList 区别</h3><p>可以从它们的底层数据结构、效率、开销进行阐述哈</p>
 <ul>
 <li>ArrayList是<strong>数组</strong>的数据结构，LinkedList是<strong>链表</strong>的数据结构。</li>
 <li>随机访问的时候，ArrayList的效率比较高，因为LinkedList要移动指针，而ArrayList是基于索引(index)的数据结构，可以直接映射到。</li>
 <li>插入、删除数据时，LinkedList的效率比较高，因为ArrayList删除数据时索引后的元素都需要移动。</li>
 <li>LinkedList比ArrayList开销更大，因为LinkedList的节点除了存储数据，还需要存储引用。</li>
 </ul>
-<h3 id="2-Collections-sort和Arrays-sort的实现原理"><a href="#2-Collections-sort和Arrays-sort的实现原理" class="headerlink" title="2. Collections.sort和Arrays.sort的实现原理"></a>2. Collections.sort和Arrays.sort的实现原理</h3><p><strong>Collection.sort是对 <em>list</em> 进行排序</strong>，<strong>Arrays.sort是对 <em>数组</em> 进行排序</strong>。</p>
-<h4 id="Collections-sort底层实现"><a href="#Collections-sort底层实现" class="headerlink" title="Collections.sort底层实现"></a>Collections.sort底层实现</h4><p>Collections.sort方法调用了list.sort方法<br><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010152717" srcset="/img/loading.gif"><br>list.sort方法调用了Arrays.sort的方法<br><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010152735" srcset="/img/loading.gif"><br>因此，<strong>Collections.sort方法底层就是调用的Array.sort方法</strong></p>
-<h4 id="Arrays-sort底层实现"><a href="#Arrays-sort底层实现" class="headerlink" title="Arrays.sort底层实现"></a>Arrays.sort底层实现</h4><p>Arrays的sort方法，如下：<br><img src="img/17253551bc95b431" srcset="/img/loading.gif"><br>如果比较器为null，进入sort（a）方法。如下：<br><img src="img/17253549f9433160" srcset="/img/loading.gif"><br>因此，Arrays的sort方法底层就是：</p>
+<h3 id="2-Collections-和-Arrays-的-sort-实现原理"><a href="#2-Collections-和-Arrays-的-sort-实现原理" class="headerlink" title="2. Collections 和 Arrays 的 sort 实现原理"></a>2. Collections 和 Arrays 的 sort 实现原理</h3><p><strong>Collection.sort是对 <em>list</em> 进行排序</strong>，<strong>Arrays.sort 是对 <em>数组</em> 进行排序</strong>。</p>
+<h4 id="Collections-sort底层实现"><a href="#Collections-sort底层实现" class="headerlink" title="Collections.sort底层实现"></a>Collections.sort底层实现</h4><p>Collections.sort方法调用了list.sort方法<br><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010152717.png" srcset="/img/loading.gif"><br>list.sort方法调用了Arrays.sort的方法<br><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010152735.png" srcset="/img/loading.gif"><br>因此，<strong>Collections.sort方法底层就是调用的Array.sort方法</strong></p>
+<h4 id="Arrays-sort底层实现"><a href="#Arrays-sort底层实现" class="headerlink" title="Arrays.sort底层实现"></a>Arrays.sort底层实现</h4><p>Arrays的sort方法，如下：<br><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010161759.png" srcset="/img/loading.gif"><br>如果比较器为null，进入sort（a）方法。如下：<br><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010162002.png" srcset="/img/loading.gif"><br>因此，Arrays的sort方法底层就是：</p>
 <ul>
 <li>legacyMergeSort(a)，归并排序，</li>
 <li>ComparableTimSort.sort()：即Timsort排序。</li>
 </ul>
 <h4 id="Timesort排序"><a href="#Timesort排序" class="headerlink" title="Timesort排序"></a>Timesort排序</h4><p>Timsort排序是结合了合并排序（merge.sort）和插入排序（insertion sort）而得出的排序方法；</p>
 <p>1.当数组长度小于某个值，采用的是<strong>二分插入排序算法</strong>，如下：</p>
-<p><img src="img/172567bc65ac1d96" srcset="/img/loading.gif"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010162757.png" srcset="/img/loading.gif"></p>
 <ol start="2">
 <li>找到各个run，并入栈。</li>
 </ol>
-<p><img src="img/172568f27aa6725d" srcset="/img/loading.gif"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010162927.png" srcset="/img/loading.gif"></p>
 <ol start="3">
 <li>按规则合并run。</li>
 </ol>
-<p><img src="img/172568e815ffcd33" srcset="/img/loading.gif"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010162940.png" srcset="/img/loading.gif"></p>
 <h3 id="3-HashMap原理，java8做了什么改变"><a href="#3-HashMap原理，java8做了什么改变" class="headerlink" title="3. HashMap原理，java8做了什么改变"></a>3. HashMap原理，java8做了什么改变</h3><ul>
 <li>HashMap是以键值对存储数据的集合容器</li>
 <li>HashMap是非线性安全的。</li>
@@ -252,21 +259,21 @@
 <li>Hashmap数组的默认初始长度是16，<strong>key和value都允许null</strong>的存在</li>
 <li>HashMap的内部实现数组是<strong>Node&lt;K,V&gt;数组</strong>，上面存放的是key-value键值对的节点。HashMap通过put和get方法存储和获取。</li>
 </ul>
-<p><img src="img/1331009-20180226181941200-488125874.png" srcset="/img/loading.gif" alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010162948.png" srcset="/img/loading.gif" alt="img"></p>
 <ul>
 <li><p>jdk7的HashMap的put方法，<strong>首先计算key的hashcode值，定位到对应的数组索引</strong>，然后再在<strong>该索引的单向链表上进行循环遍历，用equals比较key是否存在</strong>，如果<strong>存在</strong>则用新的value覆盖原值，如果<strong>没有则头插法追加</strong>。</p>
 </li>
-<li><p>jdk8中HashMap的put方法：先判断Hashmap是否为空，<strong>为空就设置初始容量16(扩容操作)**，首先</strong>计算出key的hash值(hash = h ^ (h&gt;&gt;&gt;16))<strong>，再根据寻址算法 **hash &amp; (n-1)</strong> 得到数组索引 <strong>i</strong> ，然后看table[i]是否为空，为空就直接插入，不为空判断<strong>当前位置的key和table[i]是否相同</strong>，相同就覆盖，不相同就查看table[i]是否是红黑树节点，如果是的话就用红黑树直接插入键值对，如果不是开始遍历链表插入，如果遇到重复值就覆盖，否则直接插入，如果链表长度大于8，转为红黑树结构，执行完成后，判断*<em>tableSize是否大于阈值 threshold(即 capacity * 装载因子)，大于就扩容，否则直接结束*</em>。</p>
+<li><p>jdk8中HashMap的put方法：先判断Hashmap是否为空，<strong>为空就设置初始容量16(扩容操作)</strong> ，首先 <strong>计算出key的hash值(hash = h ^ (h&gt;&gt;&gt;16))</strong> ，再根据寻址算法 <strong>hash &amp; (n-1)</strong> 得到数组索引 <strong>i</strong> ，然后看table[i]是否为空，为空就直接插入，不为空判断<strong>当前位置的key和table[i]是否相同</strong>，相同就覆盖，不相同就查看table[i]是否是红黑树节点，如果是的话就用红黑树直接插入键值对，如果不是开始遍历链表插入，如果遇到重复值就覆盖，否则直接插入，如果链表长度大于8，转为红黑树结构，执行完成后，判断*<em>tableSize是否大于阈值 threshold(即 capacity * 装载因子)，大于就扩容，否则直接结束*</em>。</p>
 <ul>
 <li>计算 hashcode 与 数组索引 i 方法，其中 <strong>&gt;&gt;&gt; 表示右移后，高位的空位补零</strong></li>
 </ul>
-<p><img src="img/image-20200908194529785.png" srcset="/img/loading.gif" alt="image-20200908194529785"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010163149.png" srcset="/img/loading.gif" alt="image-20200908194529785"></p>
 <ul>
 <li>put方法 总体流程如下图</li>
 </ul>
 </li>
 </ul>
-<p><img src="img/image-20200908193340642.png" srcset="/img/loading.gif" alt="image-20200908193340642"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010163054.png" srcset="/img/loading.gif" alt="image-20200908193340642"></p>
 <ul>
 <li><p>Hashmap<strong>解决hash冲突</strong>，使用的是链地址法，即<strong>数组+链表的形式来解决</strong>。put执行首先判断table[i]位置，如果为空就直接插入，不为空判断和当前值是否相等，相等就覆盖，如果不相等的话，判断是否是红黑树节点，如果不是，就从table[i]位置开始遍历链表，相等覆盖，不相等插入。</p>
 </li>
@@ -274,14 +281,14 @@
 </li>
 <li><p>HashMap的<strong>扩容机制</strong>，Hashmap的扩容中主要进行两步，第一步把数组长度变为原来的两倍，第二部把旧数组的元素重新计算hash插入到新数组中，jdk8时，不用重新计算hash，只用看看原来的hash值新增的一位是零还是1，如果是1这个元素在新数组中的位置，是原数组的位置加原数组长度，如果是零就插入到原数组中。扩容过程第二部一个非常重要的方法是transfer方法，采用头插法，把旧数组的元素插入到新数组中。</p>
 <ul>
-<li><strong>扩容机制</strong>，threshold(即 capacity * 装载因子)，oldCap 为旧的 map 容量</li>
+<li><strong>扩容机制</strong> ，threshold(即 capacity * 装载因子)，oldCap 为旧的 map 容量</li>
 </ul>
-<img src="C:/Users/Lin/Desktop/面试/面试笔记/JavaHome/Java面试题集结号/Java集合/img/090821532570_0HashMap扩容原理_1.Jpeg" srcset="/img/loading.gif" alt="090821532570_0HashMap扩容原理_1" style="zoom: 80%;" />
+<img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010165232.jpg" srcset="/img/loading.gif" alt="090821532570_0HashMap扩容原理_1" style="zoom: 80%;" />
 
 <ul>
 <li>e.hash &amp; oldCap 迁移老数据到新map时采用 <strong>高低链算法</strong></li>
 </ul>
-<p><img src="img/image-20200908221813030.png" srcset="/img/loading.gif" alt="image-20200908221813030"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010163237.png" srcset="/img/loading.gif" alt="image-20200908221813030"></p>
 </li>
 <li><p>HashMap大小为什么是2的幂次方？<strong>效率高+空间分布均匀</strong></p>
 </li>
@@ -341,7 +348,7 @@
 <li>ConcurrentHashMap使用锁分段技术确保线性安全</li>
 <li>JDK8为何又放弃分段锁，是因为<strong>多个分段锁浪费内存空间</strong>，竞争同一个锁的概率非常小，分段锁反而会造成效率低。</li>
 </ul>
-<p><img src="img/image-20200908222118187.png" srcset="/img/loading.gif" alt="image-20200908222118187"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010163246.png" srcset="/img/loading.gif" alt="image-20200908222118187"></p>
 <h3 id="7-写一段代码在遍历-ArrayList-时移除一个元素"><a href="#7-写一段代码在遍历-ArrayList-时移除一个元素" class="headerlink" title="7. 写一段代码在遍历 ArrayList 时移除一个元素"></a>7. 写一段代码在遍历 ArrayList 时移除一个元素</h3><p>因为foreach删除会导致快速失败问题，fori顺序遍历会导致重复元素没删除，所以正确解法如下：</p>
 <p>第一种遍历，<strong>倒叙遍历删除</strong></p>
 <div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java"><span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=list.size()-<span class="hljs-number">1</span>; i&gt;-<span class="hljs-number">1</span>; i--)&#123;
@@ -396,7 +403,7 @@ boy</code></pre></div>
 <li>TreeMap<strong>底层数据结构</strong>是一个==<strong>红黑树</strong>==，每个key-value都作为一个红黑树的节点。</li>
 <li>如果在调用TreeMap的构造函数时没有指定比较器，则<strong>根据key执行自然排序</strong>。</li>
 </ul>
-<p><img src="img/172a4245313c7162" srcset="/img/loading.gif"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010163415.png" srcset="/img/loading.gif"></p>
 <h3 id="10-HashMap-的扩容过程"><a href="#10-HashMap-的扩容过程" class="headerlink" title="10. HashMap 的扩容过程"></a>10. HashMap 的扩容过程</h3><p>Hashmap的扩容：</p>
 <ul>
 <li><p>第一步把数组长度变为原来的两倍，</p>
@@ -404,7 +411,7 @@ boy</code></pre></div>
 <li><p>第二步把旧数组的元素重新计算hash插入到新数组中。</p>
 </li>
 <li><p>jdk1.8时，不用重新计算hash，只用看看原来的hash值新增的一位是零还是1，如果是1这个元素在新数组中的位置，是原数组的位置加原数组长度，如果是零就插入到原数组中。扩容过程第二步一个非常重要的方法是transfer方法，<strong>采用尾插法，把旧数组的元素插入到新数组中</strong>。</p>
-<p><img src="img/image-20200908224119460.png" srcset="/img/loading.gif" alt="image-20200908224119460"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010163427.png" srcset="/img/loading.gif" alt="image-20200908224119460"></p>
 </li>
 </ul>
 <h3 id="11-HashSet是如何保证不重复的"><a href="#11-HashSet是如何保证不重复的" class="headerlink" title="11. HashSet是如何保证不重复的"></a>11. HashSet是如何保证不重复的</h3><p>可以看一下HashSet的add方法，元素E作为HashMap的key，我们都知道HashMap的可以是不允许重复的，哈哈。</p>
@@ -439,7 +446,7 @@ boy</code></pre></div>
 <li>ArrayList在底层数组不够用时在原来的基础上扩展0.5倍，Vector是扩展1倍。</li>
 <li>Vector只要是关键性的操作，方法前面都加了synchronized关键字，来保证线程的安全性。</li>
 </ul>
-<p><img src="img/172588218a417dc8" srcset="/img/loading.gif"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010163434.png" srcset="/img/loading.gif"></p>
 <h3 id="16-Collection与Collections的区别是什么？"><a href="#16-Collection与Collections的区别是什么？" class="headerlink" title="16. Collection与Collections的区别是什么？"></a>16. Collection与Collections的区别是什么？</h3><ul>
 <li><strong>Collection<E>是Java集合框架中的基本接口</strong>，如List接口也是继承于它</li>
 </ul>
@@ -454,7 +461,7 @@ boy</code></pre></div>
 
 <h3 id="17-如何决定使用-HashMap-还是TreeMap？"><a href="#17-如何决定使用-HashMap-还是TreeMap？" class="headerlink" title="17. 如何决定使用 HashMap 还是TreeMap？"></a>17. 如何决定使用 HashMap 还是TreeMap？</h3><p>这个点，主要考察HashMap和TreeMap的区别。</p>
 <p>TreeMap实现SortMap接口，能够把它保存的记录根据键排序，默认是按key的升序排序，也可以指定排序的比较器。当用Iterator遍历TreeMap时，得到的记录是排过序的。</p>
-<h3 id="18-如何实现数组和-List之间的转换？"><a href="#18-如何实现数组和-List之间的转换？" class="headerlink" title="18. 如何实现数组和 List之间的转换？"></a>18. 如何实现数组和 List之间的转换？</h3><h4 id="List-转-Array"><a href="#List-转-Array" class="headerlink" title="List 转 Array"></a>List 转 Array</h4><p><strong>List 转Array</strong>，必须使用集合的 **toArray(T[] array)**，如下：</p>
+<h3 id="18-如何实现数组和-List之间的转换？"><a href="#18-如何实现数组和-List之间的转换？" class="headerlink" title="18. 如何实现数组和 List之间的转换？"></a>18. 如何实现数组和 List之间的转换？</h3><h4 id="List-转-Array"><a href="#List-转-Array" class="headerlink" title="List 转 Array"></a>List 转 Array</h4><p><strong>List 转Array</strong>，必须使用集合的 <strong>toArray(T[] array)</strong> ，如下：</p>
 <div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java">List&lt;String&gt; list = <span class="hljs-keyword">new</span> ArrayList&lt;String&gt;();
 list.add(<span class="hljs-string">&quot;jay&quot;</span>);
 list.add(<span class="hljs-string">&quot;tianluo&quot;</span>);
@@ -486,7 +493,7 @@ list.add(<span class="hljs-string">&quot;boy&quot;</span>);</code></pre></div>
 	at java.util.AbstractList.add(AbstractList.java:<span class="hljs-number">108</span>)
 	at Test.main(Test.java:<span class="hljs-number">13</span>)</code></pre></div>
 
-<p>因为 <strong>Arrays.asList</strong> 不是返回java.util.ArrayList,而是一个内部类ArrayList。<br><img src="img/1726a89f75bf8725" srcset="/img/loading.gif"></p>
+<p>因为 <strong>Arrays.asList</strong> 不是返回java.util.ArrayList,而是一个内部类ArrayList。<br><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010163448.png" srcset="/img/loading.gif"></p>
 <p>可以这样使用弥补这个缺点，例如 **new ArrayList&lt;&gt;(Arrays.asList(xxx))**：</p>
 <div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java"><span class="hljs-comment">//方式一：</span>
 ArrayList&lt; String&gt; arrayList = <span class="hljs-keyword">new</span> ArrayList&lt;String&gt;(strArray.length);
@@ -513,8 +520,8 @@ Iterator&lt;String&gt; it = list. iterator();
   System. out. println(obj);
 &#125;</code></pre></div>
 
-<h3 id="20-Iterator-和-ListIterator-有什么区别？"><a href="#20-Iterator-和-ListIterator-有什么区别？" class="headerlink" title="20. Iterator 和 ListIterator 有什么区别？"></a>20. Iterator 和 ListIterator 有什么区别？</h3><p><img src="img/1728696f00e6cc3e" srcset="/img/loading.gif"></p>
-<p><img src="img/1728698274a8137f" srcset="/img/loading.gif"></p>
+<h3 id="20-Iterator-和-ListIterator-有什么区别？"><a href="#20-Iterator-和-ListIterator-有什么区别？" class="headerlink" title="20. Iterator 和 ListIterator 有什么区别？"></a>20. Iterator 和 ListIterator 有什么区别？</h3><p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010163454.png" srcset="/img/loading.gif"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010163500.png" srcset="/img/loading.gif"></p>
 <ul>
 <li>ListIterator 比 Iterator有更多的方法。</li>
 <li><strong>ListIterator只能用于遍历List及其子类</strong>，Iterator可用来遍历所有集合，</li>
@@ -648,7 +655,7 @@ isEmpty()<span class="hljs-comment">//判断队列是否为空，为空返回tru
 <h3 id="24-JAVA8的ConcurrentHashMap为什么放弃了分段锁，有什么问题吗，如果你来设计，你如何设计。"><a href="#24-JAVA8的ConcurrentHashMap为什么放弃了分段锁，有什么问题吗，如果你来设计，你如何设计。" class="headerlink" title="24. JAVA8的ConcurrentHashMap为什么放弃了分段锁，有什么问题吗，如果你来设计，你如何设计。"></a>24. JAVA8的ConcurrentHashMap为什么放弃了分段锁，有什么问题吗，如果你来设计，你如何设计。</h3><p>jdk8 放弃了分段锁而是<strong>用了Node锁，减低锁的粒度，提高性能，并使用CAS操作来确保Node的一些操作的原子性，取代了锁</strong>。</p>
 <p>可以跟面试官聊聊 <strong>悲观锁和CAS乐观锁 的区别</strong>，<strong>优缺点</strong>哈~</p>
 <h3 id="25-阻塞队列的实现，ArrayBlockingQueue的底层实现？"><a href="#25-阻塞队列的实现，ArrayBlockingQueue的底层实现？" class="headerlink" title="25. 阻塞队列的实现，ArrayBlockingQueue的底层实现？"></a>25. 阻塞队列的实现，ArrayBlockingQueue的底层实现？</h3><p>ArrayBlockingQueue是数组实现的<strong>线程安全的有界的阻塞队列</strong>，继承自<strong>AbstractBlockingQueue</strong>,间接的实现了Queue接口和Collection接口。底层以数组的形式保存数据(实际上可看作一个<strong>循环数组</strong>)。常用的操作包括 add ,offer,put，remove,poll,take,peek。</p>
-<p><img src="img/172a58069511d5db" srcset="/img/loading.gif"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010163508.png" srcset="/img/loading.gif"></p>
 <p>可以结合线程池跟面试官讲一下哦~</p>
 <h3 id="26-Java-中的-LinkedList是单向链表还是双向链表？"><a href="#26-Java-中的-LinkedList是单向链表还是双向链表？" class="headerlink" title="26. Java 中的 LinkedList是单向链表还是双向链表？"></a>26. Java 中的 LinkedList是单向链表还是双向链表？</h3><p>哈哈，看源码吧，是双向链表</p>
 <div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Node</span>&lt;<span class="hljs-title">E</span>&gt; </span>&#123;
@@ -665,7 +672,7 @@ isEmpty()<span class="hljs-comment">//判断队列是否为空，为空返回tru
 
 <h3 id="27-说一说ArrayList-的扩容机制吧"><a href="#27-说一说ArrayList-的扩容机制吧" class="headerlink" title="27. 说一说ArrayList 的扩容机制吧"></a>27. 说一说ArrayList 的扩容机制吧</h3><p>ArrayList扩容的本质就是计算出新的扩容数组的size后实例化，并将<strong>原有数组内容复制到新数组</strong>中去。</p>
 <p><strong>ArrayList 的扩容流程图如下</strong></p>
-<img src="C:/Users/Lin/Desktop/面试/面试笔记/JavaHome/Java面试题集结号/Java集合/img/image-20200908233859464.png" srcset="/img/loading.gif" alt="image-20200908233859464" style="zoom: 80%;" />
+<img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010163606.png" srcset="/img/loading.gif" alt="image-20200908233859464" style="zoom: 80%;" />
 
 <div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">add</span><span class="hljs-params">(E e)</span> </span>&#123;
     <span class="hljs-comment">//扩容</span>
@@ -869,7 +876,7 @@ isEmpty()<span class="hljs-comment">//判断队列是否为空，为空返回tru
 <li>LinkedList,使用双向链表实现存储,按索引数据需要进行前向或后向遍历，查询相对ArrayList慢一点；但是插入数据速度较快。</li>
 <li>LinkedList比ArrayList开销更大，因为LinkedList的节点除了<strong>存储数据</strong>，还需要<strong>存储引用</strong>。</li>
 </ul>
-<h3 id="45-HashMap在JDK1-7和JDK1-8中有哪些不同？"><a href="#45-HashMap在JDK1-7和JDK1-8中有哪些不同？" class="headerlink" title="45. HashMap在JDK1.7和JDK1.8中有哪些不同？"></a>45. HashMap在JDK1.7和JDK1.8中有哪些不同？</h3><p>互联网上这个答案太详细啦（来源<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/939b8a672070">Java集合必会14问</a>）<br><img src="img/172a5cecccd07908" srcset="/img/loading.gif"></p>
+<h3 id="45-HashMap在JDK1-7和JDK1-8中有哪些不同？"><a href="#45-HashMap在JDK1-7和JDK1-8中有哪些不同？" class="headerlink" title="45. HashMap在JDK1.7和JDK1.8中有哪些不同？"></a>45. HashMap在JDK1.7和JDK1.8中有哪些不同？</h3><p>互联网上这个答案太详细啦（来源<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/939b8a672070">Java集合必会14问</a>）<br><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010170050.png" srcset="/img/loading.gif"></p>
 <h3 id="46-ArrayList集合加入1万条数据，应该怎么提高效率"><a href="#46-ArrayList集合加入1万条数据，应该怎么提高效率" class="headerlink" title="46. ArrayList集合加入1万条数据，应该怎么提高效率"></a>46. ArrayList集合加入1万条数据，应该怎么提高效率</h3><blockquote>
 <p>因为ArrayList的底层是数组实现,并且数组的默认值是10,如果插入10000条要不断的扩容,耗费时间,所以我们调用ArrayList的==指定容量==的构造器方法ArrayList(int size) 就可以实现不扩容,就提高了性能。</p>
 </blockquote>
