@@ -19,7 +19,7 @@
   <meta name="description" content="">
   <meta name="author" content="Lin">
   <meta name="keywords" content="">
-  <title>Hello World - Vin</title>
+  <title>多线程之 ThreadLocal - Vin</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 
@@ -161,8 +161,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2020-09-19 11:30" pubdate>
-        2020年9月19日 中午
+      <time datetime="2020-09-30 15:20" pubdate>
+        2020年9月30日 下午
       </time>
     </span>
   
@@ -173,7 +173,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      75 字
+      748 字
     </span>
   
 
@@ -183,7 +183,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      1
+      9
        分钟
     </span>
   
@@ -213,28 +213,109 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto" id="post">
             <!-- SEO header -->
-            <h1 style="display: none">Hello World</h1>
+            <h1 style="display: none">多线程之 ThreadLocal</h1>
             
             <div class="markdown-body" id="post-body">
-              <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs bash">$ hexo new <span class="hljs-string">&quot;My New Post&quot;</span></code></pre></div>
+              <h3 id="多线程之-ThreadLocal"><a href="#多线程之-ThreadLocal" class="headerlink" title="多线程之 ThreadLocal"></a>多线程之 ThreadLocal</h3><hr>
+<h4 id="1-ThreadLocal-简介"><a href="#1-ThreadLocal-简介" class="headerlink" title="1. ThreadLocal 简介"></a>1. ThreadLocal 简介</h4><p>​    <strong>一个线程可拥有多个 ThreadLocal</strong>，<strong>等价于Thread 的局部变量</strong>。</p>
+<p>​    ThreadLocal 提供了<strong>线程内存储私有变量</strong>的能力，这些变量不同之处在于每一个线程读取的变量是对应的<strong>互相独立的</strong>。</p>
+<p>​    通过 <strong>get 和 set 方法</strong>就可以得到当前线程对应的值，从而避免了线程安全的问题。</p>
+<p>​    ThreadLocal 的使用方法很简单，与 map 类似</p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java"><span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> ThreadLocal&lt;T&gt; sThreadLocal = <span class="hljs-keyword">new</span> ThreadLocal&lt;T&gt;();
+sThreadLocal.set()
+sThreadLocal.get()</code></pre></div>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs bash">$ hexo server</code></pre></div>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs bash">$ hexo generate</code></pre></div>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs bash">$ hexo deploy</code></pre></div>
+<h4 id="2-ThreadLocal-底层原理"><a href="#2-ThreadLocal-底层原理" class="headerlink" title="2. ThreadLocal 底层原理"></a>2. ThreadLocal 底层原理</h4><p>​        <strong>ThreadLocal内存结构图</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20200930152613.png" srcset="/img/loading.gif" alt="image-20200905225631296"></p>
+<p>​    由结构图是可以看出：</p>
+<ul>
+<li>Thread对象中持有一个ThreadLocal.ThreadLocalMap 的成员变量。</li>
+<li>ThreadLocalMap内部维护了Entry数组，每个Entry代表一个完整的对象，<strong>key是 ThreadLocal 本身，value是 ThreadLocal 的泛型值</strong>。</li>
+</ul>
+<p>几段关键源码</p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Thread</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Runnable</span> </span>&#123;
+   <span class="hljs-comment">//ThreadLocal.ThreadLocalMap是Thread的属性</span>
+   ThreadLocal.ThreadLocalMap threadLocals = <span class="hljs-keyword">null</span>;
+&#125;</code></pre></div>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+
+
+<p>ThreadLocal中的关键方法 <strong>set() 和 get()</strong></p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">set</span><span class="hljs-params">(T value)</span> </span>&#123;
+    Thread t = Thread.currentThread(); 	<span class="hljs-comment">// 获取当前线程t</span>
+    ThreadLocalMap map = getMap(t);  	<span class="hljs-comment">// 根据当前线程获取到ThreadLocalMap</span>
+    <span class="hljs-keyword">if</span> (map != <span class="hljs-keyword">null</span>)
+        map.set(<span class="hljs-keyword">this</span>, value); 			<span class="hljs-comment">// K，V设置到ThreadLocalMap中</span>
+    <span class="hljs-keyword">else</span>
+        createMap(t, value); 			<span class="hljs-comment">// 创建一个新的ThreadLocalMap</span>
+&#125;
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> T <span class="hljs-title">get</span><span class="hljs-params">()</span> </span>&#123;
+    Thread t = Thread.currentThread();	<span class="hljs-comment">// 获取当前线程t</span>
+    ThreadLocalMap map = getMap(t);		<span class="hljs-comment">// 根据当前线程获取到ThreadLocalMap</span>
+    <span class="hljs-keyword">if</span> (map != <span class="hljs-keyword">null</span>) &#123;		            
+        <span class="hljs-comment">// 由this（即ThreadLoca对象）得到对应的Value，即ThreadLocal的泛型值</span>
+        ThreadLocalMap.Entry e = map.getEntry(<span class="hljs-keyword">this</span>);
+        <span class="hljs-keyword">if</span> (e != <span class="hljs-keyword">null</span>) &#123;
+            <span class="hljs-meta">@SuppressWarnings(&quot;unchecked&quot;)</span>
+            T result = (T)e.value; 
+            <span class="hljs-keyword">return</span> result;
+        &#125;
+    &#125;
+    <span class="hljs-keyword">return</span> setInitialValue();
+&#125;</code></pre></div>
+
+
+
+<h4 id="3-ThreadLocal-内存泄露问题"><a href="#3-ThreadLocal-内存泄露问题" class="headerlink" title="3. ThreadLocal 内存泄露问题"></a>3. ThreadLocal 内存泄露问题</h4><p>​        ThreadLocalMap 所使用的的 key 为 ThreadLocal 的弱引用，而 value 为强引用，这表示在垃圾回收时，key 会被清理掉而 value 则不会，这样导致 <strong>value 会一直占用</strong>，无法被 GC 回收，导致<strong>内存泄漏</strong>问题。因此在使用完 ThreadLocal 的方法后，需要手动调用 <strong><em>remove() 方法</em></strong>，<strong>清空 key 为 null 的记录</strong>。</p>
+<p><strong>ThreadLocal 引用示意图</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20200930152620.jpg" srcset="/img/loading.gif" alt="img"></p>
+<p><strong>弱引用代码</strong></p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java"><span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Entry</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">WeakReference</span>&lt;<span class="hljs-title">ThreadLocal</span>&lt;?&gt;&gt; </span>&#123;
+    <span class="hljs-comment">/** The value associated with this ThreadLocal. */</span>
+	Object value;
+    
+	Entry(ThreadLocal&lt;?&gt; k, Object v) &#123;
+		<span class="hljs-keyword">super</span>(k);
+		value = v;
+	&#125;
+&#125;</code></pre></div>
+
+<p><strong>弱引用简介</strong></p>
+<blockquote>
+<p>如果一个对象只具有弱引用，那就类似于<strong>可有可无</strong>的生活用品。弱引用的对象拥有更短暂的生命周期。在垃圾回收器线程扫描它所管辖的内存区域的过程中，一旦发现了只具有弱引用的对象，不管当前内存空间足够与否，都会<strong>回收它的内存</strong>。</p>
+</blockquote>
+<h4 id="4-ThreadLocal的应用场景"><a href="#4-ThreadLocal的应用场景" class="headerlink" title="4. ThreadLocal的应用场景"></a>4. ThreadLocal的应用场景</h4><ul>
+<li>数据库连接池</li>
+<li>会话管理中使用</li>
+</ul>
+<h4 id="5-总结"><a href="#5-总结" class="headerlink" title="5. 总结"></a>5. 总结</h4><p>​    ThreadLocal 和 Synchronized 都是为了解决多线程中相同变量的访问冲突问题，不同的点是</p>
+<ul>
+<li>Synchronized 是通过<strong>线程等待，牺牲时间</strong>来解决访问冲突，ThreadLocal是通过<strong>每个线程单独一份存储空间，牺牲空间</strong>来解决冲突。</li>
+<li>ThreadLocal 具有 <strong><em>线程隔离</em></strong> 的效果，只有在线程内才能获取到对应的值，线程外则不能访问到想要的值。</li>
+</ul>
 
             </div>
             <hr>
             <div>
               <div class="post-metas mb-3">
                 
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Java/">Java</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E9%9D%A2%E8%AF%95/">面试</a>
+                    
+                  </div>
                 
               </div>
               
@@ -243,15 +324,21 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2020/09/19/%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2/">
+                      <a href="/2020/10/01/2020-10-01-Change-Global-Font/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">我的博客</span>
+                        <span class="hidden-mobile">Hexo 全局字体之思源宋体</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
                   </article>
                   <article class="post-next col-6">
                     
+                    
+                      <a href="/2020/09/19/mysql/">
+                        <span class="hidden-mobile">MySQL 面试题</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
                     
                   </article>
                 </div>
@@ -448,7 +535,7 @@
   
     <script>
       // 非首页 则输出文章标题
-      var strs = "Hello World&nbsp;";
+      var strs = "多线程之 ThreadLocal&nbsp;";
       startTyping(strs);
     </script>
   

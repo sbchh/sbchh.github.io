@@ -1,0 +1,1222 @@
+<!-- 全局页面布局模板 -->
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+<!-- 页面 <head> 模板 -->
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Lin">
+  <meta name="keywords" content="">
+  <title>Java 集合框架整理 - Vin</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/androidstudio.min.css" />
+    
+  
+
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_pf9vaxs7x7b.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+
+
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <!-- 页面顶部蒙版布局 -->
+<nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Vin's Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner intro-2" id="background" parallax=true
+         style="background: url('https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201001115214.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container page-header text-center fade-in-up">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <!-- 文章元数据(标题，时间，分类...)布局 -->
+<div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-10-10 11:21" pubdate>
+        2020年10月10日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      8k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      98
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      <!-- 文章页面模板 -->
+
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto" id="post">
+            <!-- SEO header -->
+            <h1 style="display: none">Java 集合框架整理</h1>
+            
+            <div class="markdown-body" id="post-body">
+              <center style='font-size: 18px; font-weight: bold;'>Java 集合框架一览图</center>
+
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010143050.png" srcset="/img/loading.gif" alt="image-20201010141215496"></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近正在准备面试，借由此来复习一下 Java 集合类的基础知识及相关面试题，常学常新。</p>
+<h2 id="面试"><a href="#面试" class="headerlink" title="面试"></a>面试</h2><h3 id="1-Arraylist与LinkedList区别"><a href="#1-Arraylist与LinkedList区别" class="headerlink" title="1. Arraylist与LinkedList区别"></a>1. Arraylist与LinkedList区别</h3><p>可以从它们的底层数据结构、效率、开销进行阐述哈</p>
+<ul>
+<li>ArrayList是<strong>数组</strong>的数据结构，LinkedList是<strong>链表</strong>的数据结构。</li>
+<li>随机访问的时候，ArrayList的效率比较高，因为LinkedList要移动指针，而ArrayList是基于索引(index)的数据结构，可以直接映射到。</li>
+<li>插入、删除数据时，LinkedList的效率比较高，因为ArrayList删除数据时索引后的元素都需要移动。</li>
+<li>LinkedList比ArrayList开销更大，因为LinkedList的节点除了存储数据，还需要存储引用。</li>
+</ul>
+<h3 id="2-Collections-sort和Arrays-sort的实现原理"><a href="#2-Collections-sort和Arrays-sort的实现原理" class="headerlink" title="2. Collections.sort和Arrays.sort的实现原理"></a>2. Collections.sort和Arrays.sort的实现原理</h3><p><strong>Collection.sort是对 <em>list</em> 进行排序</strong>，<strong>Arrays.sort是对 <em>数组</em> 进行排序</strong>。</p>
+<h4 id="Collections-sort底层实现"><a href="#Collections-sort底层实现" class="headerlink" title="Collections.sort底层实现"></a>Collections.sort底层实现</h4><p>Collections.sort方法调用了list.sort方法<br><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010152717" srcset="/img/loading.gif"><br>list.sort方法调用了Arrays.sort的方法<br><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010152735" srcset="/img/loading.gif"><br>因此，<strong>Collections.sort方法底层就是调用的Array.sort方法</strong></p>
+<h4 id="Arrays-sort底层实现"><a href="#Arrays-sort底层实现" class="headerlink" title="Arrays.sort底层实现"></a>Arrays.sort底层实现</h4><p>Arrays的sort方法，如下：<br><img src="img/17253551bc95b431" srcset="/img/loading.gif"><br>如果比较器为null，进入sort（a）方法。如下：<br><img src="img/17253549f9433160" srcset="/img/loading.gif"><br>因此，Arrays的sort方法底层就是：</p>
+<ul>
+<li>legacyMergeSort(a)，归并排序，</li>
+<li>ComparableTimSort.sort()：即Timsort排序。</li>
+</ul>
+<h4 id="Timesort排序"><a href="#Timesort排序" class="headerlink" title="Timesort排序"></a>Timesort排序</h4><p>Timsort排序是结合了合并排序（merge.sort）和插入排序（insertion sort）而得出的排序方法；</p>
+<p>1.当数组长度小于某个值，采用的是<strong>二分插入排序算法</strong>，如下：</p>
+<p><img src="img/172567bc65ac1d96" srcset="/img/loading.gif"></p>
+<ol start="2">
+<li>找到各个run，并入栈。</li>
+</ol>
+<p><img src="img/172568f27aa6725d" srcset="/img/loading.gif"></p>
+<ol start="3">
+<li>按规则合并run。</li>
+</ol>
+<p><img src="img/172568e815ffcd33" srcset="/img/loading.gif"></p>
+<h3 id="3-HashMap原理，java8做了什么改变"><a href="#3-HashMap原理，java8做了什么改变" class="headerlink" title="3. HashMap原理，java8做了什么改变"></a>3. HashMap原理，java8做了什么改变</h3><ul>
+<li>HashMap是以键值对存储数据的集合容器</li>
+<li>HashMap是非线性安全的。</li>
+<li>HashMap底层数据结构：数组+(链表、红黑树)，jdk8之前是用数组+链表的方式实现，jdk8引进了红黑树</li>
+<li>Hashmap数组的默认初始长度是16，<strong>key和value都允许null</strong>的存在</li>
+<li>HashMap的内部实现数组是<strong>Node&lt;K,V&gt;数组</strong>，上面存放的是key-value键值对的节点。HashMap通过put和get方法存储和获取。</li>
+</ul>
+<p><img src="img/1331009-20180226181941200-488125874.png" srcset="/img/loading.gif" alt="img"></p>
+<ul>
+<li><p>jdk7的HashMap的put方法，<strong>首先计算key的hashcode值，定位到对应的数组索引</strong>，然后再在<strong>该索引的单向链表上进行循环遍历，用equals比较key是否存在</strong>，如果<strong>存在</strong>则用新的value覆盖原值，如果<strong>没有则头插法追加</strong>。</p>
+</li>
+<li><p>jdk8中HashMap的put方法：先判断Hashmap是否为空，<strong>为空就设置初始容量16(扩容操作)**，首先</strong>计算出key的hash值(hash = h ^ (h&gt;&gt;&gt;16))<strong>，再根据寻址算法 **hash &amp; (n-1)</strong> 得到数组索引 <strong>i</strong> ，然后看table[i]是否为空，为空就直接插入，不为空判断<strong>当前位置的key和table[i]是否相同</strong>，相同就覆盖，不相同就查看table[i]是否是红黑树节点，如果是的话就用红黑树直接插入键值对，如果不是开始遍历链表插入，如果遇到重复值就覆盖，否则直接插入，如果链表长度大于8，转为红黑树结构，执行完成后，判断*<em>tableSize是否大于阈值 threshold(即 capacity * 装载因子)，大于就扩容，否则直接结束*</em>。</p>
+<ul>
+<li>计算 hashcode 与 数组索引 i 方法，其中 <strong>&gt;&gt;&gt; 表示右移后，高位的空位补零</strong></li>
+</ul>
+<p><img src="img/image-20200908194529785.png" srcset="/img/loading.gif" alt="image-20200908194529785"></p>
+<ul>
+<li>put方法 总体流程如下图</li>
+</ul>
+</li>
+</ul>
+<p><img src="img/image-20200908193340642.png" srcset="/img/loading.gif" alt="image-20200908193340642"></p>
+<ul>
+<li><p>Hashmap<strong>解决hash冲突</strong>，使用的是链地址法，即<strong>数组+链表的形式来解决</strong>。put执行首先判断table[i]位置，如果为空就直接插入，不为空判断和当前值是否相等，相等就覆盖，如果不相等的话，判断是否是红黑树节点，如果不是，就从table[i]位置开始遍历链表，相等覆盖，不相等插入。</p>
+</li>
+<li><p>HashMap的get方法就是计算出要<strong>获取元素的hash值</strong>，去对应位置获取即可。</p>
+</li>
+<li><p>HashMap的<strong>扩容机制</strong>，Hashmap的扩容中主要进行两步，第一步把数组长度变为原来的两倍，第二部把旧数组的元素重新计算hash插入到新数组中，jdk8时，不用重新计算hash，只用看看原来的hash值新增的一位是零还是1，如果是1这个元素在新数组中的位置，是原数组的位置加原数组长度，如果是零就插入到原数组中。扩容过程第二部一个非常重要的方法是transfer方法，采用头插法，把旧数组的元素插入到新数组中。</p>
+<ul>
+<li><strong>扩容机制</strong>，threshold(即 capacity * 装载因子)，oldCap 为旧的 map 容量</li>
+</ul>
+<img src="C:/Users/Lin/Desktop/面试/面试笔记/JavaHome/Java面试题集结号/Java集合/img/090821532570_0HashMap扩容原理_1.Jpeg" srcset="/img/loading.gif" alt="090821532570_0HashMap扩容原理_1" style="zoom: 80%;" />
+
+<ul>
+<li>e.hash &amp; oldCap 迁移老数据到新map时采用 <strong>高低链算法</strong></li>
+</ul>
+<p><img src="img/image-20200908221813030.png" srcset="/img/loading.gif" alt="image-20200908221813030"></p>
+</li>
+<li><p>HashMap大小为什么是2的幂次方？<strong>效率高+空间分布均匀</strong></p>
+</li>
+</ul>
+<p>有关于HashMap这些常量设计目的，也可以看我这篇文章：<br><a target="_blank" rel="noopener" href="https://juejin.im/post/5d7195f9f265da03a6533942">面试加分项-HashMap源码中这些常量的设计目的</a></p>
+<h3 id="4-List-和-Set，Map-的区别"><a href="#4-List-和-Set，Map-的区别" class="headerlink" title="4. List 和 Set，Map 的区别"></a>4. List 和 Set，Map 的区别</h3><ul>
+<li>List 以索引来存取元素，有序的，元素是允许重复的，可以插入多个null。</li>
+<li>Set 不能存放重复元素，无序的，只允许一个null</li>
+<li>Map 保存键值对映射，映射关系可以一对一、多对一</li>
+<li>List 有基于数组、链表实现两种方式</li>
+<li>Set、Map 容器有基于哈希存储和红黑树两种方式实现</li>
+<li>Set 基于 Map 实现，Set 里的元素值就是 Map的键值</li>
+</ul>
+<h3 id="5-poll-方法和-remove-方法的区别？"><a href="#5-poll-方法和-remove-方法的区别？" class="headerlink" title="5. poll()方法和 remove()方法的区别？"></a>5. poll()方法和 remove()方法的区别？</h3><p>Queue队列中，poll() 和 remove() 都是从队列中取出一个元素，在队列元素为空的情况下，<strong>remove() 方法会抛出异常，poll() 方法只会返回 null</strong> 。</p>
+<p>看一下源码的解释吧：</p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java"><span class="hljs-comment">/**</span>
+<span class="hljs-comment">    * Retrieves and removes the head of this queue.  This method differs</span>
+<span class="hljs-comment">    * from &#123;<span class="hljs-doctag">@link</span> #poll poll&#125; only in that it throws an exception if this</span>
+<span class="hljs-comment">    * queue is empty.</span>
+<span class="hljs-comment">    *</span>
+<span class="hljs-comment">    * <span class="hljs-doctag">@return</span> the head of this queue</span>
+<span class="hljs-comment">    * <span class="hljs-doctag">@throws</span> NoSuchElementException if this queue is empty</span>
+<span class="hljs-comment">    */</span>
+   <span class="hljs-function">E <span class="hljs-title">remove</span><span class="hljs-params">()</span></span>;
+   
+       <span class="hljs-comment">/**</span>
+<span class="hljs-comment">    * Retrieves and removes the head of this queue,</span>
+<span class="hljs-comment">    * or returns &#123;<span class="hljs-doctag">@code</span> null&#125; if this queue is empty.</span>
+<span class="hljs-comment">    *</span>
+<span class="hljs-comment">    * <span class="hljs-doctag">@return</span> the head of this queue, or &#123;<span class="hljs-doctag">@code</span> null&#125; if this queue is empty</span>
+<span class="hljs-comment">    */</span>
+   <span class="hljs-function">E <span class="hljs-title">poll</span><span class="hljs-params">()</span></span>;</code></pre></div>
+
+<h3 id="6-HashMap，HashTable，ConcurrentHashMap-的共同点和区别"><a href="#6-HashMap，HashTable，ConcurrentHashMap-的共同点和区别" class="headerlink" title="6. HashMap，HashTable，ConcurrentHashMap 的共同点和区别"></a>6. HashMap，HashTable，ConcurrentHashMap 的共同点和区别</h3><ul>
+<li>共同点：jdk 1.8 后，底层数据结构都一样，均由 <strong>数组+链表+红黑树</strong> 实现。</li>
+</ul>
+<p><strong>HashMap</strong></p>
+<ul>
+<li>可以存储null键和null值</li>
+<li>线性不安全</li>
+<li>初始容量为16，扩容每次都是2的n次幂</li>
+<li>加载因子为0.75，当Map中元素总数超过Entry数组的0.75，触发扩容操作.</li>
+<li>并发情况下，HashMap进行put操作会引起死循环(jdk1.7)，导致CPU利用率接近100%</li>
+<li>HashMap是对Map接口的实现</li>
+</ul>
+<p><strong>HashTable</strong></p>
+<ul>
+<li>无论key还是value都不能为null</li>
+<li>它是线性安全的，使用了<strong>synchronized关键字，效率低下</strong>，当一个线程占用时其他线程均不可put或get操作。</li>
+<li>HashTable实现了Map接口和Dictionary抽象类</li>
+<li><strong>Hashtable初始容量为11</strong></li>
+</ul>
+<p><strong>ConcurrentHashMap</strong></p>
+<ul>
+<li><strong>不能存储null键和值</strong></li>
+<li>ConcurrentHashMap是线程安全的，并发控制<strong>使用 synchronized 和 CAS 来给 Node 上锁</strong>，而其他未上锁的节点不受影响。</li>
+<li>ConcurrentHashMap使用锁分段技术确保线性安全</li>
+<li>JDK8为何又放弃分段锁，是因为<strong>多个分段锁浪费内存空间</strong>，竞争同一个锁的概率非常小，分段锁反而会造成效率低。</li>
+</ul>
+<p><img src="img/image-20200908222118187.png" srcset="/img/loading.gif" alt="image-20200908222118187"></p>
+<h3 id="7-写一段代码在遍历-ArrayList-时移除一个元素"><a href="#7-写一段代码在遍历-ArrayList-时移除一个元素" class="headerlink" title="7. 写一段代码在遍历 ArrayList 时移除一个元素"></a>7. 写一段代码在遍历 ArrayList 时移除一个元素</h3><p>因为foreach删除会导致快速失败问题，fori顺序遍历会导致重复元素没删除，所以正确解法如下：</p>
+<p>第一种遍历，<strong>倒叙遍历删除</strong></p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java"><span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=list.size()-<span class="hljs-number">1</span>; i&gt;-<span class="hljs-number">1</span>; i--)&#123;
+  <span class="hljs-keyword">if</span>(list.get(i).equals(<span class="hljs-string">&quot;jay&quot;</span>))&#123;
+    list.remove(list.get(i));
+  &#125;
+&#125;</code></pre></div>
+
+<p>第二种，迭代器删除</p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java">Iterator itr = list.iterator();
+<span class="hljs-keyword">while</span>(itr.hasNext()) &#123;
+      <span class="hljs-keyword">if</span>(itr.next().equals(<span class="hljs-string">&quot;jay&quot;</span>) &#123;
+        itr.remove();
+      &#125;
+&#125;</code></pre></div>
+
+<h3 id="8-Java中怎么打印数组？"><a href="#8-Java中怎么打印数组？" class="headerlink" title="8. Java中怎么打印数组？"></a>8. Java中怎么打印数组？</h3><p>数组是不能直接打印的哈，如下:</p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span> </span>&#123;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;
+        String[] jayArray = &#123;<span class="hljs-string">&quot;jay&quot;</span>, <span class="hljs-string">&quot;boy&quot;</span>&#125;;
+        System.out.println(jayArray);
+    &#125;
+&#125;
+<span class="hljs-comment">//output</span>
+[Ljava.lang.String;@<span class="hljs-number">1540e19d</span></code></pre></div>
+
+<p>打印数组可以用流的方式 <strong>Strem.of().foreach()</strong> ，如下:</p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span> </span>&#123;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;
+        String[] jayArray = &#123;<span class="hljs-string">&quot;jay&quot;</span>, <span class="hljs-string">&quot;boy&quot;</span>&#125;;
+        Stream.of(jayArray).forEach(System.out::println);
+    &#125;
+&#125;
+<span class="hljs-comment">//output</span>
+jay
+boy</code></pre></div>
+
+<p>打印数组，最优雅的方式可以用这个APi, <strong>Arrays.toString()</strong></p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span> </span>&#123;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;
+        String[] jayArray = &#123;<span class="hljs-string">&quot;jay&quot;</span>, <span class="hljs-string">&quot;boy&quot;</span>&#125;;
+        System.out.println(Arrays.toString(jayArray));
+    &#125;
+&#125;
+<span class="hljs-comment">//output</span>
+[jay, boy]</code></pre></div>
+
+<h3 id="9-TreeMap底层？"><a href="#9-TreeMap底层？" class="headerlink" title="9. TreeMap底层？"></a>9. TreeMap底层？</h3><ul>
+<li>TreeMap实现了 SortedMap 接口，它是有序的集合。</li>
+<li>TreeMap<strong>底层数据结构</strong>是一个==<strong>红黑树</strong>==，每个key-value都作为一个红黑树的节点。</li>
+<li>如果在调用TreeMap的构造函数时没有指定比较器，则<strong>根据key执行自然排序</strong>。</li>
+</ul>
+<p><img src="img/172a4245313c7162" srcset="/img/loading.gif"></p>
+<h3 id="10-HashMap-的扩容过程"><a href="#10-HashMap-的扩容过程" class="headerlink" title="10. HashMap 的扩容过程"></a>10. HashMap 的扩容过程</h3><p>Hashmap的扩容：</p>
+<ul>
+<li><p>第一步把数组长度变为原来的两倍，</p>
+</li>
+<li><p>第二步把旧数组的元素重新计算hash插入到新数组中。</p>
+</li>
+<li><p>jdk1.8时，不用重新计算hash，只用看看原来的hash值新增的一位是零还是1，如果是1这个元素在新数组中的位置，是原数组的位置加原数组长度，如果是零就插入到原数组中。扩容过程第二步一个非常重要的方法是transfer方法，<strong>采用尾插法，把旧数组的元素插入到新数组中</strong>。</p>
+<p><img src="img/image-20200908224119460.png" srcset="/img/loading.gif" alt="image-20200908224119460"></p>
+</li>
+</ul>
+<h3 id="11-HashSet是如何保证不重复的"><a href="#11-HashSet是如何保证不重复的" class="headerlink" title="11. HashSet是如何保证不重复的"></a>11. HashSet是如何保证不重复的</h3><p>可以看一下HashSet的add方法，元素E作为HashMap的key，我们都知道HashMap的可以是不允许重复的，哈哈。</p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java"> <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">add</span><span class="hljs-params">(E e)</span> </span>&#123;
+    <span class="hljs-keyword">return</span> map.put(e, PRESENT)==<span class="hljs-keyword">null</span>;
+&#125;</code></pre></div>
+
+<h3 id="12-HashMap-是线程安全的吗，为什么不是线程安全的？死循环问题？"><a href="#12-HashMap-是线程安全的吗，为什么不是线程安全的？死循环问题？" class="headerlink" title="12. HashMap 是线程安全的吗，为什么不是线程安全的？死循环问题？"></a>12. HashMap 是线程安全的吗，为什么不是线程安全的？死循环问题？</h3><p>不是线性安全的。</p>
+<p>并发的情况下，扩容可能导致死循环问题。</p>
+<h3 id="13-LinkedHashMap的应用，底层，原理"><a href="#13-LinkedHashMap的应用，底层，原理" class="headerlink" title="13. LinkedHashMap的应用，底层，原理"></a>13. LinkedHashMap的应用，底层，原理</h3><ul>
+<li>LinkedHashMap维护着一个运行于所有条目的<strong>双重链接列表</strong>。此<strong>链接列表定义了迭代顺序</strong>，该迭代顺序可以是<strong>插入顺序（insert-order）或者是访问顺序</strong>，其中默认的迭代访问顺序就是插入顺序，即可以按插入的顺序遍历元素，这点和HashMap有很大的不同。</li>
+<li><strong>LRU算法</strong>可以用LinkedHashMap实现。</li>
+</ul>
+<h3 id="14-哪些集合类是线程安全的？哪些不安全？"><a href="#14-哪些集合类是线程安全的？哪些不安全？" class="headerlink" title="14. 哪些集合类是线程安全的？哪些不安全？"></a>14. 哪些集合类是线程安全的？哪些不安全？</h3><p>线性安全的</p>
+<ul>
+<li>Vector：比Arraylist多了个同步化机制。</li>
+<li>Hashtable：比Hashmap多了个线程安全。</li>
+<li>ConcurrentHashMap:是一种高效但是线程安全的集合。</li>
+<li>Stack：栈，也是线程安全的，继承于Vector。</li>
+</ul>
+<p>线性不安全的</p>
+<ul>
+<li>Hashmap</li>
+<li>Arraylist</li>
+<li>LinkedList</li>
+<li>HashSet</li>
+<li>TreeSet</li>
+<li>TreeMap</li>
+</ul>
+<h3 id="15-ArrayList-和-Vector-的区别是什么？"><a href="#15-ArrayList-和-Vector-的区别是什么？" class="headerlink" title="15. ArrayList 和 Vector 的区别是什么？"></a>15. ArrayList 和 Vector 的区别是什么？</h3><ul>
+<li>Vector是线程安全的，ArrayList不是线程安全的。</li>
+<li>ArrayList在底层数组不够用时在原来的基础上扩展0.5倍，Vector是扩展1倍。</li>
+<li>Vector只要是关键性的操作，方法前面都加了synchronized关键字，来保证线程的安全性。</li>
+</ul>
+<p><img src="img/172588218a417dc8" srcset="/img/loading.gif"></p>
+<h3 id="16-Collection与Collections的区别是什么？"><a href="#16-Collection与Collections的区别是什么？" class="headerlink" title="16. Collection与Collections的区别是什么？"></a>16. Collection与Collections的区别是什么？</h3><ul>
+<li><strong>Collection<E>是Java集合框架中的基本接口</strong>，如List接口也是继承于它</li>
+</ul>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs routeros">public<span class="hljs-built_in"> interface </span>List&lt;E&gt; extends Collection&lt;E&gt; &#123;</code></pre></div>
+
+<ul>
+<li><strong>Collections是Java集合框架提供的一个工具类</strong>，其中包含了大量用于操作或返回集合的静态方法。如下：</li>
+</ul>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs php"><span class="hljs-keyword">public</span> <span class="hljs-built_in">static</span> &lt;T <span class="hljs-keyword">extends</span> Comparable<span class="hljs-meta">&lt;?</span> super T&gt;&gt; <span class="hljs-keyword">void</span> sort(<span class="hljs-keyword">List</span>&lt;T&gt; <span class="hljs-keyword">list</span>) &#123;
+    <span class="hljs-keyword">list</span>.sort(<span class="hljs-literal">null</span>);
+&#125;</code></pre></div>
+
+<h3 id="17-如何决定使用-HashMap-还是TreeMap？"><a href="#17-如何决定使用-HashMap-还是TreeMap？" class="headerlink" title="17. 如何决定使用 HashMap 还是TreeMap？"></a>17. 如何决定使用 HashMap 还是TreeMap？</h3><p>这个点，主要考察HashMap和TreeMap的区别。</p>
+<p>TreeMap实现SortMap接口，能够把它保存的记录根据键排序，默认是按key的升序排序，也可以指定排序的比较器。当用Iterator遍历TreeMap时，得到的记录是排过序的。</p>
+<h3 id="18-如何实现数组和-List之间的转换？"><a href="#18-如何实现数组和-List之间的转换？" class="headerlink" title="18. 如何实现数组和 List之间的转换？"></a>18. 如何实现数组和 List之间的转换？</h3><h4 id="List-转-Array"><a href="#List-转-Array" class="headerlink" title="List 转 Array"></a>List 转 Array</h4><p><strong>List 转Array</strong>，必须使用集合的 **toArray(T[] array)**，如下：</p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java">List&lt;String&gt; list = <span class="hljs-keyword">new</span> ArrayList&lt;String&gt;();
+list.add(<span class="hljs-string">&quot;jay&quot;</span>);
+list.add(<span class="hljs-string">&quot;tianluo&quot;</span>);
+
+<span class="hljs-comment">// 使用泛型，无需显式类型转换</span>
+String[] array = list.toArray(<span class="hljs-keyword">new</span> String[list.size()]);
+System.out.println(array[<span class="hljs-number">0</span>]);</code></pre></div>
+
+<p>如果直接使用 toArray 无参方法，返回值只能是 Object[] 类，强转其他类型可能有问题，demo如下：</p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java">List&lt;String&gt; list = <span class="hljs-keyword">new</span> ArrayList&lt;String&gt;();
+list.add(<span class="hljs-string">&quot;jay&quot;</span>);
+list.add(<span class="hljs-string">&quot;tianluo&quot;</span>);
+
+String[] array = (String[]) list.toArray();
+System.out.println(array[<span class="hljs-number">0</span>]);</code></pre></div>
+
+<p>运行结果：</p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java">Exception in thread <span class="hljs-string">&quot;main&quot;</span> java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to [Ljava.lang.String;
+	at Test.main(Test.java:<span class="hljs-number">14</span>)</code></pre></div>
+
+<h4 id="Array-转List"><a href="#Array-转List" class="headerlink" title="Array 转List"></a>Array 转List</h4><p>使用<strong>Arrays.asList() 把数组转换成集合</strong>时，其**底层仍是一个==数组==**！因此不能使用修改集合相关的方法，例如add方法，如下：</p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java">String[] str = <span class="hljs-keyword">new</span> String[] &#123; <span class="hljs-string">&quot;jay&quot;</span>, <span class="hljs-string">&quot;tianluo&quot;</span> &#125;;
+List list = Arrays.asList(str);
+list.add(<span class="hljs-string">&quot;boy&quot;</span>);</code></pre></div>
+
+<p>运行结果如下：</p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java">Exception in thread <span class="hljs-string">&quot;main&quot;</span> java.lang.UnsupportedOperationException
+	at java.util.AbstractList.add(AbstractList.java:<span class="hljs-number">148</span>)
+	at java.util.AbstractList.add(AbstractList.java:<span class="hljs-number">108</span>)
+	at Test.main(Test.java:<span class="hljs-number">13</span>)</code></pre></div>
+
+<p>因为 <strong>Arrays.asList</strong> 不是返回java.util.ArrayList,而是一个内部类ArrayList。<br><img src="img/1726a89f75bf8725" srcset="/img/loading.gif"></p>
+<p>可以这样使用弥补这个缺点，例如 **new ArrayList&lt;&gt;(Arrays.asList(xxx))**：</p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java"><span class="hljs-comment">//方式一：</span>
+ArrayList&lt; String&gt; arrayList = <span class="hljs-keyword">new</span> ArrayList&lt;String&gt;(strArray.length);
+Collections.addAll(arrayList, strArray);
+<span class="hljs-comment">//方式二：</span>
+ArrayList&lt;String&gt; list = <span class="hljs-keyword">new</span> ArrayList&lt;String&gt;(Arrays.asList(strArray)) ;</code></pre></div>
+
+<h3 id="19-迭代器-Iterator-是什么？怎么用，有什么特点？"><a href="#19-迭代器-Iterator-是什么？怎么用，有什么特点？" class="headerlink" title="19. 迭代器 Iterator 是什么？怎么用，有什么特点？"></a>19. 迭代器 Iterator 是什么？怎么用，有什么特点？</h3><div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Collection</span>&lt;<span class="hljs-title">E</span>&gt; <span class="hljs-keyword">extends</span> <span class="hljs-title">Iterable</span>&lt;<span class="hljs-title">E</span>&gt; </span>&#123;
+
+<span class="hljs-function">Iterator&lt;E&gt; <span class="hljs-title">iterator</span><span class="hljs-params">()</span></span>;</code></pre></div>
+
+<p>方法如下：</p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java">next() 方法获得集合中的下一个元素
+hasNext() 检查集合中是否还有元素
+remove() 方法将迭代器新返回的元素删除
+forEachRemaining(Consumer&lt;? <span class="hljs-keyword">super</span> E&gt; action) 方法，遍历所有元素</code></pre></div>
+
+<p>Iterator 主要是用来遍历集合用的，它的特点是更加安全，能确保当前遍历的<strong>集合元素被更改</strong>的时候，就会<strong>抛出 ConcurrentModificationException 异常</strong>。</p>
+<p>使用demo如下：</p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java">List&lt;String&gt; list = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+Iterator&lt;String&gt; it = list. iterator();
+<span class="hljs-keyword">while</span>(it. hasNext())&#123;
+  String obj = it. next();
+  System. out. println(obj);
+&#125;</code></pre></div>
+
+<h3 id="20-Iterator-和-ListIterator-有什么区别？"><a href="#20-Iterator-和-ListIterator-有什么区别？" class="headerlink" title="20. Iterator 和 ListIterator 有什么区别？"></a>20. Iterator 和 ListIterator 有什么区别？</h3><p><img src="img/1728696f00e6cc3e" srcset="/img/loading.gif"></p>
+<p><img src="img/1728698274a8137f" srcset="/img/loading.gif"></p>
+<ul>
+<li>ListIterator 比 Iterator有更多的方法。</li>
+<li><strong>ListIterator只能用于遍历List及其子类</strong>，Iterator可用来遍历所有集合，</li>
+<li>ListIterator遍历可以是<strong>逆向的</strong>，因为有previous()和hasPrevious()方法，而Iterator不可以。</li>
+<li>ListIterator有<strong>add()方法，可以向List添加对象</strong>，而Iterator却不能。</li>
+<li>ListIterator可以<strong>定位当前的索引位置</strong>，因为有nextIndex()和previousIndex()方法，而Iterator不可以。</li>
+<li>ListIterator可以<strong>实现对象的修改</strong>，set()方法可以实现。<strong>Iierator仅能遍历</strong>，不能修改哦。</li>
+</ul>
+<h3 id="21-怎么确保一个集合不能被修改？"><a href="#21-怎么确保一个集合不能被修改？" class="headerlink" title="21. 怎么确保一个集合不能被修改？"></a>21. 怎么确保一个集合不能被修改？</h3><p>很多朋友很可能想到用final关键字进行修饰，final修饰的这个成员变量，如果是基本数据类型，表示这个变量的值是不可改变的，如果是引用类型，则表示这个引用的地址值是不能改变的，但是这个引用所指向的对象里面的内容还是可以改变滴~验证一下，如下：</p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span> </span>&#123;
+    <span class="hljs-comment">//final 修饰</span>
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> Map&lt;Integer, String&gt; map = <span class="hljs-keyword">new</span> HashMap&lt;Integer, String&gt;();
+    &#123;
+        map.put(<span class="hljs-number">1</span>, <span class="hljs-string">&quot;jay&quot;</span>);
+        map.put(<span class="hljs-number">2</span>, <span class="hljs-string">&quot;tianluo&quot;</span>);
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;
+        map.put(<span class="hljs-number">1</span>, <span class="hljs-string">&quot;boy&quot;</span>);
+        System.out.println(map.get(<span class="hljs-number">1</span>));
+    &#125;
+&#125;</code></pre></div>
+
+<p>运行结果如下:</p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs awk"><span class="hljs-regexp">//</span>可以洗发现，final修饰，集合还是会被修改呢
+boy</code></pre></div>
+
+<p>嘻嘻，那么，到底怎么**==确保一个集合不能被修改==<strong>(集合不可变)呢，看以下这三个方法，即 ==**Collections.unmodifiable&lt;集合类型&gt;</strong>==</p>
+<ul>
+<li><strong>unmodifiableMap</strong></li>
+<li><strong>unmodifiableList</strong></li>
+<li><strong>unmodifiableSet</strong></li>
+</ul>
+<p>再看一下demo吧</p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span> </span>&#123;
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span>  Map&lt;Integer, String&gt; map = <span class="hljs-keyword">new</span> HashMap&lt;Integer, String&gt;();
+    &#123;
+        map.put(<span class="hljs-number">1</span>, <span class="hljs-string">&quot;jay&quot;</span>);
+        map.put(<span class="hljs-number">2</span>, <span class="hljs-string">&quot;tianluo&quot;</span>);
+
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;
+        map = Collections.unmodifiableMap(map);
+        map.put(<span class="hljs-number">1</span>, <span class="hljs-string">&quot;boy&quot;</span>);
+        System.out.println(map.get(<span class="hljs-number">1</span>));
+    &#125;
+&#125;</code></pre></div>
+
+<p>运行结果：</p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java"><span class="hljs-comment">// 可以发现，unmodifiableMap确保集合不能修改啦，抛异常了</span>
+Exception in thread <span class="hljs-string">&quot;main&quot;</span> java.lang.UnsupportedOperationException
+	at java.util.Collections$UnmodifiableMap.put(Collections.java:<span class="hljs-number">1457</span>)
+	at Test.main(Test.java:<span class="hljs-number">14</span>)</code></pre></div>
+
+<h3 id="22-快速失败-fail-fast-和安全失败-fail-safe-的区别是什么？"><a href="#22-快速失败-fail-fast-和安全失败-fail-safe-的区别是什么？" class="headerlink" title="22. 快速失败(fail-fast)和安全失败(fail-safe)的区别是什么？"></a>22. 快速失败(fail-fast)和安全失败(fail-safe)的区别是什么？</h3><h4 id="快速失败-普通-ArrayList"><a href="#快速失败-普通-ArrayList" class="headerlink" title="快速失败 (普通 ArrayList)"></a>快速失败 (普通 ArrayList)</h4><p>在用迭代器遍历一个集合对象时，如果遍历过程中对<strong>集合对象的内容进行了修改</strong>（增加、删除、修改），则会抛出Concurrent Modification Exception。</p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span> </span>&#123;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;
+        List&lt;Integer&gt; list = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+        list.add(<span class="hljs-number">1</span>);
+        list.add(<span class="hljs-number">2</span>);
+
+        Iterator iterator = list.iterator();
+        <span class="hljs-keyword">while</span> (iterator.hasNext()) &#123;
+            System.out.println(iterator.next());
+            list.add(<span class="hljs-number">3</span>);
+            System.out.println(list.size());
+        &#125;
+    &#125;
+&#125;</code></pre></div>
+
+<p>运行结果：</p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java"><span class="hljs-number">1</span>
+Exception in thread <span class="hljs-string">&quot;main&quot;</span> java.util.ConcurrentModificationException
+<span class="hljs-number">3</span>
+	at java.util.ArrayList$Itr.checkForComodification(ArrayList.java:<span class="hljs-number">909</span>)
+	at java.util.ArrayList$Itr.next(ArrayList.java:<span class="hljs-number">859</span>)
+	at Test.main(Test.java:<span class="hljs-number">12</span>)</code></pre></div>
+
+<h4 id="安全失败-线程安全的-CopyOnWriteArrayList"><a href="#安全失败-线程安全的-CopyOnWriteArrayList" class="headerlink" title="安全失败 (线程安全的 CopyOnWriteArrayList)"></a>安全失败 (线程安全的 CopyOnWriteArrayList)</h4><p>采用安全失败机制的集合容器，<strong>在遍历时</strong>不是直接在集合内容上访问的，而是<strong>先复制原有集合内容，在拷贝的集合上进行遍历</strong>。</p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span> </span>&#123;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;
+        List&lt;Integer&gt; list = <span class="hljs-keyword">new</span> CopyOnWriteArrayList&lt;&gt;();
+        list.add(<span class="hljs-number">1</span>);
+        list.add(<span class="hljs-number">2</span>);
+
+        Iterator iterator = list.iterator();
+        <span class="hljs-keyword">while</span> (iterator.hasNext()) &#123;
+            System.out.println(iterator.next());
+            list.add(<span class="hljs-number">3</span>);
+            System.out.println(<span class="hljs-string">&quot;list size:&quot;</span>+list.size());
+        &#125;
+
+    &#125;
+&#125;</code></pre></div>
+
+<p>运行结果：</p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java"><span class="hljs-number">1</span>
+list size:<span class="hljs-number">3</span>
+<span class="hljs-number">2</span>
+list size:<span class="hljs-number">4</span></code></pre></div>
+
+<p>其实，在java.util.concurrent 并发包的集合，如 <strong>ConcurrentHashMap, CopyOnWriteArrayList等，默认为都是安全失败</strong>的。</p>
+<h3 id="23-什么是Java优先级队列-Priority-Queue-？"><a href="#23-什么是Java优先级队列-Priority-Queue-？" class="headerlink" title="23. 什么是Java优先级队列(Priority Queue)？"></a>23. 什么是Java优先级队列(Priority Queue)？</h3><p>优先队列PriorityQueue是Queue接口的实现，可以对其中元素进行排序</p>
+<ul>
+<li>优先队列中元素默认排列顺序是<strong>升序排列</strong></li>
+<li>但对于自己定义的类来说，需要自己定义比较器</li>
+</ul>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PriorityQueue</span>&lt;<span class="hljs-title">E</span>&gt; <span class="hljs-keyword">extends</span> <span class="hljs-title">AbstractQueue</span>&lt;<span class="hljs-title">E</span>&gt;</span>
+<span class="hljs-class">    <span class="hljs-keyword">implements</span> <span class="hljs-title">java</span>.<span class="hljs-title">io</span>.<span class="hljs-title">Serializable</span> </span>&#123;
+    ...
+     <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> Comparator&lt;? <span class="hljs-keyword">super</span> E&gt; comparator;</code></pre></div>
+
+<p>方法：</p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java">peek()<span class="hljs-comment">//返回队首元素</span>
+poll()<span class="hljs-comment">//返回队首元素，队首元素出队列</span>
+add()<span class="hljs-comment">//添加元素</span>
+size()<span class="hljs-comment">//返回队列元素个数</span>
+isEmpty()<span class="hljs-comment">//判断队列是否为空，为空返回true,不空返回false</span></code></pre></div>
+
+<p>特点：</p>
+<ul>
+<li>1.基于优先级堆 </li>
+<li>2.不允许null值</li>
+<li>3.线程不安全</li>
+<li>4.出入队时间复杂度O(log(n))</li>
+<li>5.调用remove()返回堆内最小值</li>
+</ul>
+<h3 id="24-JAVA8的ConcurrentHashMap为什么放弃了分段锁，有什么问题吗，如果你来设计，你如何设计。"><a href="#24-JAVA8的ConcurrentHashMap为什么放弃了分段锁，有什么问题吗，如果你来设计，你如何设计。" class="headerlink" title="24. JAVA8的ConcurrentHashMap为什么放弃了分段锁，有什么问题吗，如果你来设计，你如何设计。"></a>24. JAVA8的ConcurrentHashMap为什么放弃了分段锁，有什么问题吗，如果你来设计，你如何设计。</h3><p>jdk8 放弃了分段锁而是<strong>用了Node锁，减低锁的粒度，提高性能，并使用CAS操作来确保Node的一些操作的原子性，取代了锁</strong>。</p>
+<p>可以跟面试官聊聊 <strong>悲观锁和CAS乐观锁 的区别</strong>，<strong>优缺点</strong>哈~</p>
+<h3 id="25-阻塞队列的实现，ArrayBlockingQueue的底层实现？"><a href="#25-阻塞队列的实现，ArrayBlockingQueue的底层实现？" class="headerlink" title="25. 阻塞队列的实现，ArrayBlockingQueue的底层实现？"></a>25. 阻塞队列的实现，ArrayBlockingQueue的底层实现？</h3><p>ArrayBlockingQueue是数组实现的<strong>线程安全的有界的阻塞队列</strong>，继承自<strong>AbstractBlockingQueue</strong>,间接的实现了Queue接口和Collection接口。底层以数组的形式保存数据(实际上可看作一个<strong>循环数组</strong>)。常用的操作包括 add ,offer,put，remove,poll,take,peek。</p>
+<p><img src="img/172a58069511d5db" srcset="/img/loading.gif"></p>
+<p>可以结合线程池跟面试官讲一下哦~</p>
+<h3 id="26-Java-中的-LinkedList是单向链表还是双向链表？"><a href="#26-Java-中的-LinkedList是单向链表还是双向链表？" class="headerlink" title="26. Java 中的 LinkedList是单向链表还是双向链表？"></a>26. Java 中的 LinkedList是单向链表还是双向链表？</h3><p>哈哈，看源码吧，是双向链表</p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Node</span>&lt;<span class="hljs-title">E</span>&gt; </span>&#123;
+    E item;
+    Node&lt;E&gt; next;
+    Node&lt;E&gt; prev;
+
+    Node(Node&lt;E&gt; prev, E element, Node&lt;E&gt; next) &#123;
+        <span class="hljs-keyword">this</span>.item = element;
+        <span class="hljs-keyword">this</span>.next = next;
+        <span class="hljs-keyword">this</span>.prev = prev;
+    &#125;
+&#125;</code></pre></div>
+
+<h3 id="27-说一说ArrayList-的扩容机制吧"><a href="#27-说一说ArrayList-的扩容机制吧" class="headerlink" title="27. 说一说ArrayList 的扩容机制吧"></a>27. 说一说ArrayList 的扩容机制吧</h3><p>ArrayList扩容的本质就是计算出新的扩容数组的size后实例化，并将<strong>原有数组内容复制到新数组</strong>中去。</p>
+<p><strong>ArrayList 的扩容流程图如下</strong></p>
+<img src="C:/Users/Lin/Desktop/面试/面试笔记/JavaHome/Java面试题集结号/Java集合/img/image-20200908233859464.png" srcset="/img/loading.gif" alt="image-20200908233859464" style="zoom: 80%;" />
+
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">add</span><span class="hljs-params">(E e)</span> </span>&#123;
+    <span class="hljs-comment">//扩容</span>
+    ensureCapacityInternal(size + <span class="hljs-number">1</span>); <span class="hljs-comment">// Increments modCount!!</span>
+    elementData[size++] = e;
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+&#125;
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ensureCapacityInternal</span><span class="hljs-params">(<span class="hljs-keyword">int</span> minCapacity)</span> </span>&#123;
+    ensureExplicitCapacity(calculateCapacity(elementData, minCapacity));
+&#125;
+
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">calculateCapacity</span><span class="hljs-params">(Object[] elementData, <span class="hljs-keyword">int</span> minCapacity)</span> </span>&#123;
+    <span class="hljs-comment">//如果传入的是个空数组则最小容量取默认容量与minCapacity之间的最大值</span>
+    <span class="hljs-keyword">if</span> (elementData == DEFAULTCAPACITY_EMPTY_ELEMENTDATA) &#123;
+        <span class="hljs-keyword">return</span> Math.max(DEFAULT_CAPACITY, minCapacity);
+    &#125;
+    <span class="hljs-keyword">return</span> minCapacity;
+&#125;
+
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ensureExplicitCapacity</span><span class="hljs-params">(<span class="hljs-keyword">int</span> minCapacity)</span> </span>&#123;
+    modCount++;
+    <span class="hljs-comment">// 如果最小需要空间比elementData的内存空间要大，则需要扩容</span>
+    <span class="hljs-comment">// overflow-conscious code</span>
+    <span class="hljs-keyword">if</span> (minCapacity - elementData.length &gt; <span class="hljs-number">0</span>)
+        grow(minCapacity);
+&#125;
+
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">grow</span><span class="hljs-params">(<span class="hljs-keyword">int</span> minCapacity)</span> </span>&#123;
+    <span class="hljs-comment">// 获取elementData数组的内存空间长度</span>
+    <span class="hljs-keyword">int</span> oldCapacity = elementData.length;
+    <span class="hljs-comment">// 扩容至原来的1.5倍</span>
+    <span class="hljs-keyword">int</span> newCapacity = oldCapacity + (oldCapacity &gt;&gt; <span class="hljs-number">1</span>);
+    <span class="hljs-comment">//校验容量是否够</span>
+    <span class="hljs-keyword">if</span> (newCapacity - minCapacity &lt; <span class="hljs-number">0</span>)
+        newCapacity = minCapacity;
+    <span class="hljs-comment">//若预设值大于默认的最大值，检查是否溢出</span>
+    <span class="hljs-keyword">if</span> (newCapacity - MAX_ARRAY_SIZE &gt; <span class="hljs-number">0</span>)
+        newCapacity = hugeCapacity(minCapacity);
+    <span class="hljs-comment">// 调用Arrays.copyOf方法将elementData数组指向新的内存空间</span>
+    <span class="hljs-comment">//并将elementData的数据复制到新的内存空间</span>
+    elementData = Arrays.copyOf(elementData, newCapacity);
+&#125;</code></pre></div>
+
+<h3 id="28-HashMap-的长度为什么是2的幂次方，以及其他常量定义的含义"><a href="#28-HashMap-的长度为什么是2的幂次方，以及其他常量定义的含义" class="headerlink" title="28. HashMap 的长度为什么是2的幂次方，以及其他常量定义的含义~"></a>28. HashMap 的长度为什么是2的幂次方，以及其他常量定义的含义~</h3><p>为了能让HashMap存取高效，数据分配均匀。</p>
+<p>看着呢，以下等式相等，但是<strong>位移运算比取余效率高</strong>很多呢~</p>
+<p>当 length 为 2的幂时，**<code>hash % length</code> 等价于<code>hash &amp; (length-1)</code>**。</p>
+<p>可以看下我这篇文章哈~<br><a target="_blank" rel="noopener" href="https://juejin.im/post/5d7195f9f265da03a6533942">面试加分项-HashMap源码中这些常量的设计目的</a></p>
+<h3 id="29-ConcurrenHashMap-原理？1-8-中为什么要用红黑树？"><a href="#29-ConcurrenHashMap-原理？1-8-中为什么要用红黑树？" class="headerlink" title="29. ConcurrenHashMap 原理？1.8 中为什么要用红黑树？"></a>29. ConcurrenHashMap 原理？1.8 中为什么要用红黑树？</h3><p>聊到ConcurrenHashMap，需要跟面试官聊到安全性，分段锁segment，为什么放弃了分段锁，与及选择CAS，其实就是都是从效率和安全性触发，嘻嘻~</p>
+<p>java8不是用红黑树来管理hashmap,而是在hash值相同的情况下(且重复数量大于8),用红黑树来管理数据。</p>
+<p>红黑树相当于排序数据。可以自动的使用<strong>二分法进行定位数据，性能较高</strong>。</p>
+<h3 id="30-ArrayList的默认大小"><a href="#30-ArrayList的默认大小" class="headerlink" title="30. ArrayList的默认大小"></a>30. ArrayList的默认大小</h3><p>ArrayList 的<strong>默认大小为 10</strong> 个元素</p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java"><span class="hljs-comment">/**</span>
+<span class="hljs-comment">  * Default initial capacity.</span>
+<span class="hljs-comment">  */</span>
+<span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> DEFAULT_CAPACITY = <span class="hljs-number">10</span>;</code></pre></div>
+
+<h3 id="31-为何Collection不从Cloneable和Serializable接口继承？"><a href="#31-为何Collection不从Cloneable和Serializable接口继承？" class="headerlink" title="31. 为何Collection不从Cloneable和Serializable接口继承？"></a>31. 为何Collection不从Cloneable和Serializable接口继承？</h3><ul>
+<li><p>Collection表示一个集合，包含了一组对象元素。如何维护它的元素对象是由具体实现来决定的。因为集合的具体形式多种多样，例如list允许重复，set则不允许。而<strong>克隆（clone）和序列化（serializable）只对于具体的实体，对象有意义</strong>，你不能说去把一个接口，抽象类克隆，序列化甚至反序列化。所以具体的collection实现类是否可以克隆，是否可以序列化应该由其自身决定，而不能由其超类强行赋予。 </p>
+</li>
+<li><p>如果collection继承了clone和serializable，那么所有的集合实现都会实现这两个接口，而如果某个实现它不需要被克隆，甚至不允许它序列化（<strong>序列化有风险</strong>），那么就与collection矛盾了。</p>
+</li>
+</ul>
+<h3 id="32-Enumeration和Iterator接口的区别？"><a href="#32-Enumeration和Iterator接口的区别？" class="headerlink" title="32. Enumeration和Iterator接口的区别？"></a>32. Enumeration和Iterator接口的区别？</h3><div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Enumeration</span>&lt;<span class="hljs-title">E</span>&gt; </span>&#123;
+    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">hasMoreElements</span><span class="hljs-params">()</span></span>;
+    <span class="hljs-function">E <span class="hljs-title">nextElement</span><span class="hljs-params">()</span></span>;
+&#125;
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Iterator</span>&lt;<span class="hljs-title">E</span>&gt; </span>&#123;
+    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">hasNext</span><span class="hljs-params">()</span></span>;
+    <span class="hljs-function">E <span class="hljs-title">next</span><span class="hljs-params">()</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">remove</span><span class="hljs-params">()</span></span>;
+&#125;</code></pre></div>
+
+<ul>
+<li>函数接口不同</li>
+<li><strong>Enumeration速度快</strong>，占用内存少，但是不是快速失败的，<strong>线程不安全</strong>。</li>
+<li><strong>Iterator允许删除底层数据</strong>，枚举不允许</li>
+<li><strong>Iterator安全性高</strong>，因为其他线程<strong>不能够修改</strong>正在被Iterator遍历的集合里面的对象。</li>
+</ul>
+<h3 id="33-我们如何对一组对象进行排序？"><a href="#33-我们如何对一组对象进行排序？" class="headerlink" title="33. 我们如何对一组对象进行排序？"></a>33. 我们如何对一组对象进行排序？</h3><p>可以用 <strong>Collections.sort（）+ Comparator.comparing（）</strong>，因为对对象排序，实际上是对<strong>对象的属性排序</strong>哈~</p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Student</span> </span>&#123;
+
+    <span class="hljs-keyword">private</span> String name;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> score;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Student</span><span class="hljs-params">(String name, <span class="hljs-keyword">int</span> score)</span></span>&#123;
+        <span class="hljs-keyword">this</span>.name = name;
+        <span class="hljs-keyword">this</span>.score = score;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getName</span><span class="hljs-params">()</span> </span>&#123;
+        <span class="hljs-keyword">return</span> name;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setName</span><span class="hljs-params">(String name)</span> </span>&#123;
+        <span class="hljs-keyword">this</span>.name = name;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">getScore</span><span class="hljs-params">()</span> </span>&#123;
+        <span class="hljs-keyword">return</span> score;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setScore</span><span class="hljs-params">(<span class="hljs-keyword">int</span> score)</span> </span>&#123;
+        <span class="hljs-keyword">this</span>.score = score;
+    &#125;
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">toString</span><span class="hljs-params">()</span> </span>&#123;
+        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Student: &quot;</span> + <span class="hljs-keyword">this</span>.name + <span class="hljs-string">&quot; 分数：&quot;</span> + Integer.toString( <span class="hljs-keyword">this</span>.score );
+    &#125;
+&#125;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span> </span>&#123;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;
+
+        List&lt;Student&gt; studentList = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+        studentList.add(<span class="hljs-keyword">new</span> Student(<span class="hljs-string">&quot;D&quot;</span>, <span class="hljs-number">90</span>));
+        studentList.add(<span class="hljs-keyword">new</span> Student(<span class="hljs-string">&quot;C&quot;</span>, <span class="hljs-number">100</span>));
+        studentList.add(<span class="hljs-keyword">new</span> Student(<span class="hljs-string">&quot;B&quot;</span>, <span class="hljs-number">95</span>));
+        studentList.add(<span class="hljs-keyword">new</span> Student(<span class="hljs-string">&quot;A&quot;</span>, <span class="hljs-number">95</span>));
+
+        Collections.sort(studentList, 			Comparator.comparing(Student::getScore).reversed().thenComparing(Student::getName));
+		studentList.stream().forEach(p - &gt; System.out.println(p.toString()));
+    &#125;
+&#125;</code></pre></div>
+
+<h3 id="34-当一个集合被作为参数传递给一个函数时，如何才可以确保函数不能修改它？"><a href="#34-当一个集合被作为参数传递给一个函数时，如何才可以确保函数不能修改它？" class="headerlink" title="34. 当一个集合被作为参数传递给一个函数时，如何才可以确保函数不能修改它？"></a>34. 当一个集合被作为参数传递给一个函数时，如何才可以确保函数不能修改它？</h3><p>这个跟之前那个不可变集合一样道理哈~</p>
+<blockquote>
+<p>在作为参数传递之前，使用==<strong>Collections.unmodifiableCollection</strong>==(Collection c)方法创建一个**==只读集合==**，这将确保改变集合的任何操作都会抛出UnsupportedOperationException。</p>
+</blockquote>
+<h3 id="35-说一下HashSet的实现原理？"><a href="#35-说一下HashSet的实现原理？" class="headerlink" title="35. 说一下HashSet的实现原理？"></a>35. 说一下HashSet的实现原理？</h3><ul>
+<li><strong>不能保证元素的排列顺序</strong>，顺序有可能发生变化。</li>
+<li>元素可以为null</li>
+<li>hashse<strong>t保证元素不重复</strong>~ （这个面试官很可能会问什么原理，这个跟HashMap有关的哦）</li>
+<li>HashSet，需要谈谈它俩hashcode()和equles()哦~（判断当前元素是否已添加，先检查hashcode再判断equals方法是否一致）</li>
+<li>实际是基于HashMap实现的，HashSet 底层使用HashMap来保存所有元素的</li>
+</ul>
+<p>看看它的add方法吧~</p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">add</span><span class="hljs-params">(E e)</span> </span>&#123;
+    <span class="hljs-keyword">return</span> map.put(e, PRESENT)==<span class="hljs-keyword">null</span>;
+&#125;</code></pre></div>
+
+<h3 id="36-array数组-和-ArrayList-有何区别？"><a href="#36-array数组-和-ArrayList-有何区别？" class="headerlink" title="36. array数组 和 ArrayList 有何区别？"></a>36. array数组 和 ArrayList 有何区别？</h3><ul>
+<li>定义一个 Array 时，<strong>必须指定数组的数据类型及数组长度</strong>，即数组中存放的元素个数固定并且类型相同。</li>
+<li>ArrayList 是动态数组，<strong>长度动态可变，会自动扩容</strong>。不使用泛型的时候，可以添加不同类型元素。</li>
+</ul>
+<h3 id="37-为什么HashMap中String、Integer这样的包装类适合作为key？"><a href="#37-为什么HashMap中String、Integer这样的包装类适合作为key？" class="headerlink" title="37. 为什么HashMap中String、Integer这样的包装类适合作为key？"></a>37. 为什么HashMap中String、Integer这样的包装类适合作为key？</h3><p>String、Integer等包装类的特性<strong>能够保证Hash值的不可更改性和计算准确性</strong>，能够有效的减少Hash碰撞的几率~</p>
+<p>因为</p>
+<ul>
+<li>它们都是<strong>final修饰的类，不可变性</strong>，保证key的不可更改性，不会存在获取hash值不同的情况~</li>
+<li>它们<strong>内部已重写了equals()、hashCode()等方法</strong>，遵守了HashMap内部的规范</li>
+</ul>
+<h3 id="38-如果想用Object作为hashMap的Key？；"><a href="#38-如果想用Object作为hashMap的Key？；" class="headerlink" title="38. 如果想用Object作为hashMap的Key？；"></a>38. 如果想用Object作为hashMap的Key？；</h3><p><strong>重写hashCode()和equals()方法</strong>啦~ (这个答案来自互联网哈~)</p>
+<blockquote>
+<ul>
+<li>重写hashCode()是因为需要计算存储数据的存储位置，需要注意不要试图从散列码计算中排除掉一个对象的关键部分来提高性能，这样虽然能更快但可能会导致更多的Hash碰撞；</li>
+<li>重写equals()方法，需要遵守自反性、对称性、传递性、一致性以及对于任何非null的引用值x，x.equals(null)必须返回false的这几个特性，目的是为了保证key在哈希表中的唯一性；</li>
+</ul>
+</blockquote>
+<h3 id="39-讲讲红黑树的特点？"><a href="#39-讲讲红黑树的特点？" class="headerlink" title="39. 讲讲红黑树的特点？"></a>39. 讲讲红黑树的特点？</h3><p>​    <strong>根和NIL节点均为黑色，节点颜色非黑即红，红节点的子节点必为黑色，黑高。</strong></p>
+<ul>
+<li>每个节点或者是黑色，或者是红色。</li>
+<li>根节点是黑色。</li>
+<li>每个叶子节点（NIL）是黑色。 [注意：这里叶子节点，是指为空(NIL或NULL)的叶子节点！]</li>
+<li>如果一个节点是红色的，则它的<strong>子节点必须是黑色</strong>的。</li>
+<li>从一个节点到该节点的子孙节点的所有路径上包含相同数目的黑节点。(黑高)</li>
+</ul>
+<h3 id="40-Java集合类框架的最佳实践有哪些？"><a href="#40-Java集合类框架的最佳实践有哪些？" class="headerlink" title="40. Java集合类框架的最佳实践有哪些？"></a>40. Java集合类框架的最佳实践有哪些？</h3><p>其实这些点，结合平时工作，代码总结讲出来，更容易吸引到面试官呢 (这个答案来自互联网哈~)</p>
+<ul>
+<li>1.根据应用需要正确选择要使用的集合类型对性能非常重要，比如：假如知道<strong>元素的大小是固定的，那么选用Array数组类型</strong>而不是ArrayList类型更为合适。</li>
+<li>2.有些集合类型允许指定初始容量。因此，如果我们能估计出存储的元素的数目，我们可以<strong>指定初始容量</strong>来避免重新计算hash值或者扩容等。</li>
+<li>3.为了类型安全、可读性和健壮性等原因总是要<strong>使用泛型</strong>。同时，使用泛型还可以避免运行时的 ClassCastException。</li>
+<li>4.<strong>使用JDK提供的不变类(immutable class)作为Map的键key</strong>可以避免为我们自己的类实现hashCode()和equals()方法。</li>
+<li>5.编程的时候接口优于实现</li>
+<li>6.<strong>底层的集合实际上是空</strong>的情况下，返回为<strong>长度是0的集合或数组</strong>而不是null。</li>
+</ul>
+<h3 id="41-谈谈线程池阻塞队列吧"><a href="#41-谈谈线程池阻塞队列吧" class="headerlink" title="41.谈谈线程池阻塞队列吧~"></a>41.谈谈线程池阻塞队列吧~</h3><ul>
+<li>ArrayBlockingQueue</li>
+<li>LinkedBlockingQueue</li>
+<li>DelayQueue</li>
+<li>PriorityBlockingQueue</li>
+<li>SynchronousQueue</li>
+</ul>
+<p><strong>ArrayBlockingQueue：</strong> （有界队列）是一个用数组实现的有界阻塞队列，按FIFO排序量。</p>
+<p><strong>LinkedBlockingQueue：</strong> （可设置容量队列）基于链表结构的阻塞队列，按FIFO排序任务，容量可以选择进行设置，不设置的话，将是一个无边界的阻塞队列，最大长度为Integer.MAX_VALUE，吞吐量通常要高于ArrayBlockingQuene；newFixedThreadPool线程池使用了这个队列</p>
+<p><strong>DelayQueue：</strong>（延迟队列）是一个任务定时周期的延迟执行的队列。根据指定的执行时间从小到大排序，否则根据插入到队列的先后排序。newScheduledThreadPool线程池使用了这个队列。</p>
+<p><strong>PriorityBlockingQueue：</strong>（优先级队列）是具有优先级的无界阻塞队列；</p>
+<p><strong>SynchronousQueue：</strong>（同步队列）一个不存储元素的阻塞队列，每个插入操作必须等到另一个线程调用移除操作，否则插入操作一直处于阻塞状态，吞吐量通常要高于LinkedBlockingQuene，newCachedThreadPool线程池使用了这个队列。<br>针对面试题：线程池都有哪几种工作队列？</p>
+<p>我觉得，回答以上几种ArrayBlockingQueue，LinkedBlockingQueue，SynchronousQueue等，说出它们的特点，并结合使用到对应队列的常用线程池(如newFixedThreadPool线程池使用LinkedBlockingQueue)，进行展开阐述， 就可以啦。</p>
+<p>有兴趣的朋友，可以看看我的<a href="%E6%8B%93%E5%B1%95%E6%96%87%E6%A1%A3%5C41_%E7%BA%BF%E7%A8%8B%E6%B1%A0%E8%A7%A3%E6%9E%90.md">这篇文章</a>哦~</p>
+<p><a target="_blank" rel="noopener" href="https://juejin.im/post/5d1882b1f265da1ba84aa676#heading-15">面试必备：Java线程池解析</a></p>
+<h3 id="42-HashSet-和-TreeSet-有什么区别？"><a href="#42-HashSet-和-TreeSet-有什么区别？" class="headerlink" title="42. HashSet 和 TreeSet 有什么区别？"></a>42. HashSet 和 TreeSet 有什么区别？</h3><ul>
+<li>Hashset 的底层是由**==哈希表==<strong>实现的，Treeset 底层是由==**红黑树</strong>==实现的。</li>
+<li>HashSet中的元素没有顺序，TreeSet保存的元素**==有顺序性==**（实现Comparable接口）</li>
+<li>HashSet的add()，remove()，contains()方法的时间复杂度是==<strong>O(1)</strong>==；TreeSet中，add()，remove()，contains()方法的时间复杂度是==<strong>O(logn)</strong>==</li>
+</ul>
+<h3 id="43-Set里的元素是不能重复的，那么用什么方法来区分重复与否呢-是用-还是equals"><a href="#43-Set里的元素是不能重复的，那么用什么方法来区分重复与否呢-是用-还是equals" class="headerlink" title="43. Set里的元素是不能重复的，那么用什么方法来区分重复与否呢? 是用==还是equals()?"></a>43. Set里的元素是不能重复的，那么用什么方法来区分重复与否呢? 是用==还是equals()?</h3><p>元素重复与否是<strong>使用equals()方法</strong>进行判断的，这个可以跟面试官说说==和equals()的区别，hashcode()和equals</p>
+<h3 id="44-说出ArrayList-LinkedList的存储性能和特性"><a href="#44-说出ArrayList-LinkedList的存储性能和特性" class="headerlink" title="44. 说出ArrayList,LinkedList的存储性能和特性"></a>44. 说出ArrayList,LinkedList的存储性能和特性</h3><p>这道面试题，跟ArrayList,LinkedList，就是换汤不换药的~</p>
+<ul>
+<li>ArrayList,使用数组方式存储数据，查询时，ArrayList是基于索引(index)的数据结构，可以直接映射到，速度较快；但是插入数据需要移动数据，效率就比LinkedList慢一点~</li>
+<li>LinkedList,使用双向链表实现存储,按索引数据需要进行前向或后向遍历，查询相对ArrayList慢一点；但是插入数据速度较快。</li>
+<li>LinkedList比ArrayList开销更大，因为LinkedList的节点除了<strong>存储数据</strong>，还需要<strong>存储引用</strong>。</li>
+</ul>
+<h3 id="45-HashMap在JDK1-7和JDK1-8中有哪些不同？"><a href="#45-HashMap在JDK1-7和JDK1-8中有哪些不同？" class="headerlink" title="45. HashMap在JDK1.7和JDK1.8中有哪些不同？"></a>45. HashMap在JDK1.7和JDK1.8中有哪些不同？</h3><p>互联网上这个答案太详细啦（来源<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/939b8a672070">Java集合必会14问</a>）<br><img src="img/172a5cecccd07908" srcset="/img/loading.gif"></p>
+<h3 id="46-ArrayList集合加入1万条数据，应该怎么提高效率"><a href="#46-ArrayList集合加入1万条数据，应该怎么提高效率" class="headerlink" title="46. ArrayList集合加入1万条数据，应该怎么提高效率"></a>46. ArrayList集合加入1万条数据，应该怎么提高效率</h3><blockquote>
+<p>因为ArrayList的底层是数组实现,并且数组的默认值是10,如果插入10000条要不断的扩容,耗费时间,所以我们调用ArrayList的==指定容量==的构造器方法ArrayList(int size) 就可以实现不扩容,就提高了性能。</p>
+</blockquote>
+<h3 id="47-如何对Object的list排序"><a href="#47-如何对Object的list排序" class="headerlink" title="47. 如何对Object的list排序"></a>47. 如何对Object的list排序</h3><p>看例子吧，哈哈，这个跟对象排序也是一样的呢~</p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span> </span>&#123;
+
+    <span class="hljs-keyword">private</span> String name;
+    <span class="hljs-keyword">private</span> Integer age;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getName</span><span class="hljs-params">()</span> </span>&#123;
+        <span class="hljs-keyword">return</span> name;
+    &#125;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setName</span><span class="hljs-params">(String name)</span> </span>&#123;
+        <span class="hljs-keyword">this</span>.name = name;
+    &#125;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Integer <span class="hljs-title">getAge</span><span class="hljs-params">()</span> </span>&#123;
+        <span class="hljs-keyword">return</span> age;
+    &#125;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setAge</span><span class="hljs-params">(Integer age)</span> </span>&#123;
+        <span class="hljs-keyword">this</span>.age = age;
+    &#125;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Person</span><span class="hljs-params">(String name, Integer age)</span> </span>&#123;
+        <span class="hljs-keyword">this</span>.name = name;
+        <span class="hljs-keyword">this</span>.age = age;
+    &#125;
+&#125;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span> </span>&#123;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;
+
+        List&lt;Person&gt; list = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+        list.add(<span class="hljs-keyword">new</span> Person(<span class="hljs-string">&quot;jay&quot;</span>, <span class="hljs-number">18</span>));
+        list.add(<span class="hljs-keyword">new</span> Person(<span class="hljs-string">&quot;tianLuo&quot;</span>, <span class="hljs-number">10</span>));
+
+        list.stream().forEach(p -&gt; System.out.println(p.getName()+<span class="hljs-string">&quot; &quot;</span>+p.getAge()));
+        <span class="hljs-comment">// 用comparing比较对象属性</span>
+        list.sort(Comparator.comparing(Person::getAge));
+
+        System.out.println(<span class="hljs-string">&quot;排序后&quot;</span>);
+
+        list.stream().forEach(p -&gt; System.out.print(p.getName()+<span class="hljs-string">&quot; &quot;</span>+p.getAge()+<span class="hljs-string">&quot; &quot;</span>));
+    &#125;
+&#125;</code></pre></div>
+
+
+<h3 id="48-ArrayList-和-HashMap-的默认大小是多数？"><a href="#48-ArrayList-和-HashMap-的默认大小是多数？" class="headerlink" title="48. ArrayList 和 HashMap 的默认大小是多数？"></a>48. ArrayList 和 HashMap 的默认大小是多数？</h3><p>在 Java 7 中，<strong>ArrayList</strong> 的默认大小是 <strong>10 个元素</strong>，<strong>HashMap</strong> 的默认大小是<strong>16个元素</strong>（必须是2的幂）。</p>
+<h3 id="49-有没有有顺序的Map实现类，如果有，他们是怎么保证有序的"><a href="#49-有没有有顺序的Map实现类，如果有，他们是怎么保证有序的" class="headerlink" title="49. 有没有有顺序的Map实现类，如果有，他们是怎么保证有序的"></a>49. 有没有有顺序的Map实现类，如果有，他们是怎么保证有序的</h3><ul>
+<li>Hashmap和Hashtable 都不是有序的。</li>
+<li><strong>TreeMap和LinkedHashmap都是有序的。</strong>（TreeMap默认是key升序，LinkedHashmap默认是数据插入顺序）</li>
+<li>TreeMap是基于比较器Comparator来实现有序的。</li>
+<li>LinkedHashmap是基于链表来实现数据插入有序的。</li>
+</ul>
+<h3 id="50-HashMap是怎么解决哈希冲突的"><a href="#50-HashMap是怎么解决哈希冲突的" class="headerlink" title="50. HashMap是怎么解决哈希冲突的"></a>50. HashMap是怎么解决哈希冲突的</h3><p>Hashmap解决hash冲突，使用的是<strong>链地址法</strong>，即<strong>数组+链表</strong>的形式来解决。put执行首先判断table[i]位置，如果为空就直接插入，不为空判断和当前值是否相等，相等就覆盖，如果不相等的话，判断是否是红黑树节点，如果不是，就从table[i]位置开始遍历链表，相等覆盖，不相等插入。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E9%9D%A2%E8%AF%95/">面试</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E9%9D%A2%E8%AF%95/">面试</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Java/">Java</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/10/07/2020-10-07-Study-Git-Note/">
+                        <span class="hidden-mobile">Git 学习笔记</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <!-- 目录模板 -->
+<div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  <!-- 回到顶部 -->
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <!-- 搜索框布局 -->
+<div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  <!-- 自定义 html -->
+  
+    <div class="col-lg-7 mx-auto nopadding-md">
+      <div class="container custom mx-auto">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/css/font.css">
+      </div>
+    </div>
+  
+
+  <!-- 页脚模板布局 -->
+<footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <p>©2020 by Lin</p>
+      <span>驱动</span>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener">Hexo</a>
+      <span>|&nbsp;主题</span>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">Fluid</a>
+    </div>
+    <!-- 统计模块 -->
+
+
+    <!-- 备案信息 -->
+
+
+    
+
+    <!-- 一言-言语的魅力 -->
+    <div>
+      <p style="font-size: 18px; font-weight: bold;" id="hitokoto">:D 获取中...</p>
+      <script>
+        fetch('https://v1.hitokoto.cn')
+          .then(response => response.json())
+          .then(data => {
+            const hitokoto = document.getElementById('hitokoto')
+            hitokoto.innerText = data.hitokoto
+            })
+            .catch(console.error)
+      </script>
+    </div>
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<!-- 引入第三方 js -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '#post-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+<!-- 打字机特效 -->
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+    <script type="text/javascript">
+        !function(e){var n,t={},o="jinrishici-token";function i(){return document.getElementById("jinrishici-sentence")||0!=document.getElementsByClassName("jinrishici-sentence").length}function c(){t.load(function(e){var n=document.getElementById("jinrishici-sentence"),t=document.getElementsByClassName("jinrishici-sentence");if(n&&(n.innerText=e.data.content),0!==t.length)for(var o=0;o<t.length;o++)t[o].innerText=e.data.content})}function r(e,n){var t=new XMLHttpRequest;t.open("get",n),t.withCredentials=!0,t.send(),t.onreadystatechange=function(n){if(4===t.readyState){var o=JSON.parse(t.responseText);"success"===o.status?e(o):console.error("今日诗词API加载失败，错误原因："+o.errMessage)}}}t.load=function(n){return e.localStorage&&e.localStorage.getItem(o)?function(e,n){return r(e,"https://v2.jinrishici.com/one.json?client=browser-sdk/1.2&X-User-Token="+encodeURIComponent(n))}(n,e.localStorage.getItem(o)):function(n){return r(function(t){e.localStorage.setItem(o,t.token),n(t)},"https://v2.jinrishici.com/one.json?client=browser-sdk/1.2")}(n)},e.jinrishici=t,i()?c():(n=function(){i()&&c()},"loading"!=document.readyState?n():document.addEventListener?document.addEventListener("DOMContentLoaded",n):document.attachEvent("onreadystatechange",function(){"complete"==document.readyState&&n()}))}(window); 
+        // 输出指定数量空格+引用
+        function writeSpace(len){
+          len = (len > 15) ? (len > 31 ? 0 : 10) : len
+          var space = ''
+          for(var i = 0; i<len; i++){
+            space += '&emsp;'
+          }
+          return space+"——";
+        }
+
+        // 执行打字机动效
+        function startTyping(strs){
+          var typed = new Typed('#subtitle', {
+          strings: ['  ', strs],
+          cursorChar: "_",
+          typeSpeed: 50,
+          loop: false,
+          });
+          typed.stop();
+          $(document).ready(function () {
+            $(".typed-cursor").addClass("h2");
+            typed.start();
+          }); 
+        }
+    </script>
+  
+    <script>
+      // 非首页 则输出文章标题
+      var strs = "Java 集合框架整理&nbsp;";
+      startTyping(strs);
+    </script>
+  
+
+<!-- 标题锚点 -->
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+<!-- 鼠标点击特效模板 -->
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/js/mouse-fireworks.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

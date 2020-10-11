@@ -19,7 +19,7 @@
   <meta name="description" content="">
   <meta name="author" content="Lin">
   <meta name="keywords" content="">
-  <title>Hello World - Vin</title>
+  <title>Git 常用命令 - Vin</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 
@@ -161,8 +161,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2020-09-19 11:30" pubdate>
-        2020年9月19日 中午
+      <time datetime="2020-10-05 16:23" pubdate>
+        2020年10月5日 下午
       </time>
     </span>
   
@@ -173,7 +173,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      75 字
+      1.1k 字
     </span>
   
 
@@ -183,7 +183,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      1
+      14
        分钟
     </span>
   
@@ -213,28 +213,233 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto" id="post">
             <!-- SEO header -->
-            <h1 style="display: none">Hello World</h1>
+            <h1 style="display: none">Git 常用命令</h1>
             
             <div class="markdown-body" id="post-body">
-              <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs bash">$ hexo new <span class="hljs-string">&quot;My New Post&quot;</span></code></pre></div>
+              <p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201007111524.png" srcset="/img/loading.gif" alt="Git常用命令"></p>
+<h1 id="Git-命令速查"><a href="#Git-命令速查" class="headerlink" title="Git 命令速查"></a>Git 命令速查</h1><h2 id="1-创建版本库"><a href="#1-创建版本库" class="headerlink" title="1. 创建版本库"></a>1. 创建版本库</h2><div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs bash">git <span class="hljs-built_in">clone</span> &lt;url&gt;		<span class="hljs-comment"># 克隆远程版本库</span>
+git init			<span class="hljs-comment"># 初始化本地版本库</span></code></pre></div>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs bash">$ hexo server</code></pre></div>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs bash">$ hexo generate</code></pre></div>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs bash">$ hexo deploy</code></pre></div>
+<h2 id="2-修改与提交"><a href="#2-修改与提交" class="headerlink" title="2. 修改与提交"></a>2. 修改与提交</h2><p>一般都不推荐使用 <code>git commit -a</code> ，还是推荐先 <code>git add </code> 再 <code>git commit</code>。</p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs bash">git status                       		<span class="hljs-comment"># 查看状态</span>
+git diff                         		<span class="hljs-comment"># 查看变更内容</span>
+git add .                        		<span class="hljs-comment"># 跟踪所有改动过的文件</span>
+git add &lt;file&gt;                   		<span class="hljs-comment"># 跟踪指定的文件</span>
+git mv &lt;old&gt; &lt;new&gt;               		<span class="hljs-comment"># 文件改名</span>
+git rm &lt;file&gt;                   		<span class="hljs-comment"># 删除文件</span>
+git rm --cached&lt;file&gt;            		<span class="hljs-comment"># 停止跟踪文件但不删除</span>
+git commit -m <span class="hljs-string">&quot;本次提交说明&quot;</span>  	 		<span class="hljs-comment"># 提交所有更新过的文件</span>
+git commit --amend -m <span class="hljs-string">&quot;本次提交说明&quot;</span>  	<span class="hljs-comment"># 重新提交 (适用于提交后错误的文件/信息后的情况)</span></code></pre></div>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+
+
+<h2 id="3-查看提交历史"><a href="#3-查看提交历史" class="headerlink" title="3. 查看提交历史"></a>3. 查看提交历史</h2><div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs bash">git <span class="hljs-built_in">log</span>                    <span class="hljs-comment"># 查看提交历史</span>
+git <span class="hljs-built_in">log</span> -p &lt;file&gt;          <span class="hljs-comment"># 查看指定文件的提交历史</span>
+git blame &lt;file&gt;           <span class="hljs-comment"># 以列表方式查看指定文件的提交历史</span></code></pre></div>
+
+
+
+<h2 id="4-撤销操作"><a href="#4-撤销操作" class="headerlink" title="4. 撤销操作"></a>4. 撤销操作</h2><div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs bash">git reset --hard HEAD      <span class="hljs-comment"># 撤销工作目录中所有未提交文件的修改内容</span>
+git checkout HEAD &lt;file&gt;   <span class="hljs-comment"># 撤销指定的未提交文件的修改内容</span>
+git revert &lt;commit&gt;        <span class="hljs-comment"># 撤销指定的提交</span>
+git <span class="hljs-built_in">log</span> --before=<span class="hljs-string">&quot;1 days&quot;</span>  <span class="hljs-comment"># 退回到之前1天的版本</span></code></pre></div>
+
+
+
+<h2 id="5-分支与标签"><a href="#5-分支与标签" class="headerlink" title="5. 分支与标签"></a>5. 分支与标签</h2><div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs bash">git branch                   <span class="hljs-comment"># 显示所有本地分支</span>
+git branch &lt;new-branch&gt;      <span class="hljs-comment"># 创建新分支</span>
+git checkout &lt;branch/tag&gt;    <span class="hljs-comment"># 切换到指定分支或标签</span>
+git branch -b &lt;new-branch&gt;   <span class="hljs-comment"># 创建并切换到新分支</span>
+git branch -d &lt;branch&gt;       <span class="hljs-comment"># 删除本地分支</span>
+
+git tag                      <span class="hljs-comment"># 列出所有本地标签</span>
+git tag &lt;tag name&gt;           <span class="hljs-comment"># 基于最新提交创建标签</span>
+git tag -d &lt;tag name&gt;        <span class="hljs-comment"># 删除标签</span></code></pre></div>
+
+
+
+<h2 id="6-合并与衍合"><a href="#6-合并与衍合" class="headerlink" title="6. 合并与衍合"></a>6. 合并与衍合</h2><div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs bash">git merge &lt;branch&gt;        <span class="hljs-comment"># 合并指定分支到当前分支</span>
+git rebase &lt;branch&gt;       <span class="hljs-comment"># 衍合指定分支到当前分支</span></code></pre></div>
+
+
+
+<h2 id="7-远程操作"><a href="#7-远程操作" class="headerlink" title="7. 远程操作"></a>7. 远程操作</h2><div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs bash">git remote -v                         <span class="hljs-comment"># 查看远程版本库信息</span>
+git remote show &lt;remote&gt;              <span class="hljs-comment"># 查看指定远程版本库信息</span>
+git remote add &lt;remote&gt; &lt;url&gt;         <span class="hljs-comment"># 添加远程版本库</span>
+git remote set-url origin &lt;url&gt;		  <span class="hljs-comment"># 重设远程版本库地址</span>
+git fetch &lt;remote&gt;                    <span class="hljs-comment"># 从远程库获取代码</span>
+
+git pull &lt;remote&gt; &lt;branch&gt;            <span class="hljs-comment"># 下载代码及快速合并</span>
+git push &lt;remote&gt; &lt;branch&gt;            <span class="hljs-comment"># 上传代码及快速合并</span>
+
+git push &lt;remote&gt; :&lt;branch/tag-name&gt;  <span class="hljs-comment"># 删除远程分支或标签</span>
+git push --tags                       <span class="hljs-comment"># 上传所有标签</span>
+git push -f origin &lt;branch&gt;			  <span class="hljs-comment"># 强制推送到远程分支(分支回退到某次提交后的操作)</span></code></pre></div>
+
+
+
+<h2 id="附录：速查表"><a href="#附录：速查表" class="headerlink" title="附录：速查表"></a>附录：速查表</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>mkdir ‘xxx’</td>
+<td>创建一个空目录 (xxx 指目录名)</td>
+</tr>
+<tr>
+<td>pwd</td>
+<td>显示当前目录的路径</td>
+</tr>
+<tr>
+<td>git init</td>
+<td>把当前的目录变成可以管理的 git 仓库，生成隐藏. git 文件</td>
+</tr>
+<tr>
+<td>git add ‘xxx’</td>
+<td>把 xxx 文件添加到暂存区去</td>
+</tr>
+<tr>
+<td>git commit –m ‘xxx’</td>
+<td>xxx 为提交文件的是注释</td>
+</tr>
+<tr>
+<td>git status</td>
+<td>查看仓库状态</td>
+</tr>
+<tr>
+<td>git diff ‘xxx’</td>
+<td>查看 ‘xxx’ 文件修改了哪些内容</td>
+</tr>
+<tr>
+<td><strong>git log</strong></td>
+<td><strong>查看历史记录</strong></td>
+</tr>
+<tr>
+<td><strong>git reset –hard HEAD^</strong></td>
+<td><strong>回退到上一个版本</strong></td>
+</tr>
+<tr>
+<td>git reset –hard HEAD~100</td>
+<td>回退到第 100 个版本</td>
+</tr>
+<tr>
+<td>cat ‘xxx’</td>
+<td>查看 ‘xxx’ 文件内容</td>
+</tr>
+<tr>
+<td>git reflog</td>
+<td>查看历史记录的版本号 id</td>
+</tr>
+<tr>
+<td><strong>git checkout –  ‘xxx’</strong></td>
+<td><strong>把  ‘xxx’ 文件在工作区的修改全部撤销</strong></td>
+</tr>
+<tr>
+<td>git rm  ‘xxx’</td>
+<td>删除 ‘xxx’ 文件</td>
+</tr>
+<tr>
+<td>git remote add origin &lt;远程库地址&gt;</td>
+<td>关联一个远程库</td>
+</tr>
+<tr>
+<td><strong>git push –u( <em>仅首次使用</em> ) origin master</strong></td>
+<td><strong>把当前 master 分支推送到远程库</strong></td>
+</tr>
+<tr>
+<td><strong>git clone &lt;远程库地址&gt;</strong></td>
+<td><strong>从远程库中克隆</strong></td>
+</tr>
+<tr>
+<td><strong>git checkout –b dev</strong></td>
+<td><strong>创建并切换到 dev 分支上</strong></td>
+</tr>
+<tr>
+<td><strong>git branch</strong></td>
+<td><strong>查看当前所有的分支</strong></td>
+</tr>
+<tr>
+<td><strong>git branch -a</strong></td>
+<td><strong>查看所有的分支</strong></td>
+</tr>
+<tr>
+<td><strong>git checkout &lt;分支名&gt;</strong></td>
+<td><strong>切换回指定分支</strong></td>
+</tr>
+<tr>
+<td>git merge dev</td>
+<td>在当前的分支上合并 dev 分支</td>
+</tr>
+<tr>
+<td>git branch –d dev</td>
+<td>删除 dev 分支</td>
+</tr>
+<tr>
+<td>git branch dev</td>
+<td>创建 dev 分支</td>
+</tr>
+<tr>
+<td>git stash</td>
+<td>把当前的工作隐藏起来 等以后恢复现场后继续工作</td>
+</tr>
+<tr>
+<td>git stash list</td>
+<td>查看所有被隐藏的文件列表</td>
+</tr>
+<tr>
+<td>git stash apply</td>
+<td>恢复被隐藏的文件，但不删除内容</td>
+</tr>
+<tr>
+<td>git stash drop</td>
+<td>删除文件</td>
+</tr>
+<tr>
+<td>git stash pop</td>
+<td>恢复文件的同时 也删除文件</td>
+</tr>
+<tr>
+<td>git remote</td>
+<td>查看远程库的信息</td>
+</tr>
+<tr>
+<td>git remote –v</td>
+<td>查看远程库的详细信息</td>
+</tr>
+<tr>
+<td><strong>git remote set-url origin <url></strong></td>
+<td><strong>设置远程库地址</strong></td>
+</tr>
+</tbody></table>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://p3terx.com/archives/git-common-command-quick-lookup-table.html">Git 常用命令速查表</a></li>
+<li><a target="_blank" rel="noopener" href="http://marklodato.github.io/visual-git-guide/index-zh-cn.html">图解 Git 命令</a></li>
+</ul>
 
             </div>
             <hr>
             <div>
               <div class="post-metas mb-3">
                 
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Git/">Git</a>
+                    
+                  </div>
                 
               </div>
               
@@ -243,15 +448,21 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2020/09/19/%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2/">
+                      <a href="/2020/10/07/2020-10-07-Study-Git-Note/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">我的博客</span>
+                        <span class="hidden-mobile">Git 学习笔记</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
                   </article>
                   <article class="post-next col-6">
                     
+                    
+                      <a href="/2020/10/01/2020-10-01-Change-Global-Font/">
+                        <span class="hidden-mobile">Hexo 全局字体之思源宋体</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
                     
                   </article>
                 </div>
@@ -448,7 +659,7 @@
   
     <script>
       // 非首页 则输出文章标题
-      var strs = "Hello World&nbsp;";
+      var strs = "Git 常用命令&nbsp;";
       startTyping(strs);
     </script>
   

@@ -1,0 +1,124 @@
+/* Markdown 相关设置 */
+.markdown-body mark {
+  background-color: #fdf0b3;
+}
+.markdown-body pre {
+  padding-bottom: 5px;
+}
+.markdown-body pre code {
+  padding: 1rem 0 0.5rem 0;
+}
+
+.markdown-body .drop-cap {
+  margin-top: 10px !important;
+}
+
+/* 无序列表样式 */
+.markdown-body p,
+.markdown-body ol,
+.markdown-body ul {
+  line-height: 1.5;
+}
+
+
+/* 代码顶栏 */
+.hljs-wrap::before {
+  content: " ";
+  position: absolute;
+  background: #fc625d;
+  border-radius: 50%;
+  box-shadow: 20px 0 #fdbc40, 40px 0 #35cd4b;
+  margin-top: -5px;
+  left: 12px;
+  height: 12px;
+  width: 12px;
+}
+
+.hljs-wrap code[data-rel]::before {
+  color: #fff;
+  content: attr(data-rel);
+  line-height: 38px;
+  font-size: 16px;
+  position: absolute;
+  margin-top: -35px;
+  left: 0;
+  width: 100%;
+  font-family: Arial, sans-serif;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* 链接样式 */
+.markdown-body a {
+  text-decoration: underline;
+}
+.markdown-body a:hover {
+  color: #15967d;
+}
+
+/* 文章图片样式 */
+.markdown-body p > img,
+.markdown-body p > a > img {
+  max-width: 95%;
+}
+
+/* 文章标题 hover 样式 */
+.markdown-body h1:hover,
+.markdown-body h2:hover,
+.markdown-body h3:hover,
+.markdown-body h4:hover,
+.markdown-body h5:hover,
+.markdown-body h6:hover {
+  padding-left: 0.5rem;
+}
+
+/* 小代码块样式 */
+code {
+  color: darkred;
+}
+[data-user-color-scheme="dark"] .markdown-body :not(pre) > code {
+  color: yellow;
+}
+
+/* 鼠标样式 */
+/* body,
+.banner {
+  cursor: url(https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/other/bibata/Arrow.cur),
+    auto;
+}
+
+body a {
+  cursor: url(https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/other/bibata/Hand.cur),
+    pointer;
+} */
+
+/* p, ul, :not(button) > span {
+  cursor: url(https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/other/bibata/IBeam.cur),
+    text;
+} */
+
+/* 首页文章贴图样式 */
+.index-img img {
+  width: 101%;
+  transition: all 0.6s;
+}
+.index-img img:hover {
+  transform: scale(1.1);
+  box-shadow: 0px 0px 16px rgba(23, 106, 196, 0.6);
+}
+
+/* 搜索关键字样式 */
+.md-form label {
+  font-size: 0.95rem;
+}
+.md-form input[type].valid + label,
+.md-form input[type]:focus.valid + label {
+  color: #00af2c;
+}
+
+/* 引用块样式 */
+.markdown-body blockquote {
+  padding: 0 1em;
+  background-color: #F2F2F2;
+  border-left: .25em solid #428bca;
+}

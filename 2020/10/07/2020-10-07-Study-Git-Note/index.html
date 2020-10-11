@@ -1,0 +1,741 @@
+<!-- 全局页面布局模板 -->
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+<!-- 页面 <head> 模板 -->
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Lin">
+  <meta name="keywords" content="">
+  <title>Git 学习笔记 - Vin</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/androidstudio.min.css" />
+    
+  
+
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_pf9vaxs7x7b.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+
+
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <!-- 页面顶部蒙版布局 -->
+<nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Vin's Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner intro-2" id="background" parallax=true
+         style="background: url('https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201001115214.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container page-header text-center fade-in-up">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <!-- 文章元数据(标题，时间，分类...)布局 -->
+<div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-10-07 22:22" pubdate>
+        2020年10月7日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      37
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      <!-- 文章页面模板 -->
+
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto" id="post">
+            <!-- SEO header -->
+            <h1 style="display: none">Git 学习笔记</h1>
+            
+            <div class="markdown-body" id="post-body">
+              <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近发现了一个学习 Git 命令的好网站，是通过玩游戏的方式来可视化 git 命令的操作，方便上手掌握！</p>
+<p>网址：<a target="_blank" rel="noopener" href="https://git.mo.mk/">https://git.mo.mk/</a></p>
+<p>参考攻略：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/WMCH/p/7876056.html">https://www.cnblogs.com/WMCH/p/7876056.html</a></p>
+<h1 id="本地操作"><a href="#本地操作" class="headerlink" title="本地操作"></a>本地操作</h1><h2 id="1-Git基础篇"><a href="#1-Git基础篇" class="headerlink" title="1. Git基础篇"></a>1. Git基础篇</h2><p>循序渐进地介绍 Git 主要命令</p>
+<h3 id="1-Git-Commit"><a href="#1-Git-Commit" class="headerlink" title="1. Git Commit"></a>1. Git Commit</h3><p>Git 仓库中的提交记录保存的是你的目录下所有文件的快照，它会将当前版本与仓库中的上一个版本进行对比，并把所有的差异打包到一起作为一个提交记录。</p>
+<p>由于 Git 需要保存提交了的历史记录，因此大多数提交记录的上面都有父节点。</p>
+<p><code>练习代码 &amp; 执行效果</code></p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs bash"><span class="hljs-comment"># 执行两次提交</span>
+git commit
+git commit</code></pre></div>
+
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201007224325.png" srcset="/img/loading.gif" alt="image-20201007224322645"></p>
+<h3 id="2-Git-Branch"><a href="#2-Git-Branch" class="headerlink" title="2. Git Branch"></a>2. Git Branch</h3><p>Git 的分支也非常轻量。它们只是简单地指向某个提交纪录，不会造成储存或内存上的开销，而是按逻辑分解工作到不同的分支上。</p>
+<p><strong>早建分支！多用分支！</strong></p>
+<p>将分支和提交记录结合起来，即基于这个提交以及它所有的父提交进行新的工作。</p>
+<p><code>练习代码 &amp; 执行效果</code></p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs bash"><span class="hljs-comment"># 方式1</span>
+git checkout -b bugFix	<span class="hljs-comment"># 创建并切换到 bugFix 分支</span>
+
+<span class="hljs-comment"># 方式2</span>
+git branch bugFix 		<span class="hljs-comment"># 创建 bugFix 分支</span>
+git checkout bugFix 	<span class="hljs-comment"># 切换到 bugFix 分支</span></code></pre></div>
+
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201007231735.png" srcset="/img/loading.gif" alt="Git Branch"></p>
+<h3 id="3-Git-Merge"><a href="#3-Git-Merge" class="headerlink" title="3. Git Merge"></a>3. Git Merge</h3><p>Git 合并分支：将两个分支合并到一起。就是说我们新建一个分支，在其上开发某个新功能，开发完成后再合并回主线。</p>
+<p>Git Merge：在 Git 中合并两个分支时会产生一个有两个父节点的提交记录，具体流程如下图所示：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201007234844.png" srcset="/img/loading.gif" alt="image-20201007233914469"></p>
+<p><code>练习代码 &amp; 执行效果</code></p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs bash">git checkout -b bugFix		<span class="hljs-comment"># 创建并切换到 bugFix 分支</span>
+git commit					<span class="hljs-comment"># 提交一次</span>
+git checkout master			<span class="hljs-comment"># 切换到 master 分支</span>
+git commit					<span class="hljs-comment"># 再提交一次</span>
+git merge bugFix			<span class="hljs-comment"># 将 bugFix 分支合并到 master 分支</span></code></pre></div>
+
+
+
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201007234625.png" srcset="/img/loading.gif" alt="image-20201007234623565"></p>
+<h3 id="4-Git-Rebase"><a href="#4-Git-Rebase" class="headerlink" title="4. Git Rebase"></a>4. Git Rebase</h3><p>相较于 Merge 操作，Git Rebase 实际上就是取出一系列的提交记录，“复制”它们，然后在另外一个地方逐个的放下去。</p>
+<p>其优势就是可以创造更线性的提交历史，让代码库的提交历史将会变得异常清晰。</p>
+<p>具体流程，如下图所示</p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008000250.png" srcset="/img/loading.gif" alt="image-20201007235434578"></p>
+<p><code>练习代码 &amp; 执行效果</code></p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs bash">git checkout -b bugFix			<span class="hljs-comment"># 创建并切换到 bugFix 分支</span>
+git commit						<span class="hljs-comment"># 提交一次</span>
+git checkout master				<span class="hljs-comment"># 切换到 master 分支</span>
+git commit						<span class="hljs-comment"># 再提交一次</span>
+git checkout bugFix				<span class="hljs-comment"># 切换到 bugFix 分支</span>
+git rebase master				<span class="hljs-comment"># 将 bugFix 分支合并到 master 分支</span></code></pre></div>
+
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201007235900.png" srcset="/img/loading.gif" alt="image-20201007235854007"></p>
+<h2 id="2-Git高级篇"><a href="#2-Git高级篇" class="headerlink" title="2. Git高级篇"></a>2. Git高级篇</h2><p>来体验 Git 的超棒特性</p>
+<h3 id="1-分离-HEAD"><a href="#1-分离-HEAD" class="headerlink" title="1. 分离 HEAD"></a>1. 分离 HEAD</h3><p><strong>HEAD</strong>： 指向<strong>当前分支上最近一次提交记录</strong>，大多数修改提交树的 Git 命令都是从改变 HEAD 的指向开始的，即分离 HEAD。</p>
+<p>更改 HEAD 指向</p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008143329.png" srcset="/img/loading.gif" alt="image-20201008143326919"></p>
+<p>分离 HEAD 实例如下</p>
+<p><code>练习代码 &amp; 执行效果</code></p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs bash">git checkout c1</code></pre></div>
+
+
+
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008142007.png" srcset="/img/loading.gif" alt="image-20201008142005424"></p>
+<h3 id="2-相对引用"><a href="#2-相对引用" class="headerlink" title="2. 相对引用"></a>2. 相对引用</h3><p>上一小结，我们学习到通过改变提交记录的哈希值来改变 HEAD 分支，而通过 <code>git log</code> 命令来获取提交记录的哈希值(可取前几位)，但通过指定提交记录哈希值的方式在 Git 中移动不太方便，因此 Git 加入了<strong>相对引用</strong>的方式来引用。</p>
+<p><strong>相对引用有两种方式：</strong></p>
+<ul>
+<li>使用 <code>^</code> 向上移动 1 个提交记录</li>
+<li>使用 <code>~&lt;num&gt;</code> 向上移动 n 个提交记录</li>
+</ul>
+<p><strong>相对引用(^) 示例</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008150146.png" srcset="/img/loading.gif" alt="image-20201008150144666"></p>
+<p><strong>相对引用(~) 示例</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008164048.png" srcset="/img/loading.gif" alt="image-20201008164046820"></p>
+<p><strong>强制修改分支位置</strong></p>
+<p>使用 <code>-f</code> 让指定分支指向另一个提交，即修改分支位置。</p>
+<p>让 master 分支强制指向 HEAD 的第 3 级父提交，如下图所示</p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008164816.png" srcset="/img/loading.gif" alt="image-20201008164814954"></p>
+<p>相对引用之(^)的<code>练习代码 &amp; 执行效果</code></p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs bash">git checkout bugFix^	<span class="hljs-comment"># 提交到 bugFix 的父提交</span></code></pre></div>
+
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008151014.png" srcset="/img/loading.gif" alt="image-20201008151012184"></p>
+<p>相对引用之(~)的<code>练习代码 &amp; 执行效果</code></p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs bash">git checkout HEAD~1				<span class="hljs-comment"># HEAD指向C1</span>
+git branch -f master C6			<span class="hljs-comment"># 分支master直接指向C6</span>
+git branch -f bugFix HEAD^		<span class="hljs-comment"># 分支bugFix指向HEAD的上一级</span></code></pre></div>
+
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008173214.png" srcset="/img/loading.gif" alt="image-20201008173212358"></p>
+<h3 id="3-撤销变更"><a href="#3-撤销变更" class="headerlink" title="3. 撤销变更"></a>3. 撤销变更</h3><p>撤销变更由底层部分（暂存区的独立文件或者片段）和<strong>上层部分</strong>（变更到底是通过<strong>哪种方式被撤销</strong>的）组成。我们这个应用主要关注的是后者。</p>
+<p>两种方法用来撤销变更，分别是 <code>git reset</code>，还有就是 <code>git revert</code>。</p>
+<ul>
+<li><strong>git reset</strong>：通过把分支记录回退几个提交记录来实现撤销改动，原来指向的提交记录就跟从来没有提交过一样。（仅本地使用）</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008185948.png" srcset="/img/loading.gif" alt="image-20201008185946102"></p>
+<ul>
+<li><p><strong>git revert</strong>：git reset 是无法更改远程分支的，为了撤销更改并<strong>分享</strong>给别人，Git 引入了更改机制，推送到远程分支，实现撤销上一个提交记录。</p>
+<p>如下图，<strong>C1 的状态与 C2’ 是相同的</strong></p>
+</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008190215.png" srcset="/img/loading.gif" alt="image-20201008190213601"></p>
+<p><code>练习代码 &amp; 执行效果</code></p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs bash">git reset <span class="hljs-built_in">local</span>^		<span class="hljs-comment"># 撤销本地分支(还原到上一个提交分支)</span>
+
+git checkout pushed		<span class="hljs-comment"># 先切换到远程分支</span>
+git revert pushed		<span class="hljs-comment"># 撤销远程分支(向远程分支推送更改的C2&#x27;, 状态与C1一样)</span></code></pre></div>
+
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008201908.png" srcset="/img/loading.gif" alt="image-20201008201907199"></p>
+<hr>
+<p>​        到这里，我们已经学习了 Git 的基础知识 —— <strong>提交、分支以及在提交树上移动</strong>。 这些概念涵盖了 Git 90% 的功能，同样也足够满足开发者的日常需求，剩余的 10%的是<strong>整理提交记录</strong>， 在处理复杂的工作流时(或者当你陷入困惑时）可能就显示尤为重要了。</p>
+<h2 id="3-移动提交记录"><a href="#3-移动提交记录" class="headerlink" title="3. 移动提交记录"></a>3. 移动提交记录</h2><p>自由修改提交树</p>
+<h3 id="1-Git-Cherry-pick"><a href="#1-Git-Cherry-pick" class="headerlink" title="1. Git Cherry-pick"></a>1. Git Cherry-pick</h3><p>Cherry-pick 能将<strong>一些提交复制到当前所在的位置（<code>HEAD</code>）的下面</strong>，命令格式为 <code>git cherry-pick &lt;提交号&gt;...</code>，如下图</p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008205915.png" srcset="/img/loading.gif" alt="image-20201008205807863"></p>
+<p><code>练习代码 &amp; 执行效果</code></p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs bash">git cherry-pick C3 C4 C7			<span class="hljs-comment"># 把&lt;提交号&gt;抓过来放到当前分支下</span></code></pre></div>
+
+<img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008210545.png" srcset="/img/loading.gif" alt="image-20201008210521787" style="zoom:90%;" />
+
+
+
+<h3 id="2-图形交互式的-rebase"><a href="#2-图形交互式的-rebase" class="headerlink" title="2. 图形交互式的 rebase"></a>2. 图形交互式的 rebase</h3><p>当知道提交记录的<strong>哈希值</strong>时, 用 <strong>cherry-pick</strong> 再好不过了，而若不清楚哈希值时，采用<strong>图形交互式的 rebase</strong> 则是最好的方法。</p>
+<p>交互式 rebase 指的是使用带参数 <code>--interactive</code> 的 rebase 命令, 简写为 <code>-i</code>，命令格式为 <code>git rebase -i HEAD~&lt;num&gt;</code>。</p>
+<p>Git 会打开一个 UI 界面，并列出将要被复制到目标分支的备选提交记录，它还会显示每个提交记录的哈希值和提交说明，提交说明有助于你理解这个提交进行了哪些更改。</p>
+<p>当 rebase UI界面打开时, 你能做3件事：</p>
+<ul>
+<li>调整提交记录的顺序</li>
+<li>删除你不想要的提交 (通过切换 <code>pick</code> 的状态完成，关闭即代表不提交该记录)</li>
+<li>合并提交 (多个提交记录合并成一个)</li>
+</ul>
+<p><code>练习代码 &amp; 执行效果</code></p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs bash">git rebase -i HEAD~4</code></pre></div>
+
+<p>Rebase UI 界面</p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008212326.png" srcset="/img/loading.gif" alt="image-20201008212245262"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008212336.png" srcset="/img/loading.gif" alt="image-20201008212254864"></p>
+<h2 id="4-杂项"><a href="#4-杂项" class="headerlink" title="4. 杂项"></a>4. 杂项</h2><p>Git 技术、技巧与贴士大集合</p>
+<h3 id="1-只取一个提交记录"><a href="#1-只取一个提交记录" class="headerlink" title="1. 只取一个提交记录"></a>1. 只取一个提交记录</h3><p><strong>本地栈式提交</strong>，在开发中经常会遇到的情况：我正在解决某个特别棘手的 Bug，这个过程中顺带在代码中加了一些调试命令和打印语句(在各自的提交记录里)，Bug 解决完后就打算把 <code>bugFix</code> 分支里的工作合并回 <code>master</code> 分支了，但<strong>不想将调试语句和打印语句也一并提交</strong>。</p>
+<p><code>练习代码 &amp; 执行效果</code></p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs bash">git rebase -i C2 C3		<span class="hljs-comment"># 将C2,C3分支先挂起，另做处理</span>
+git checkout master		<span class="hljs-comment"># 切换到master分支</span>
+git merge bugFix		<span class="hljs-comment"># 将bugFix分支与master分支合并</span></code></pre></div>
+
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008231357.png" srcset="/img/loading.gif" alt="image-20201008231035992"></p>
+<h3 id="2-提交的技巧-1"><a href="#2-提交的技巧-1" class="headerlink" title="2. 提交的技巧 #1"></a>2. 提交的技巧 #1</h3><p>使用场景：之前在 A 分支上进行了一次提交，然后又基于它创建了 <code>C1</code> 分支，然后又提交了一次，而此时你想<strong>对某个以前的提交记录进行修改</strong>。</p>
+<p>具体操作可分为四个步骤：</p>
+<ul>
+<li>先用 <strong>git rebase -i</strong> 将提交<strong>重新排序</strong>，然后把我们想要修改的提交记录挪到最前</li>
+<li>然后用 <strong>git commit –amend</strong> 来做一些小修改后重新提交</li>
+<li>接着再用 <strong>git rebase -i</strong> 来还原提交记录的顺序</li>
+<li>最后我们<strong>把 master 移到最新</strong>，就大功告成啦！</li>
+</ul>
+<p><code>练习代码 &amp; 执行效果</code></p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs bash">git rebase -i HEAD~2 	<span class="hljs-comment"># 调整c2c3，得到c3&#x27; c2&#x27;</span>
+git commit --amend 		<span class="hljs-comment"># 修改c2&#x27;后重新提交，得到c2&#x27;&#x27;</span>
+git rebase -i HEAD~2 	<span class="hljs-comment"># 调整c2&#x27;&#x27; c3&#x27;，得到c2&#x27;&#x27;&#x27; c3&#x27;&#x27;</span>
+git checkout master		<span class="hljs-comment"># 切换到master分支</span>
+git merge caption 		<span class="hljs-comment"># caption指向c3&#x27;&#x27;，合并到master</span></code></pre></div>
+
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201008235222.png" srcset="/img/loading.gif" alt="image-20201008235222"></p>
+<h3 id="3-提交的技巧-2"><a href="#3-提交的技巧-2" class="headerlink" title="3. 提交的技巧 #2"></a>3. 提交的技巧 #2</h3><p>使用 <strong>cherry-pick</strong> 实现上述操作的相同效果，而且更便捷！</p>
+<p>操作演示</p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201009095433.png" srcset="/img/loading.gif" alt="image-20201009095425126"></p>
+<p><code>练习代码 &amp; 执行效果</code></p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs bash">git checkout master		<span class="hljs-comment"># 先切换到master分支</span>
+git cherry-pick C2		<span class="hljs-comment"># 把C2转到master分支下，得到C2&#x27;</span>
+git commit --amend		<span class="hljs-comment"># 重新提交C2&#x27;,得到C2&#x27;&#x27;</span>
+git cherry-pick C3		<span class="hljs-comment"># 把C3转到master分支(C2&#x27;&#x27;)下，得到C3&#x27;</span></code></pre></div>
+
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201009095938.png" srcset="/img/loading.gif" alt="image-20201009095936449"></p>
+<h3 id="4-Git-Tag"><a href="#4-Git-Tag" class="headerlink" title="4. Git Tag"></a>4. Git Tag</h3><p>不难得出，分支的缺点主要是<strong>易被人为移动、改变</strong>，而且大部分分支还只是临时的，并且还一直在变。</p>
+<p>而 <strong>标签</strong> 可以 <strong><em>永远</em> 指向某个提交记录的标识</strong>，它就像是提交树上的一个锚点，标识了某个特定的位置。</p>
+<p>用途也很广，例如软件发布新的大版本，或者是修正一些重要的 Bug 或是增加了某些新特性等。</p>
+<p>命名语法为 <code>git tag &lt;标签名&gt; &lt;commit号&gt;</code>，如下图</p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201009103006.png" srcset="/img/loading.gif" alt="image-20201009102800288"></p>
+<p><code>练习代码 &amp; 执行效果</code></p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs bash">git tag v0 C1			<span class="hljs-comment"># 给C1添加标签v0</span>
+git tag v1 C2			<span class="hljs-comment"># 给C2添加标签v1</span>
+git checkout C2			<span class="hljs-comment"># 当前HEAD指向C2</span></code></pre></div>
+
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201009103455.png" srcset="/img/loading.gif" alt="git tag"></p>
+<h3 id="5-Git-Describe"><a href="#5-Git-Describe" class="headerlink" title="5. Git Describe"></a>5. Git Describe</h3><p><strong>Git Describe</strong>：用来<strong>描述</strong>离你最近的标签(锚点)，能帮你在提交历史中移动了多次以后找到方向。</p>
+<p>命令语法是<code>git describe &lt;ref&gt;</code>，<code>&lt;ref&gt;</code> 可以是任何能<strong>被 Git 识别成提交记录的引用</strong>，Git 默认会以你目前所检出的位置<strong>（<code>HEAD</code>）</strong>。</p>
+<p>输出的结果是 <code>&lt;tag&gt;_&lt;numCommits&gt;_g&lt;hash&gt;</code>，其中</p>
+<ul>
+<li><p><code>tag</code> 表示的是离 <code>ref</code> 最近的标签</p>
+</li>
+<li><p><code>numCommits</code> 是表示这个 <code>ref</code> 与 <code>tag</code> 相差有多少个提交记录</p>
+</li>
+<li><p><code>hash</code> 表示的是提交记录哈希值的前几位</p>
+</li>
+</ul>
+<h1 id="远程操作"><a href="#远程操作" class="headerlink" title="远程操作"></a>远程操作</h1><h2 id="Git-远程仓库-Push-amp-Pull-及高级操作"><a href="#Git-远程仓库-Push-amp-Pull-及高级操作" class="headerlink" title="Git 远程仓库(Push &amp; Pull)及高级操作"></a>Git 远程仓库(Push &amp; Pull)及高级操作</h2><p>是时候分享你的代码了，让编码变得社交化吧</p>
+<h3 id="1-Git-Clone-与-远程分支"><a href="#1-Git-Clone-与-远程分支" class="headerlink" title="1. Git Clone 与 远程分支"></a>1. Git Clone 与 远程分支</h3><p><code>git clone</code> 命令在真实的环境下的作用是在<strong>本地</strong>创建一个远程仓库的拷贝，命令语法为<code>git clone &lt;url&gt;</code>。</p>
+<p>通过 <code>git clone</code>，我们在本地的仓库多了一个名为 <code>o/master</code> 的分支, 这种类型的分支就叫<strong>远程</strong>分支。</p>
+<p>远程分支反映了远程仓库在你<strong>最后一次和它通信时的状态</strong>，有助于理解本地的工作与公共工作的差别。</p>
+<p>远程分支的命名规范是 <code>&lt;remote name&gt;/&lt;branch name&gt;</code>，因此 <code>o/master</code> 分支中，分支名为 <code>master</code>，远程仓库的名称为 <code>origin</code>(为了简化用’o’代替)。</p>
+<h3 id="2-Git-Fetch"><a href="#2-Git-Fetch" class="headerlink" title="2. Git Fetch"></a>2. Git Fetch</h3><p>Git 远程仓库相当的操作实际可以归纳为两点：<strong>向远程仓库传输数据</strong>(git push) 以及<strong>从远程仓库获取数据</strong>(git fetch)。</p>
+<p><code>git fetch</code> 完成了仅有的但是很<strong>重要的两步</strong>:</p>
+<ul>
+<li>从远程仓库下载本地仓库中缺失的提交记录</li>
+<li>更新远程分支指针(如 <code>o/master</code>)</li>
+</ul>
+<p><code>git fetch</code> 将本地仓库中的远程分支更新成了远程仓库相应分支最新的状态，通常通过互联网（使用 <code>http://</code> 或 <code>git://</code> 协议) 与远程仓库通信。</p>
+<p><code>git fetch</code> 只是执行单纯的下载操作，<strong>不会</strong>改变你本地仓库的状态，<strong>不会</strong>更新你的 <code>master</code> 分支，也<strong>不会</strong>修改你磁盘上的文件。</p>
+<p><strong>git fetch 示例</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201009123552.png" srcset="/img/loading.gif"></p>
+<h3 id="3-Git-Pull"><a href="#3-Git-Pull" class="headerlink" title="3. Git Pull"></a>3. Git Pull</h3><p>Git Pull 实际上执行了两个操作， <strong>先抓取更新(git fetch)，再合并到本地分支(git <u>merge/base/cherry-pick</u> o/master)</strong> 。</p>
+<p>先来看看 <code>fetch</code>、<code>merge</code> 依次执行的效果</p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201009124543.png" srcset="/img/loading.gif" alt="image-20201009124542415"></p>
+<p>使用 <code>git pull</code> 的效果</p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201009124552.png" srcset="/img/loading.gif"></p>
+<p>结论： <strong><code>git pull</code> 就是 git fetch 和 git merge <just-fetched-branch> 的缩写！</strong></p>
+<h3 id="4-Git-Push"><a href="#4-Git-Push" class="headerlink" title="4. Git Push"></a>4. Git Push</h3><p><code>git push</code> 即<strong>向远程仓库传输数据</strong>，负责将<strong>本地的</strong>变更上传到指定的远程仓库，并在远程仓库上合并你的新提交记录。</p>
+<p>命令语法为：<code>git push &lt;remote&gt; &lt;place&gt;</code>。</p>
+<p>例如：<code>git push origin master</code> 翻译过来是：切到本地仓库中的“master”分支，获取所有的提交，再到远程仓库“origin”中找到“master”分支，将远程仓库中没有的提交记录都添加上去。</p>
+<p>其中 <code>&lt;place&gt;</code>可以划分为 <code>&lt;source&gt;:&lt;destination&gt;</code>，同时指定 <strong>源地址</strong> 和 <strong>目的地(若不存在则新建该分支)</strong> 。</p>
+<p><strong>git push 示例</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201009125524.png" srcset="/img/loading.gif" alt="image-20201009125523139"></p>
+<p><strong>git push <remote> <place> 示例</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201009132449.png" srcset="/img/loading.gif" alt="image-20201009132447363"></p>
+<p><strong>git push origin <code>&lt;source&gt;:&lt;destination&gt;</code> 示例</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201009133122.png" srcset="/img/loading.gif" alt="image-20201009133117183"></p>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><p>分享其他不错的 Git 学习网站</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://try.github.io/">https://try.github.io</a></li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Git/">Git</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/10/10/2020-10-10-Java-Collection-Interview/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Java 集合框架整理</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/10/05/2020-10-05-Git-Common-Commands/">
+                        <span class="hidden-mobile">Git 常用命令</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <!-- 目录模板 -->
+<div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  <!-- 回到顶部 -->
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <!-- 搜索框布局 -->
+<div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  <!-- 自定义 html -->
+  
+    <div class="col-lg-7 mx-auto nopadding-md">
+      <div class="container custom mx-auto">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/css/font.css">
+      </div>
+    </div>
+  
+
+  <!-- 页脚模板布局 -->
+<footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <p>©2020 by Lin</p>
+      <span>驱动</span>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener">Hexo</a>
+      <span>|&nbsp;主题</span>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">Fluid</a>
+    </div>
+    <!-- 统计模块 -->
+
+
+    <!-- 备案信息 -->
+
+
+    
+
+    <!-- 一言-言语的魅力 -->
+    <div>
+      <p style="font-size: 18px; font-weight: bold;" id="hitokoto">:D 获取中...</p>
+      <script>
+        fetch('https://v1.hitokoto.cn')
+          .then(response => response.json())
+          .then(data => {
+            const hitokoto = document.getElementById('hitokoto')
+            hitokoto.innerText = data.hitokoto
+            })
+            .catch(console.error)
+      </script>
+    </div>
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<!-- 引入第三方 js -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '#post-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+<!-- 打字机特效 -->
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+    <script type="text/javascript">
+        !function(e){var n,t={},o="jinrishici-token";function i(){return document.getElementById("jinrishici-sentence")||0!=document.getElementsByClassName("jinrishici-sentence").length}function c(){t.load(function(e){var n=document.getElementById("jinrishici-sentence"),t=document.getElementsByClassName("jinrishici-sentence");if(n&&(n.innerText=e.data.content),0!==t.length)for(var o=0;o<t.length;o++)t[o].innerText=e.data.content})}function r(e,n){var t=new XMLHttpRequest;t.open("get",n),t.withCredentials=!0,t.send(),t.onreadystatechange=function(n){if(4===t.readyState){var o=JSON.parse(t.responseText);"success"===o.status?e(o):console.error("今日诗词API加载失败，错误原因："+o.errMessage)}}}t.load=function(n){return e.localStorage&&e.localStorage.getItem(o)?function(e,n){return r(e,"https://v2.jinrishici.com/one.json?client=browser-sdk/1.2&X-User-Token="+encodeURIComponent(n))}(n,e.localStorage.getItem(o)):function(n){return r(function(t){e.localStorage.setItem(o,t.token),n(t)},"https://v2.jinrishici.com/one.json?client=browser-sdk/1.2")}(n)},e.jinrishici=t,i()?c():(n=function(){i()&&c()},"loading"!=document.readyState?n():document.addEventListener?document.addEventListener("DOMContentLoaded",n):document.attachEvent("onreadystatechange",function(){"complete"==document.readyState&&n()}))}(window); 
+        // 输出指定数量空格+引用
+        function writeSpace(len){
+          len = (len > 15) ? (len > 31 ? 0 : 10) : len
+          var space = ''
+          for(var i = 0; i<len; i++){
+            space += '&emsp;'
+          }
+          return space+"——";
+        }
+
+        // 执行打字机动效
+        function startTyping(strs){
+          var typed = new Typed('#subtitle', {
+          strings: ['  ', strs],
+          cursorChar: "_",
+          typeSpeed: 50,
+          loop: false,
+          });
+          typed.stop();
+          $(document).ready(function () {
+            $(".typed-cursor").addClass("h2");
+            typed.start();
+          }); 
+        }
+    </script>
+  
+    <script>
+      // 非首页 则输出文章标题
+      var strs = "Git 学习笔记&nbsp;";
+      startTyping(strs);
+    </script>
+  
+
+<!-- 标题锚点 -->
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+<!-- 鼠标点击特效模板 -->
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/js/mouse-fireworks.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

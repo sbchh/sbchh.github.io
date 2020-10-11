@@ -19,7 +19,7 @@
   <meta name="description" content="">
   <meta name="author" content="Lin">
   <meta name="keywords" content="">
-  <title>Hello World - Vin</title>
+  <title>Hexo 全局字体之思源宋体 - Vin</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 
@@ -161,8 +161,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2020-09-19 11:30" pubdate>
-        2020年9月19日 中午
+      <time datetime="2020-10-01 00:14" pubdate>
+        2020年10月1日 凌晨
       </time>
     </span>
   
@@ -173,7 +173,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      75 字
+      325 字
     </span>
   
 
@@ -183,7 +183,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      1
+      4
        分钟
     </span>
   
@@ -213,28 +213,63 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto" id="post">
             <!-- SEO header -->
-            <h1 style="display: none">Hello World</h1>
+            <h1 style="display: none">Hexo 全局字体之思源宋体</h1>
             
             <div class="markdown-body" id="post-body">
-              <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs bash">$ hexo new <span class="hljs-string">&quot;My New Post&quot;</span></code></pre></div>
+              <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>一直想更换默认的博客文章字体，参考了众多大佬的博客设计，想换点不一样的字体。</p>
+<p>鉴于本博客主要以中文内容为主，最终选择思源宋体作为博客的正文展示，文章整体显得比较得体和大气！</p>
+<h2 id="1-Fluid-主题"><a href="#1-Fluid-主题" class="headerlink" title="1. Fluid 主题"></a>1. Fluid 主题</h2><h3 id="1-1-导入-Google-字库"><a href="#1-1-导入-Google-字库" class="headerlink" title="1.1 导入 Google 字库"></a>1.1 导入 Google 字库</h3><p>打开 Fluid 主题配置文件 <code>fluid/_config.yml</code>，在自定义 html 处引入字库</p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs yaml"><span class="hljs-attr">custom_html:</span> 
+    <span class="hljs-string">&#x27;&lt;link rel=&quot;stylesheet&quot; href=&quot;https://fonts.googleapis.com/css?family=Noto+Serif+SC&quot;&gt;&#x27;</span></code></pre></div>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs bash">$ hexo server</code></pre></div>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201003214436.png" srcset="/img/loading.gif" alt="image-20201003214432936"></p>
+<h3 id="1-2-配置全局字体"><a href="#1-2-配置全局字体" class="headerlink" title="1.2 配置全局字体"></a>1.2 配置全局字体</h3><p>同时设置 <code>font_family</code> 为 <strong>Noto Serif SC</strong></p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs yaml"><span class="hljs-attr">font:</span>  <span class="hljs-comment"># 主题字体配置</span>
+  <span class="hljs-attr">font_size:</span> <span class="hljs-string">18px</span>                   <span class="hljs-comment"># 全局字号</span>
+  <span class="hljs-attr">font_family:</span> <span class="hljs-string">&quot;Noto Serif SC&quot;</span>      <span class="hljs-comment"># 全局字体</span>
+  <span class="hljs-attr">code_font_size:</span> <span class="hljs-string">18px</span>              <span class="hljs-comment"># 代码的字号</span></code></pre></div>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs bash">$ hexo generate</code></pre></div>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs bash">$ hexo deploy</code></pre></div>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201003214334.png" srcset="/img/loading.gif" alt="image-20201003214331716"></p>
+<h2 id="2-Butterfly-主题"><a href="#2-Butterfly-主题" class="headerlink" title="2. Butterfly 主题"></a>2. Butterfly 主题</h2><p>​    更换 Butterfly 主题的字库可以仅在<code>_config.yml</code>中设置，也可按照下面的方法进行魔改。</p>
+<h3 id="2-1-导入-Google-字库"><a href="#2-1-导入-Google-字库" class="headerlink" title="2.1 导入 Google 字库"></a>2.1 导入 Google 字库</h3><p>打开文件 <code>layout/includes/additional-js.pug</code>，把如下代码复制到顶部</p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs routeros">link(<span class="hljs-attribute">rel</span>=<span class="hljs-string">&quot;stylesheet&quot;</span>, <span class="hljs-attribute">href</span>=<span class="hljs-string">&quot;https://fonts.googleapis.com/css?family=Noto+Serif+SC&quot;</span>)</code></pre></div>
+
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201001002937.png" srcset="/img/loading.gif" alt="image-20201001002932977"></p>
+<h3 id="2-2-配置全局字体"><a href="#2-2-配置全局字体" class="headerlink" title="2.2 配置全局字体"></a>2.2 配置全局字体</h3><p>打开文件 <code>source/css/var.styl</code>，替换相应的代码</p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs stylus"><span class="hljs-variable">$dafault</span>-<span class="hljs-attribute">font-family</span> = <span class="hljs-string">&#x27;Noto Serif SC&#x27;</span>, serif</code></pre></div>
+
+
+
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201001002945.png" srcset="/img/loading.gif" alt="image-20201001002944343"></p>
+<p>完成上述两个步骤，字体替换完成！:)</p>
+<h2 id="3-参考"><a href="#3-参考" class="headerlink" title="3. 参考"></a>3. 参考</h2><p>感谢博主的分享😀</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://blog.shenshilei.site/post/29e3">Butterfly主题更换思源宋体</a></li>
+</ul>
 
             </div>
             <hr>
             <div>
               <div class="post-metas mb-3">
                 
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Hexo/">Hexo</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Butterfly/">Butterfly</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Fluid/">Fluid</a>
+                    
+                  </div>
                 
               </div>
               
@@ -243,15 +278,21 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2020/09/19/%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2/">
+                      <a href="/2020/10/05/2020-10-05-Git-Common-Commands/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">我的博客</span>
+                        <span class="hidden-mobile">Git 常用命令</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
                   </article>
                   <article class="post-next col-6">
                     
+                    
+                      <a href="/2020/09/30/ThreadLocal/">
+                        <span class="hidden-mobile">多线程之 ThreadLocal</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
                     
                   </article>
                 </div>
@@ -448,7 +489,7 @@
   
     <script>
       // 非首页 则输出文章标题
-      var strs = "Hello World&nbsp;";
+      var strs = "Hexo 全局字体之思源宋体&nbsp;";
       startTyping(strs);
     </script>
   
