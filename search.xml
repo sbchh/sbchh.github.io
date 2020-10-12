@@ -615,6 +615,648 @@ sThreadLocal.get()</code></pre>
       </tags>
   </entry>
   <entry>
+    <title>十个常见的排序算法</title>
+    <url>/2020/10/12/2020-10-12-ten-sort-alogrithm/</url>
+    <content><![CDATA[<center style='font-size: 18px; font-weight: bold;'>常见的内部排序算法</center>
+
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201012110529.png" alt="image-20201012110323047"></p>
+<p>名词解释：</p>
+<ul>
+<li>n：数据规模</li>
+<li>k：”桶”的个数</li>
+<li>In-place：占用常数内存，不占用额外内存</li>
+<li>Out-place：占用额外内存</li>
+<li>稳定性：排序后 2 个相等键值的顺序和排序之前它们的顺序相同</li>
+</ul>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>排序算法可以分为内部排序和外部排序，内部排序是数据记录在内存中进行排序，而外部排序是因排序的数据很大，一次不能容纳全部的排序记录，在排序过程中需要访问外存。常见的内部排序算法有：插入排序、希尔排序、选择排序、冒泡排序、归并排序、快速排序、堆排序、基数排序等。</p>
+<p>接下来详细地介绍下着十大经典的排序算法。</p>
+<h2 id="1-冒泡排序"><a href="#1-冒泡排序" class="headerlink" title="1. 冒泡排序"></a>1. 冒泡排序</h2><p>冒泡排序（Bubble Sort）是一种简单的<strong>排序算法</strong>。它重复地走访过要排序的数列，一次比较两个元素，如果他们的顺序错误就把他们交换过来。走访数列的工作是重复地进行直到没有再需要交换，也就是说该数列已经排序完成。这个算法的名字由来是因为<strong>越小的元素会经由交换慢慢“浮”到数列的顶端</strong>。</p>
+<p><strong>算法步骤：</strong></p>
+<ul>
+<li>较相邻的元素，如果前者比后者大，则交换两个元素</li>
+<li>对每一对相邻元素作同样的工作，从开始第一对到结尾的最后一对</li>
+<li>针对所有的元素重复以上的步骤，除了最后一个</li>
+<li>重复上面三个步骤，直到没有任何一对数字需要比较</li>
+</ul>
+<p><strong>演示动图</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201012131013.gif" alt="bubbo"></p>
+<p><strong>Java 代码实现</strong></p>
+<pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span>[] bubbleSort(<span class="hljs-keyword">int</span>[] arr) &#123;
+    <span class="hljs-comment">// 直接进行冒泡排序</span>
+    <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> len = arr.length;
+    <span class="hljs-comment">// i表示第几趟排序 遍历n-1次</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= len - <span class="hljs-number">1</span>; i++) &#123;
+        <span class="hljs-comment">// j表示排序次数</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; len - i; j++) &#123;
+            <span class="hljs-comment">// 让小的数字冒泡上浮 大数下沉</span>
+            <span class="hljs-keyword">if</span> (arr[j] &gt; arr[j + <span class="hljs-number">1</span>]) &#123;
+                <span class="hljs-keyword">int</span> temp = arr[j + <span class="hljs-number">1</span>];
+                arr[j + <span class="hljs-number">1</span>] = arr[j];
+                arr[j] = temp;
+            &#125;
+        &#125;
+    &#125;
+    <span class="hljs-keyword">return</span> arr;
+&#125;</code></pre>
+
+
+
+<p>若序列中的大部分元素已经预先排好序，那么使用冒泡排序简直浪费生命，故可以针对局部元素已排好序的情况进行改进。</p>
+<p><strong>改进后的冒泡排序算法</strong></p>
+<pre><code class="hljs java"><span class="hljs-comment">// 优化后的冒泡排序: 若当前数组子集没有交换过 代表已经排序完成 看后续元素</span>
+<span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span>[] proveBubble(<span class="hljs-keyword">int</span>[] arr) &#123;
+    <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> len = arr.length;
+    <span class="hljs-keyword">boolean</span> flag = <span class="hljs-keyword">false</span>;
+    <span class="hljs-comment">// i表示第几趟排序 遍历n-1次</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; len - <span class="hljs-number">1</span>; i++) &#123;
+        <span class="hljs-comment">// j表示排序次数</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; len - <span class="hljs-number">1</span> - i; j++) &#123;
+            <span class="hljs-comment">// 让小的数字冒泡上浮 大数下沉</span>
+            <span class="hljs-keyword">if</span> (arr[j] &gt; arr[j + <span class="hljs-number">1</span>]) &#123;
+                flag = <span class="hljs-keyword">true</span>;
+                <span class="hljs-keyword">int</span> temp = arr[j + <span class="hljs-number">1</span>];
+                arr[j + <span class="hljs-number">1</span>] = arr[j];
+                arr[j] = temp;
+            &#125;
+        &#125;
+        <span class="hljs-keyword">if</span> (flag) &#123;
+            flag = <span class="hljs-keyword">false</span>;
+        &#125; <span class="hljs-keyword">else</span> &#123;
+            <span class="hljs-keyword">break</span>;
+        &#125;
+    &#125;
+    <span class="hljs-keyword">return</span> arr;
+&#125;</code></pre>
+
+
+
+<h2 id="2-选择排序"><a href="#2-选择排序" class="headerlink" title="2. 选择排序"></a>2. 选择排序</h2><p>选择排序是一种简单直观的排序算法，无论什么数据进去都是 O(n²) 的时间复杂度。所以用到它的时候，数据规模越小越好，不占用额外的内存空间了。</p>
+<p><strong>算法步骤</strong></p>
+<ol>
+<li>在序列中找到最小（大）元素</li>
+<li>把它存放到排序序列的起始位置</li>
+<li>重复 1 和 2 两个步骤，直到所有元素均排序完毕</li>
+</ol>
+<p><strong>动图演示</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201012134051.gif" alt="直接选择排序.gif"></p>
+<p><strong>Java 代码实现</strong></p>
+<pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span>[] selectSort(<span class="hljs-keyword">int</span>[] arr) &#123;
+    <span class="hljs-comment">// 总共要经过 N-1 轮比较</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; arr.length - <span class="hljs-number">1</span>; i++) &#123;
+        <span class="hljs-keyword">int</span> min = i;
+
+        <span class="hljs-comment">// 每轮需要比较的次数 N-i</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = i + <span class="hljs-number">1</span>; j &lt; arr.length; j++) &#123;
+            <span class="hljs-keyword">if</span> (arr[j] &lt; arr[min]) &#123;
+                <span class="hljs-comment">// 记录目前能找到的最小值元素的下标</span>
+                min = j;
+            &#125;
+        &#125;
+
+        <span class="hljs-comment">// 当最小值索引有变动 交换两数索引</span>
+        <span class="hljs-keyword">if</span> (i != min) &#123;
+            <span class="hljs-keyword">int</span> tmp = arr[i];
+            arr[i] = arr[min];
+            arr[min] = tmp;
+        &#125;
+    <span class="hljs-keyword">return</span> arr;
+&#125;</code></pre>
+
+
+
+<h2 id="3-插入排序"><a href="#3-插入排序" class="headerlink" title="3. 插入排序"></a>3. 插入排序</h2><p>插入排序（Insertion Sort）是一种简单直观的排序算法。它的工作原理是通过构建有序序列，<strong>对于未排序数据，在已排序序列中从后向前扫描</strong>，找到相应位置并插入。</p>
+<p>插入排序在实现上，通常采用<strong>原地排序</strong>（即只需用到 O(1) 的额外空间的排序），因而在从后向前扫描过程中，需要反复把已排序元素逐步向后挪位，为最新元素提供插入空间。</p>
+<p><strong>算法步骤</strong></p>
+<ol>
+<li>从第一个元素开始，该元素可以认为已经被排序</li>
+<li>取出下一个元素，在已经排序的元素序列中从后向前扫描</li>
+<li>如果该元素（已排序）大于新元素，将该元素移到下一位置</li>
+<li>重复步骤 3，直到找到已排序的元素小于或者等于新元素的位置</li>
+<li>将新元素插入到该位置后</li>
+<li>重复步骤 2~5，直到所有元素排序完毕</li>
+</ol>
+<p><strong>动图演示</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201012135948.gif" alt="img"></p>
+<p><strong>Java 代码实现</strong></p>
+<pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span>[] insertSort(<span class="hljs-keyword">int</span>[] arr) &#123;
+    <span class="hljs-comment">// 从下标为1的元素开始选择合适的位置插入，因为下标为0的只有一个元素，默认是有序的</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; arr.length; i++) &#123;
+        <span class="hljs-comment">// 记录要插入的数据</span>
+        <span class="hljs-keyword">int</span> tmp = arr[i];
+
+        <span class="hljs-comment">// 记录待插入点</span>
+        <span class="hljs-keyword">int</span> j = i;
+        
+        <span class="hljs-comment">// 从已经排序的序列最右边的开始比较，找到比其小的数</span>
+        <span class="hljs-keyword">while</span> (j &gt; <span class="hljs-number">0</span> &amp;&amp; tmp &lt; arr[j - <span class="hljs-number">1</span>]) &#123;
+            arr[j] = arr[j - <span class="hljs-number">1</span>];
+            j--;
+        &#125;
+
+        <span class="hljs-comment">// 存在比其小的数，插入</span>
+        <span class="hljs-keyword">if</span> (j != i) &#123;
+            arr[j] = tmp;
+        &#125;
+    &#125;
+    <span class="hljs-keyword">return</span> arr;
+&#125;</code></pre>
+
+
+
+<h2 id="4-希尔排序"><a href="#4-希尔排序" class="headerlink" title="4. 希尔排序"></a>4. 希尔排序</h2><p>希尔排序（Shell Sort），是插入排序的一种更高效的改进版本，摒弃逐一元素对比而选用大跨步的间隔比较，使记录<strong>跳跃式接近它的排序位置</strong>。</p>
+<p>希尔排序的基本思想是：先将整个待排序的记录序列分割成为若干子序列分别进行直接插入排序，待整个序列中的记录”基本有序”时，再对全体记录进行依次直接插入排序。</p>
+<p><strong>算法步骤</strong></p>
+<ol>
+<li>先取一个正整数步长 d1（d1 &lt; length），把全部记录分成 d1 个组，所有距离为 d1 的倍数的记录看成一组，然后在各组内进行插入排序</li>
+<li>然后取 d2（d2 &lt; d1）</li>
+<li>重复 1 和 2 两个步骤，直到 di = 1（i &gt;= 1）位置，即所有记录成为一个组，最后对这个组进行插入排序</li>
+</ol>
+<p><strong>动图演示</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201012143300.gif" alt="img"></p>
+<p><strong>Java 代码实现</strong></p>
+<pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span>[] shellSort(<span class="hljs-keyword">int</span>[] arr) &#123;
+    <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> len = arr.length;
+    <span class="hljs-keyword">int</span> group = len / <span class="hljs-number">2</span>;
+    <span class="hljs-keyword">int</span> temp = <span class="hljs-number">0</span>;
+
+    <span class="hljs-keyword">while</span> (group &gt; <span class="hljs-number">0</span>) &#123;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = group; i &lt; len; i++) &#123;
+            <span class="hljs-comment">// j为分组后末尾的点 j-group为分组后起始的点</span>
+            <span class="hljs-comment">// 通过两者对应的值比较来排序</span>
+            <span class="hljs-keyword">int</span> j = i;
+            <span class="hljs-comment">// 待插入的点</span>
+            temp = arr[j];
+            <span class="hljs-comment">// 该组的后续元素比前面的小 需要移动小的元素到前面</span>
+            <span class="hljs-keyword">if</span> (arr[j] &lt; arr[j - group]) &#123;
+                <span class="hljs-comment">// 将分组后的元素向右按步长移动 直至j到达插入点或数组的起点</span>
+                <span class="hljs-keyword">while</span> (j - group &gt;= <span class="hljs-number">0</span> &amp;&amp; temp &lt; arr[j - group]) &#123;
+                    arr[j] = arr[j - group];
+                    j -= group;
+                &#125;
+                <span class="hljs-comment">// 此时索引j在数组的前面 将元素赋值给arr[j]</span>
+                arr[j] = temp;
+            &#125;
+        &#125;
+        group /= <span class="hljs-number">2</span>;
+    &#125;
+    <span class="hljs-keyword">return</span> arr;
+&#125;</code></pre>
+
+
+
+<h2 id="5-归并排序"><a href="#5-归并排序" class="headerlink" title="5. 归并排序"></a>5. 归并排序</h2><p>归并排序（Merge Sort）是创建在归并操作上的一种有效的排序算法，效率为 O(n log n)，是采用<strong>分治法</strong>（Divide and Conquer）的一个非常典型的应用，且各层分治递归可以同时进行。</p>
+<p><strong>算法步骤</strong></p>
+<ol>
+<li>把 n 个元素看成 n 个长度为 1 的有序子表</li>
+<li>进行两两归并使记录关键字有序，得到 n/2 个长度为 2 的有序子表</li>
+<li>重复第 2 个步骤直到所有记录归并成一个长度为 n 的有序表为止</li>
+</ol>
+<p><strong>动图演示</strong></p>
+<center>数组长度为偶数</center>
+
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201012145026.gif" alt="even"></p>
+<center>数组长度为奇数</center>
+
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201012145054.gif" alt="odd"></p>
+<p><strong>Java 代码实现</strong></p>
+<pre><code class="hljs java"><span class="hljs-comment">/**</span>
+<span class="hljs-comment">* 归并排序 - 递归分解 合并排序</span>
+<span class="hljs-comment">*</span>
+<span class="hljs-comment">* <span class="hljs-doctag">@param</span> arr   待排序数组</span>
+<span class="hljs-comment">* <span class="hljs-doctag">@param</span> left  左边有序序列索引</span>
+<span class="hljs-comment">* <span class="hljs-doctag">@param</span> right 右边有序序列索引</span>
+<span class="hljs-comment">* <span class="hljs-doctag">@param</span> temp  中转数组</span>
+<span class="hljs-comment">*/</span>
+<span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span>[] mergeSort(<span class="hljs-keyword">int</span>[] arr, <span class="hljs-keyword">int</span> left, <span class="hljs-keyword">int</span> right, <span class="hljs-keyword">int</span>[] temp) &#123;
+    <span class="hljs-comment">// 递归终止条件 此时该部分数组被分为若干组小数组</span>
+    <span class="hljs-keyword">if</span> (left &gt;= right) &#123;
+        <span class="hljs-keyword">return</span>;
+    &#125;
+
+    <span class="hljs-keyword">int</span> mid = (left + right) / <span class="hljs-number">2</span>;
+
+    <span class="hljs-comment">// 向左递归分解</span>
+    mergeSort(arr, left, mid, temp);
+
+    <span class="hljs-comment">// 向右递归分解</span>
+    mergeSort(arr, mid + <span class="hljs-number">1</span>, right, temp);
+
+    <span class="hljs-comment">// 合并并返回</span>
+    <span class="hljs-keyword">return</span> merge(arr, left, mid, right, temp);
+&#125;
+
+
+<span class="hljs-comment">/**</span>
+<span class="hljs-comment">* 归并排序 - 排序并合并过程</span>
+<span class="hljs-comment">*</span>
+<span class="hljs-comment">* <span class="hljs-doctag">@param</span> arr   待排序数组</span>
+<span class="hljs-comment">* <span class="hljs-doctag">@param</span> left  左边有序序列的索引</span>
+<span class="hljs-comment">* <span class="hljs-doctag">@param</span> mid   数组中间索引</span>
+<span class="hljs-comment">* <span class="hljs-doctag">@param</span> right 右边有序序列索引</span>
+<span class="hljs-comment">* <span class="hljs-doctag">@param</span> temp  中转数组</span>
+<span class="hljs-comment">*/</span>
+<span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span>[] merge(<span class="hljs-keyword">int</span>[] arr, <span class="hljs-keyword">int</span> left, <span class="hljs-keyword">int</span> mid, <span class="hljs-keyword">int</span> right, <span class="hljs-keyword">int</span>[] temp) &#123;
+    <span class="hljs-comment">// 左边有序序列的初始索引</span>
+    <span class="hljs-keyword">int</span> i = left;
+    <span class="hljs-comment">// 右边有序序列的初始索引</span>
+    <span class="hljs-keyword">int</span> j = mid + <span class="hljs-number">1</span>;
+    <span class="hljs-comment">// 中转数组的当前索引</span>
+    <span class="hljs-keyword">int</span> t = <span class="hljs-number">0</span>;
+
+    <span class="hljs-comment">// 1. 先把左右两边(有序)数据填充到temp数组 直到左右其中一边处理完毕终止</span>
+    <span class="hljs-keyword">while</span> (i &lt;= mid &amp;&amp; j &lt;= right) &#123;
+        <span class="hljs-comment">// 如果左边的小于等于右边的元素</span>
+        <span class="hljs-comment">// 将左边的元素填充到temp数组中 反之亦然</span>
+        <span class="hljs-keyword">if</span> (arr[i] &lt;= arr[j]) &#123;
+            temp[t++] = arr[i++];
+        &#125; <span class="hljs-keyword">else</span> &#123;
+            temp[t++] = arr[j++];
+        &#125;
+    &#125;
+    
+    <span class="hljs-comment">// 2. 把有剩余数据的一边数据全部填充到temp中</span>
+    <span class="hljs-keyword">while</span> (i &lt;= mid) &#123;
+        temp[t++] = arr[i++];
+    &#125;
+    <span class="hljs-keyword">while</span> (j &lt;= right) &#123;
+        temp[t++] = arr[j++];
+    &#125;
+    
+    <span class="hljs-comment">// 3. 增量地将temp数组有序的元素填充到原数组</span>
+    t = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">int</span> tempLeft = left;
+    <span class="hljs-comment">// 合并时的下标 可进入断点进行模拟</span>
+    <span class="hljs-comment">// 第1次合并时 tempLeft=0, right = l</span>
+    <span class="hljs-comment">// 第2次合并时 tempLeft=2, right = 3</span>
+    <span class="hljs-comment">// 第3次合并时 tempLeft=0, right = 3</span>
+    <span class="hljs-comment">// 最后一次合并, tempLeft=0, right=arr.length-1</span>
+    <span class="hljs-keyword">while</span> (tempLeft &lt;= right) &#123;
+        arr[tempLeft] = temp[t];
+        t++;
+        tempLeft++;
+    &#125;    
+    <span class="hljs-keyword">return</span> arr;
+&#125;</code></pre>
+
+
+
+<h2 id="6-快速排序"><a href="#6-快速排序" class="headerlink" title="6. 快速排序"></a>6. 快速排序</h2><p>快速排序（Quick sort）最早是由图灵奖得主东尼·霍尔提出的。在平均状况下，排序 n 个项目要 Ο(n * logn) 次比较。在最坏状况下则需要 Ο(n2) 次比较（但这种状况并不常见）。事实上，快速排序通常明显比其他 Ο(n * logn) 的算法更快，因为它的内部循环（inner loop）可以在大部分的架构上很有效率地被实现出来。</p>
+<p>快速排序使用分治法（Divide and conquer）策略来把一个串行（list）分为两个子串行（sub-lists）。</p>
+<p>快速排序算法的<strong>基本思想</strong>是：通过一趟排序将待排序数据分割成独立的两部分，其中一部分的所有元素均比另一部分的元素小，然后分别对这两部分继续进行排序，重复上述步骤直到排序完成。</p>
+<p><strong>算法步骤</strong></p>
+<ol>
+<li>在序列中选择一个元素作为“基准点” (<code>pivot</code>)</li>
+<li>将所有小于“基准点”的元素都移到左边，所有大于“基准点”的元素都移到右边</li>
+<li>对“基准点”左边和右边的两个子集，不断重复步骤 1 和 2，直到所有子集只剩下一个元素为止</li>
+</ol>
+<p><strong>动图演示</strong></p>
+<center>数组长度为偶数</center>
+
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201012163945.gif" alt="even"></p>
+<center>数组长度为奇数</center>
+
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201012164027.gif" alt="odd-1602491968355"></p>
+<p><strong>Java 代码实现</strong></p>
+<pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">quickSort</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] arr, <span class="hljs-keyword">int</span> left, <span class="hljs-keyword">int</span> right)</span> </span>&#123;
+    <span class="hljs-comment">// 递归变量</span>
+    <span class="hljs-keyword">int</span> l = left;
+    <span class="hljs-keyword">int</span> r = right;
+    
+    <span class="hljs-comment">// 设置基准值</span>
+    <span class="hljs-keyword">int</span> pivot = arr[(right + left) / <span class="hljs-number">2</span>];
+    
+    <span class="hljs-comment">// 临时交换</span>
+    <span class="hljs-keyword">int</span> temp = <span class="hljs-number">0</span>;
+
+    <span class="hljs-comment">// 1. 进行左右分组交换</span>
+    <span class="hljs-comment">// 从小到大排序</span>
+    <span class="hljs-comment">// 数组情况 [left(l)...[mid]...(r)right]</span>
+    <span class="hljs-keyword">while</span> (l &lt; r) &#123;
+        <span class="hljs-comment">// 在中间元素的左边找大于它的值 放在右边</span>
+        <span class="hljs-keyword">while</span> (arr[l] &lt; pivot) &#123;
+            l += <span class="hljs-number">1</span>;
+        &#125;
+        <span class="hljs-comment">// 在中间元素的右边找小于它的值 放在左边</span>
+        <span class="hljs-keyword">while</span> (arr[r] &gt; pivot) &#123;
+            r -= <span class="hljs-number">1</span>;
+        &#125;
+        <span class="hljs-comment">// 一趟排序结束 进入递归步骤</span>
+        <span class="hljs-keyword">if</span> (l &gt;= r) &#123;
+            <span class="hljs-keyword">break</span>;
+        &#125;
+        <span class="hljs-comment">// 左右元素交换</span>
+        temp = arr[l];
+        arr[l] = arr[r];
+        arr[r] = temp;
+
+        <span class="hljs-comment">// 交换完后 如果左边的值等于pivot 右边的往左移</span>
+        <span class="hljs-keyword">if</span> (arr[l] == pivot) &#123;
+            r--;
+        &#125;
+        <span class="hljs-comment">// 交换完后 如果右边的值等于pivot 左边的往右移</span>
+        <span class="hljs-keyword">if</span> (arr[r] == pivot) &#123;
+            l++;
+        &#125;
+    &#125;
+    
+    <span class="hljs-comment">// 2. 进行左右递归</span>
+    
+    <span class="hljs-comment">// 防止出现栈溢出</span>
+    <span class="hljs-keyword">if</span> (l == r) &#123;
+        l += <span class="hljs-number">1</span>;
+        r -= <span class="hljs-number">1</span>;
+    &#125;
+
+    <span class="hljs-comment">// 向左递归</span>
+    <span class="hljs-keyword">if</span> (left &lt; r) &#123;
+        <span class="hljs-comment">// 排序 [left,...,r][mid][l,...right]</span>
+        quickSort(arr, left, r);
+    &#125;
+
+    <span class="hljs-comment">// 向右边递归</span>
+    <span class="hljs-keyword">if</span> (l &lt; right) &#123;
+        <span class="hljs-comment">// 排序 [left,...,r][mid][l,...right]</span>
+        quickSort(arr, l, right);
+    &#125;
+&#125;</code></pre>
+
+
+
+<h2 id="7-堆排序"><a href="#7-堆排序" class="headerlink" title="7. 堆排序"></a>7. 堆排序</h2><p>堆排序（Heapsort）是指利用堆这种数据结构所设计的一种排序算法。堆积是一个近似完全二叉树的结构，并同时满足堆积的性质：即子结点的键值或索引总是小于（或者大于）它的父节点。</p>
+<p><strong>算法步骤</strong></p>
+<ol>
+<li>将无序序列<strong>构建成一个堆</strong>，根据升序选择大顶堆 此时<strong>堆顶元素为序列中最大的元素</strong></li>
+<li>排序：将<strong>堆顶元素与末尾元素交换</strong>，将最大元素下沉到数组末尾</li>
+<li>重新调整结构，使其满足堆定义</li>
+<li>重复步骤2、3，直到整个序列有序</li>
+</ol>
+<p><strong>动图演示</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201012165158.gif" alt="img-20201012165158"></p>
+<p><strong>Java 代码实现</strong></p>
+<pre><code class="hljs java"><span class="hljs-comment">/**</span>
+<span class="hljs-comment">* 堆排序(升序)</span>
+<span class="hljs-comment">*</span>
+<span class="hljs-comment">* <span class="hljs-doctag">@param</span> arr</span>
+<span class="hljs-comment">*/</span>
+<span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span>[] heapSort(<span class="hljs-keyword">int</span>[] arr) &#123;
+    <span class="hljs-comment">// 1. 将待排序序列调整为大顶堆 index为非叶子节点</span>
+    <span class="hljs-keyword">int</span> index = arr.length / <span class="hljs-number">2</span> - <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">int</span> len = arr.length;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = index; i &gt;= <span class="hljs-number">0</span>; i--) &#123;
+        adjustHeap(arr, i, len);
+    &#125;
+
+    <span class="hljs-comment">// 2. 将堆顶元素与末尾元素交换，将最大元素沉到数组末端</span>
+    <span class="hljs-keyword">int</span> temp = <span class="hljs-number">0</span>;
+    <span class="hljs-comment">// j 堆末尾元素下标； 0 堆顶元素下标</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = len - <span class="hljs-number">1</span>; j &gt; <span class="hljs-number">0</span>; j--) &#123;
+        temp = arr[j];
+        arr[j] = arr[<span class="hljs-number">0</span>];
+        arr[<span class="hljs-number">0</span>] = temp;
+        <span class="hljs-comment">// 3. 重新调整结构，使其满足堆定义</span>
+        adjustHeap(arr, <span class="hljs-number">0</span>, j);
+    &#125;
+    <span class="hljs-keyword">return</span> arr;
+&#125;
+
+<span class="hljs-comment">/**</span>
+<span class="hljs-comment">* 功能：完成将以 index 对应的非叶子节点的树调整成大顶堆</span>
+<span class="hljs-comment">* 举例：待排序序列为 &#123;4, 6, 8, 5, 9&#125;, 传入index=1，调整后变为 &#123;4, 9, 8, 5, 6&#125;</span>
+<span class="hljs-comment">* 在此调用该方法，传入的index=0，调整后变为 &#123;9, 6, 8, 5, 4&#125;</span>
+<span class="hljs-comment">*</span>
+<span class="hljs-comment">* <span class="hljs-doctag">@param</span> arr   待排序序列</span>
+<span class="hljs-comment">* <span class="hljs-doctag">@param</span> index 非叶子节点的下标</span>
+<span class="hljs-comment">* <span class="hljs-doctag">@param</span> len   对多少个元素进行调整，调整完的元素不算在待排序列里</span>
+<span class="hljs-comment">* <span class="hljs-doctag">@return</span></span>
+<span class="hljs-comment">*/</span>
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">adjustHeap</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] arr, <span class="hljs-keyword">int</span> index, <span class="hljs-keyword">int</span> len)</span> </span>&#123;
+    <span class="hljs-comment">// 1. 取出当前元素的值 用于与子树元素比较</span>
+    <span class="hljs-keyword">int</span> temp = arr[index];
+
+    <span class="hljs-comment">// 开始调整</span>
+    <span class="hljs-comment">// k=index*2+1  index节点的左子节点，比较左右子节点(如果有)的元素</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> k = index * <span class="hljs-number">2</span> + <span class="hljs-number">1</span>; k &lt; len; k = k * <span class="hljs-number">2</span> + <span class="hljs-number">1</span>) &#123;
+        
+        <span class="hljs-comment">// 2. 判断局部子树里节点较大，将k指向它</span>
+        <span class="hljs-comment">// 左子节点小于右子节点的值 让k指向右子节点(较大的数)</span>
+        <span class="hljs-keyword">if</span> (k + <span class="hljs-number">1</span> &lt; len &amp;&amp; arr[k] &lt; arr[k + <span class="hljs-number">1</span>]) &#123;
+            k++;
+        &#125;
+
+        <span class="hljs-comment">// 如果子节点大于父节点</span>
+        <span class="hljs-comment">// 3. 把大的值赋给父节点 并替换两者对应的下标 继续往下比较</span>
+        <span class="hljs-keyword">if</span> (arr[k] &gt; temp) &#123;
+            arr[index] = arr[k];
+            index = k;
+        &#125; <span class="hljs-keyword">else</span> &#123;
+            <span class="hljs-comment">// 该局部树已比较完成 index是这三个节点中最大的</span>
+            <span class="hljs-keyword">break</span>;
+        &#125;
+    &#125;
+    
+    <span class="hljs-comment">// 此时，完成将以index为父节点的子树的最大值放在堆顶(局部调整)</span>
+    <span class="hljs-comment">// 4. 此时的index指向的是比较后较小的元素 局部调整完成</span>
+    arr[index] = temp;
+&#125;</code></pre>
+
+
+
+<h2 id="8-计数排序"><a href="#8-计数排序" class="headerlink" title="8. 计数排序"></a>8. 计数排序</h2><p>计数排序（Counting Sort）是一种稳定的线性时间排序算法。计数排序使用一个额外的数组 C，其中第 i 个元素是待排序数组 A 中值等于 i 的元素的个数。然后根据数组 C 来将 A 中的元素排到正确的位置。</p>
+<p>当输入的元素是 n 个 0 到 k 之间的整数时，它的运行时间是 O(n + k)。计数排序不是比较排序，排序的速度快于任何比较排序算法。</p>
+<p><strong>算法步骤</strong></p>
+<ol>
+<li>找出待排序的数组中最大（最小）的元素</li>
+<li>统计数组中每个值为 i 的元素出现的次数，存入数组 C 的第 i 项</li>
+<li>对所有的计数累加（从 C 中的第一个元素开始，每一项和前一项相加）</li>
+<li>反向填充目标数组：将每个元素 i 放在新数组的第 C(i) 项，每放一个元素就将 C(i) 减去 1</li>
+</ol>
+<p><strong>动图演示</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201012170927.gif" alt="count"></p>
+<p><strong>Java 代码实现</strong></p>
+<pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span>[] countingSort(<span class="hljs-keyword">int</span>[] arr, <span class="hljs-keyword">int</span> maxValue) &#123;
+    <span class="hljs-keyword">int</span> bucketLen = maxValue + <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">int</span>[] bucket = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[bucketLen];
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> value : arr) &#123;
+        bucket[value]++;
+    &#125;
+
+    <span class="hljs-keyword">int</span> sortedIndex = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; bucketLen; j++) &#123;
+        <span class="hljs-keyword">while</span> (bucket[j] &gt; <span class="hljs-number">0</span>) &#123;
+            arr[sortedIndex++] = j;
+            bucket[j]--;
+        &#125;
+    &#125;
+    <span class="hljs-keyword">return</span> arr;
+&#125;
+
+<span class="hljs-comment">/**</span>
+<span class="hljs-comment">* 获取数组中的最大值</span>
+<span class="hljs-comment">*/</span>
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> <span class="hljs-title">getMaxValue</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] arr)</span> </span>&#123;
+    <span class="hljs-keyword">int</span> maxValue = arr[<span class="hljs-number">0</span>];
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> value : arr) &#123;
+        <span class="hljs-keyword">if</span> (maxValue &lt; value) &#123;
+            maxValue = value;
+        &#125;
+    &#125;
+    <span class="hljs-keyword">return</span> maxValue;
+&#125;</code></pre>
+
+
+
+<h2 id="9-桶排序"><a href="#9-桶排序" class="headerlink" title="9. 桶排序"></a>9. 桶排序</h2><p>桶排序 (Bucket sort)是计数排序的升级版，它利用了函数的映射关系，高效与否的关键就在于这个映射函数的确定。</p>
+<p>桶排序的<strong>工作原理</strong>：假设输入数据服从均匀分布，将数据分到有限数量的桶里，每个桶再分别排序（有可能再使用别的排序算法或是以递归方式继续使用桶排序进行排）。</p>
+<p><strong>算法步骤</strong></p>
+<ol>
+<li>设置一个定量的数组当作空桶子</li>
+<li>遍历数组，把数据放入对应的桶内</li>
+<li>对每个非空的桶子进行排序</li>
+<li>再把非空桶排好序的数据拼接起来</li>
+</ol>
+<p><strong>动图演示</strong></p>
+<p><img src="https://blog.fiteen.top/2019/sorting-algorithm/bucket-sort.gif"></p>
+<p><strong>Java 代码实现</strong></p>
+<pre><code class="hljs java"> <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span>[] bucketSort(<span class="hljs-keyword">int</span>[] arr, <span class="hljs-keyword">int</span> bucketSize) <span class="hljs-keyword">throws</span> Exception &#123;
+     <span class="hljs-keyword">if</span> (arr.length == <span class="hljs-number">0</span>) &#123;
+         <span class="hljs-keyword">return</span> arr;
+     &#125;
+
+     <span class="hljs-keyword">int</span> minValue = arr[<span class="hljs-number">0</span>];
+     <span class="hljs-keyword">int</span> maxValue = arr[<span class="hljs-number">0</span>];
+     <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> value : arr) &#123;
+         <span class="hljs-keyword">if</span> (value &lt; minValue) &#123;
+             minValue = value;
+         &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (value &gt; maxValue) &#123;
+             maxValue = value;
+         &#125;
+     &#125;
+
+     <span class="hljs-keyword">int</span> bucketCount = (<span class="hljs-keyword">int</span>) Math.floor((maxValue - minValue) / bucketSize) + <span class="hljs-number">1</span>;
+     <span class="hljs-keyword">int</span>[][] buckets = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[bucketCount][<span class="hljs-number">0</span>];
+
+     <span class="hljs-comment">// 利用映射函数将数据分配到各个桶中</span>
+     <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; arr.length; i++) &#123;
+         <span class="hljs-keyword">int</span> index = (<span class="hljs-keyword">int</span>) Math.floor((arr[i] - minValue) / bucketSize);
+         buckets[index] = arrAppend(buckets[index], arr[i]);
+     &#125;
+
+     <span class="hljs-keyword">int</span> arrIndex = <span class="hljs-number">0</span>;
+     <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span>[] bucket : buckets) &#123;
+         <span class="hljs-keyword">if</span> (bucket.length &lt;= <span class="hljs-number">0</span>) &#123;
+             <span class="hljs-keyword">continue</span>;
+         &#125;
+         <span class="hljs-comment">// 对每个桶进行排序，这里使用了插入排序</span>
+         bucket = insertSort.sort(bucket);
+         <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> value : bucket) &#123;
+             arr[arrIndex++] = value;
+         &#125;
+     &#125;
+     <span class="hljs-keyword">return</span> arr;
+ &#125;
+
+<span class="hljs-comment">/**</span>
+<span class="hljs-comment">* 自动扩容，并保存数据</span>
+<span class="hljs-comment">*</span>
+<span class="hljs-comment">* <span class="hljs-doctag">@param</span> arr</span>
+<span class="hljs-comment">* <span class="hljs-doctag">@param</span> value</span>
+<span class="hljs-comment">*/</span>
+<span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span>[] arrAppend(<span class="hljs-keyword">int</span>[] arr, <span class="hljs-keyword">int</span> value) &#123;
+    arr = Arrays.copyOf(arr, arr.length + <span class="hljs-number">1</span>);
+    arr[arr.length - <span class="hljs-number">1</span>] = value;
+    <span class="hljs-keyword">return</span> arr;
+&#125;</code></pre>
+
+
+
+<h2 id="10-基数排序"><a href="#10-基数排序" class="headerlink" title="10. 基数排序"></a>10. 基数排序</h2><p>基数排序是一种非比较型整数排序算法，其原理是将整数按位数(关键字)切割成不同的数字，然后按每个位数分别比较。</p>
+<p>对于关键字的选择，有最高位优先法（MSD 法）和<strong>最低位优先法</strong>（LSD 法）两种方式。</p>
+<p>MSD 必须将序列先逐层分割成若干子序列，然后再对各子序列进行排序；而 LSD 进行排序时，不必分成子序列，对每个关键字都是整个序列参加排序。</p>
+<p><strong>算法步骤</strong></p>
+<p>以 <strong>LSD 法</strong>为例：</p>
+<ol>
+<li>将所有待比较数值（非负整数）统一为同样的数位长度，数位不足的数值前面补零</li>
+<li>从最低位（个位）开始，依次进行一次排序</li>
+<li>从最低位排序一直到最高位排序完成以后, 数列就变成一个有序序列</li>
+</ol>
+<p><strong>动图演示 (以 LSD 为例)</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201012174249.gif" alt="radix_sort"></p>
+<p><strong>Java 代码实现</strong></p>
+<pre><code class="hljs java"><span class="hljs-comment">// LSD 实现</span>
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">radixSort</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] arr)</span> </span>&#123;
+    <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> len = arr.length;
+    <span class="hljs-comment">// 定义一个二维数组 存储10个桶的一维数组</span>
+    <span class="hljs-keyword">int</span>[][] bucket = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[<span class="hljs-number">10</span>][len];
+    <span class="hljs-comment">// 定义一个桶元素容量数组 存储下标为键位的有效容量</span>
+    <span class="hljs-keyword">int</span>[] bucketElementCounts = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[<span class="hljs-number">10</span>];
+
+
+    <span class="hljs-comment">// 开始基数排序</span>
+    <span class="hljs-comment">// 1. 获取最高位的位数</span>
+    <span class="hljs-keyword">int</span> max = arr[<span class="hljs-number">0</span>];
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; len; i++) &#123;
+        <span class="hljs-keyword">if</span> (arr[i] &gt; max) &#123;
+            max = arr[i];
+        &#125;
+    &#125;
+    
+    <span class="hljs-comment">// 定义排序次数 (巧妙的方法)</span>
+    <span class="hljs-keyword">int</span> time = (max + <span class="hljs-string">&quot;&quot;</span>).length();
+    <span class="hljs-comment">// i为第几趟排序 初始为第一趟; n为位数 初始为个位</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>, n = <span class="hljs-number">1</span>; i &lt;= time; i++, n *= <span class="hljs-number">10</span>) &#123;
+        <span class="hljs-comment">// 2. 遍历原数组 将其放入10个桶中</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; len; j++) &#123;
+            <span class="hljs-keyword">int</span> digitOfElement = arr[j] / n % <span class="hljs-number">10</span>;
+            <span class="hljs-comment">// 元素放入键位为 digitOfElement 的桶中</span>
+            bucket[digitOfElement][bucketElementCounts[digitOfElement]] = arr[j];
+            <span class="hljs-comment">// 该桶有效容量+1</span>
+            bucketElementCounts[digitOfElement]++;
+        &#125;
+
+        <span class="hljs-comment">// 3. 将10个桶的元素按序放入原数组中</span>
+        <span class="hljs-comment">// bucketElementCounts.length为桶个数 即10</span>
+        <span class="hljs-keyword">int</span> index = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> k = <span class="hljs-number">0</span>; k &lt; bucketElementCounts.length; k++) &#123;
+            <span class="hljs-comment">// 若该桶有元素 放入原数组</span>
+            <span class="hljs-comment">// bucketElementCounts[k]为桶元素个数</span>
+            <span class="hljs-keyword">if</span> (bucketElementCounts[k] != <span class="hljs-number">0</span>) &#123;
+                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> l = <span class="hljs-number">0</span>; l &lt; bucketElementCounts[k]; l++) &#123;
+                    arr[index++] = bucket[k][l];
+                &#125;
+            &#125;
+            <span class="hljs-comment">// !!重要!!</span>
+            <span class="hljs-comment">// 清空下标为k桶元素的容量 防止进行下次的排序栈溢出</span>
+            bucketElementCounts[k] = <span class="hljs-number">0</span>;
+        &#125;
+    &#125;
+&#125;</code></pre>
+
+
+
+<h4 id="基数排序-vs-计数排序-vs-桶排序"><a href="#基数排序-vs-计数排序-vs-桶排序" class="headerlink" title="基数排序 vs 计数排序 vs 桶排序"></a>基数排序 vs 计数排序 vs 桶排序</h4><p>基数排序有两种方法：</p>
+<p>这三种排序算法都利用了桶的概念，但对桶的使用方法上有明显差异：</p>
+<ul>
+<li>基数排序：根据键值的<strong>每位数字</strong>来分配桶，适用于<strong>非负整数</strong>间的排序，且最大值和最小值尽可能接近。</li>
+<li>计数排序：每个桶只存储<strong>单一键值</strong>，适用于最大值和最小值尽可能相近的排序。</li>
+<li>桶排序：每个桶存储<strong>一定范围</strong>的数值，适用于数据尽量分布均匀。</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="https://visualgo.net/zh">算法可视化网站</a></li>
+<li><a href="https://zoharyip.club/algorithm/sort-algorithms.html">各大排序算法的比较、研究与实现</a></li>
+<li><a href="https://fishc.com.cn/">鱼C工作室</a></li>
+<li><a href="https://blog.fiteen.top/2019/sorting-algorithm">动画详解十大经典排序算法</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MySQL 面试题</title>
     <url>/2020/09/19/mysql/</url>
     <content><![CDATA[<hr>
@@ -1016,7 +1658,7 @@ explain select * from &#39;表名&#39;</code></pre>
 <p><a href="https://segmentfault.com/a/1190000023199039">https://segmentfault.com/a/1190000023199039</a></p>
 </blockquote>
 <p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010235450.png" alt="image-20201010235448614"></p>
-<h2 id="映射-Map"><a href="#映射-Map" class="headerlink" title="映射 Map"></a>映射 Map</h2><h2 id="集合工具-Collections-amp-Arrays"><a href="#集合工具-Collections-amp-Arrays" class="headerlink" title="集合工具 Collections &amp; Arrays"></a>集合工具 Collections &amp; Arrays</h2><h2 id="面试"><a href="#面试" class="headerlink" title="面试"></a>面试</h2><h3 id="1-Arraylist-与-LinkedList-区别"><a href="#1-Arraylist-与-LinkedList-区别" class="headerlink" title="1. Arraylist 与 LinkedList 区别"></a>1. Arraylist 与 LinkedList 区别</h3><p>可以从它们的底层数据结构、效率、开销进行阐述哈</p>
+<h2 id="映射-Map"><a href="#映射-Map" class="headerlink" title="映射 Map"></a>映射 Map</h2><h2 id="工具类-Collections-amp-Arrays"><a href="#工具类-Collections-amp-Arrays" class="headerlink" title="工具类 Collections &amp; Arrays"></a>工具类 Collections &amp; Arrays</h2><h2 id="面试"><a href="#面试" class="headerlink" title="面试"></a>面试</h2><h3 id="1-Arraylist-与-LinkedList-区别"><a href="#1-Arraylist-与-LinkedList-区别" class="headerlink" title="1. Arraylist 与 LinkedList 区别"></a>1. Arraylist 与 LinkedList 区别</h3><p>可以从它们的底层数据结构、效率、开销进行阐述哈</p>
 <ul>
 <li>ArrayList是<strong>数组</strong>的数据结构，LinkedList是<strong>链表</strong>的数据结构。</li>
 <li>随机访问的时候，ArrayList的效率比较高，因为LinkedList要移动指针，而ArrayList是基于索引(index)的数据结构，可以直接映射到。</li>
@@ -1056,7 +1698,7 @@ explain select * from &#39;表名&#39;</code></pre>
 <ul>
 <li>计算 hashcode 与 数组索引 i 方法，其中 <strong>&gt;&gt;&gt; 表示右移后，高位的空位补零</strong></li>
 </ul>
-<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010163149.png" alt="image-20200908194529785"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010162954.png" alt="image-20200908194529785"></p>
 <ul>
 <li>put方法 总体流程如下图</li>
 </ul>
