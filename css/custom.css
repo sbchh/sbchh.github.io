@@ -13,13 +13,19 @@
   margin-top: 10px !important;
 }
 
-/* 无序列表样式 */
+/* 列表样式 */
 .markdown-body p,
 .markdown-body ol,
 .markdown-body ul {
-  line-height: 1.5;
+  line-height: 2;
+  font-size: 19px;
 }
 
+/* 粗体样式 */
+.markdown-body strong {
+  font-weight: 700;
+  /* color: rgba(0,0,0,.98); */
+}
 
 /* 代码顶栏 */
 .hljs-wrap::before {
@@ -48,11 +54,20 @@
   text-align: center;
 }
 
-/* 链接样式 */
-.markdown-body a {
-  text-decoration: underline;
+/* 代码注释字体 */
+.hljs-comment, .hljs-quote {
+  font-family: "Noto Sans SC" !important;
 }
+
+/* 代码字符串 */
+.hljs-addition, .hljs-attribute, .hljs-string {
+  font-size: 18px;
+  font-family: "OPPO Sans SC" !important;
+}
+
+/* 链接样式 */
 .markdown-body a:hover {
+  text-decoration: none;
   color: #15967d;
 }
 

@@ -243,7 +243,7 @@ sup > a::before,
 html,
 body {
   font-size: 18px;
-  font-family: Noto Serif SC, Arial;
+  font-family: OPPO Sans SC, Microsoft Yahei, sans-serif;
 }
 html,
 body,
@@ -286,7 +286,7 @@ img[srcset] {
 :root {
   --color-mode: 'light';
   --body-bg-color: #eee;
-  --board-bg-color: #fff;
+  --board-bg-color: #FAFBFC;
   --text-color: #1E1E1E;
   --sec-text-color: #718096;
   --post-text-color: #000;
@@ -856,7 +856,7 @@ img[srcset] {
 .markdown-body {
   font-size: 1rem;
   margin-bottom: 2rem;
-  font-family: Noto Serif SC, Arial;
+  font-family: OPPO Sans SC, Microsoft Yahei, sans-serif;
   color: var(--post-text-color);
 }
 .markdown-body h1,

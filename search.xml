@@ -584,6 +584,19 @@ sThreadLocal.get()</code></pre>
       </tags>
   </entry>
   <entry>
+    <title>我的博客</title>
+    <url>/2020/09/19/%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2/</url>
+    <content><![CDATA[<h2 id="第一章"><a href="#第一章" class="headerlink" title="第一章"></a>第一章</h2><p>内容</p>
+<h2 id="第二章"><a href="#第二章" class="headerlink" title="第二章"></a>第二章</h2><p>内容</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2>]]></content>
+      <categories>
+        <category>test</category>
+      </categories>
+      <tags>
+        <tag>test</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hello World</title>
     <url>/2020/09/19/hello-world/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
@@ -600,19 +613,6 @@ sThreadLocal.get()</code></pre>
 
 <p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 ]]></content>
-  </entry>
-  <entry>
-    <title>我的博客</title>
-    <url>/2020/09/19/%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2/</url>
-    <content><![CDATA[<h2 id="第一章"><a href="#第一章" class="headerlink" title="第一章"></a>第一章</h2><p>内容</p>
-<h2 id="第二章"><a href="#第二章" class="headerlink" title="第二章"></a>第二章</h2><p>内容</p>
-<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2>]]></content>
-      <categories>
-        <category>test</category>
-      </categories>
-      <tags>
-        <tag>test</tag>
-      </tags>
   </entry>
   <entry>
     <title>十个常见的排序算法</title>
@@ -900,7 +900,7 @@ sThreadLocal.get()</code></pre>
 
 
 
-<h2 id="6-快速排序"><a href="#6-快速排序" class="headerlink" title="6. 快速排序"></a>6. 快速排序</h2><p>快速排序（Quick sort）最早是由图灵奖得主东尼·霍尔提出的。在平均状况下，排序 n 个项目要 Ο(n * logn) 次比较。在最坏状况下则需要 Ο(n2) 次比较（但这种状况并不常见）。事实上，快速排序通常明显比其他 Ο(n * logn) 的算法更快，因为它的内部循环（inner loop）可以在大部分的架构上很有效率地被实现出来。</p>
+<h2 id="6-快速排序"><a href="#6-快速排序" class="headerlink" title="6. 快速排序"></a>6. 快速排序</h2><p>快速排序（Quick sort）最早是由图灵奖得主东尼·霍尔提出的。在平均状况下，排序 n 个项目要 Ο(n * logn) 次比较。在最坏状况下则需要 Ο(n²) 次比较（但这种状况并不常见）。事实上，快速排序通常明显比其他 Ο(n * logn) 的算法更快，因为它的内部循环（inner loop）可以在大部分的架构上很有效率地被实现出来。</p>
 <p>快速排序使用分治法（Divide and conquer）策略来把一个串行（list）分为两个子串行（sub-lists）。</p>
 <p>快速排序算法的<strong>基本思想</strong>是：通过一趟排序将待排序数据分割成独立的两部分，其中一部分的所有元素均比另一部分的元素小，然后分别对这两部分继续进行排序，重复上述步骤直到排序完成。</p>
 <p><strong>算法步骤</strong></p>
@@ -1656,9 +1656,10 @@ explain select * from &#39;表名&#39;</code></pre>
 <p><a href="https://mp.weixin.qq.com/s/7WA1k31xmatsYTEfyMdLEQ">https://mp.weixin.qq.com/s/7WA1k31xmatsYTEfyMdLEQ</a></p>
 <p><a href="https://segmentfault.com/a/1190000023081145">https://segmentfault.com/a/1190000023081145</a></p>
 <p><a href="https://segmentfault.com/a/1190000023199039">https://segmentfault.com/a/1190000023199039</a></p>
+<p><a href="https://segmentfault.com/a/1190000020014357">https://segmentfault.com/a/1190000020014357</a></p>
 </blockquote>
 <p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010235450.png" alt="image-20201010235448614"></p>
-<h2 id="映射-Map"><a href="#映射-Map" class="headerlink" title="映射 Map"></a>映射 Map</h2><h2 id="工具类-Collections-amp-Arrays"><a href="#工具类-Collections-amp-Arrays" class="headerlink" title="工具类 Collections &amp; Arrays"></a>工具类 Collections &amp; Arrays</h2><h2 id="面试"><a href="#面试" class="headerlink" title="面试"></a>面试</h2><h3 id="1-Arraylist-与-LinkedList-区别"><a href="#1-Arraylist-与-LinkedList-区别" class="headerlink" title="1. Arraylist 与 LinkedList 区别"></a>1. Arraylist 与 LinkedList 区别</h3><p>可以从它们的底层数据结构、效率、开销进行阐述哈</p>
+<h3 id="Collection"><a href="#Collection" class="headerlink" title="Collection"></a>Collection</h3><h2 id="映射-Map"><a href="#映射-Map" class="headerlink" title="映射 Map"></a>映射 Map</h2><h2 id="工具类-Collections-amp-Arrays"><a href="#工具类-Collections-amp-Arrays" class="headerlink" title="工具类 Collections &amp; Arrays"></a>工具类 Collections &amp; Arrays</h2><h2 id="面试题"><a href="#面试题" class="headerlink" title="面试题"></a>面试题</h2><h3 id="1-Arraylist-与-LinkedList-区别"><a href="#1-Arraylist-与-LinkedList-区别" class="headerlink" title="1. Arraylist 与 LinkedList 区别"></a>1. Arraylist 与 LinkedList 区别</h3><p>可以从它们的底层数据结构、效率、开销进行阐述哈</p>
 <ul>
 <li>ArrayList是<strong>数组</strong>的数据结构，LinkedList是<strong>链表</strong>的数据结构。</li>
 <li>随机访问的时候，ArrayList的效率比较高，因为LinkedList要移动指针，而ArrayList是基于索引(index)的数据结构，可以直接映射到。</li>
@@ -1842,7 +1843,7 @@ boy</code></pre>
 <li><p>第二步把旧数组的元素重新计算hash插入到新数组中。</p>
 </li>
 <li><p>jdk1.8时，不用重新计算hash，只用看看原来的hash值新增的一位是零还是1，如果是1这个元素在新数组中的位置，是原数组的位置加原数组长度，如果是零就插入到原数组中。扩容过程第二步一个非常重要的方法是transfer方法，<strong>采用尾插法，把旧数组的元素插入到新数组中</strong>。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010163427.png" alt="image-20200908224119460"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010163237.png" alt="image-20200908224119460"></p>
 </li>
 </ul>
 <h3 id="11-HashSet是如何保证不重复的"><a href="#11-HashSet是如何保证不重复的" class="headerlink" title="11. HashSet是如何保证不重复的"></a>11. HashSet是如何保证不重复的</h3><p>可以看一下HashSet的add方法，元素E作为HashMap的key，我们都知道HashMap的可以是不允许重复的，哈哈。</p>
