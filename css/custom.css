@@ -87,6 +87,16 @@
   padding-left: 0.5rem;
 }
 
+/* 部分粗体文字渲染
+@font-face {
+  font-family: OPPO Sans SC;
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url(https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/fonts/OPPOSans/OPPOSans_B_sub.woff2);
+  unicode-range: U+7EC4;
+} */
+
 /* 小代码块样式 */
 code {
   color: darkred;
