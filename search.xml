@@ -89,43 +89,6 @@
       </tags>
   </entry>
   <entry>
-    <title>MySQL 之读写分离</title>
-    <url>/2020/09/17/09-17-Mysql-Read-And-Write-Seperate/</url>
-    <content><![CDATA[<h2 id="1-如何实现-MySQL-的读写分离"><a href="#1-如何实现-MySQL-的读写分离" class="headerlink" title="1. 如何实现 MySQL 的读写分离"></a>1. 如何实现 MySQL 的读写分离</h2><p>​    基于原生的<mark><strong>主从复制架构</strong></mark>，即一个主库，多个从库。主库以写操作，从库以读数据，同时主库数据同步到从库上。</p>
-<h2 id="2-MySQL-主从复制原理"><a href="#2-MySQL-主从复制原理" class="headerlink" title="2. MySQL 主从复制原理"></a>2. MySQL 主从复制原理</h2><ol>
-<li>主服务器在执行写操作的同时，将数据的变化记录到 <strong>binlog</strong> 日志文件中 (工作线程串行化完成)</li>
-<li>主从库之间通过后台的 <strong>IO线程</strong> 建立通信</li>
-<li>从服务器将读取到的 binlog 日志文件同步到自己的 <strong>relay 日志文件</strong> (<strong>os cache</strong>) 中</li>
-<li>从服务器再开启一个 <strong>SQL线程</strong> 将 relay 日志数据应用到本地数据库，完成更新从服务器中的数据。</li>
-</ol>
-<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201017233320.png" alt="image-20200830162904809"></p>
-<p>​    在此过程中，存在以下<mark>两个问题</mark>：</p>
-<ul>
-<li>主从复制是串行化的，而工作线程是并行化执行的，导致<strong>主从数据同步存在延时</strong>的情况，延时取决于主库的写并发情况。</li>
-<li>主库刚写入数据，还未写入 binlog 时就宕机了，导致<strong>从库无法更新数据</strong>。</li>
-</ul>
-<p>​    对应的解决方案有两个：<strong>防止数据丢失问题</strong> + <strong>缓解主从同步延时问题</strong></p>
-<ol>
-<li><strong>半同步复制</strong>：在完成了<strong>主库写操作 + bin log 写入成功 + 从库读取并写入 relay log</strong>后，主库收到来自从库的确认信息，才代表主库的写操作完成。</li>
-<li><strong>并行复制</strong>：从库开启多线程并行读取 relay log 中不同库的日志，然后<strong>并行重放不同库的日志</strong>，缓解主从同步延时问题。</li>
-</ol>
-<h2 id="3-解决主从同步延时问题-★"><a href="#3-解决主从同步延时问题-★" class="headerlink" title="3. 解决主从同步延时问题(★)"></a>3. 解决主从同步延时问题(<span style="color: red">★</span>)</h2><p>​    若出现在高峰期出现以下操作失败了：插入一条数据、查询该数据、更新该数据报错。</p>
-<p>​    排查得查询从库时，从库未更新数据，没有查到主库的数据，故报错。</p>
-<ol>
-<li><strong>分库</strong>：<strong>一个主库拆分为多个主库</strong>，每个主库的写并发就减少了几倍，此时主从延迟可以忽略不计。</li>
-<li>打开 MySQL 的并行复制，但此时单库的写并发已达到上限，其实际意义不大。</li>
-<li><strong>重写操作数据库的代码</strong>，调整代码执行的顺序，<strong>插入数据后直接更新</strong>，若立马查询可能查不到。</li>
-</ol>
-]]></content>
-      <categories>
-        <category>技术</category>
-      </categories>
-      <tags>
-        <tag>面试</tag>
-        <tag>MySQL</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>多线程之 ThreadLocal</title>
     <url>/2020/09/30/09-30-ThreadLocal/</url>
     <content><![CDATA[<h3 id="多线程之-ThreadLocal"><a href="#多线程之-ThreadLocal" class="headerlink" title="多线程之 ThreadLocal"></a>多线程之 ThreadLocal</h3><hr>
@@ -214,6 +177,43 @@ sThreadLocal.get()</code></pre>
       </categories>
       <tags>
         <tag>面试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MySQL 之读写分离</title>
+    <url>/2020/09/17/09-17-Mysql-Read-And-Write-Seperate/</url>
+    <content><![CDATA[<h2 id="1-如何实现-MySQL-的读写分离"><a href="#1-如何实现-MySQL-的读写分离" class="headerlink" title="1. 如何实现 MySQL 的读写分离"></a>1. 如何实现 MySQL 的读写分离</h2><p>​    基于原生的<mark><strong>主从复制架构</strong></mark>，即一个主库，多个从库。主库以写操作，从库以读数据，同时主库数据同步到从库上。</p>
+<h2 id="2-MySQL-主从复制原理"><a href="#2-MySQL-主从复制原理" class="headerlink" title="2. MySQL 主从复制原理"></a>2. MySQL 主从复制原理</h2><ol>
+<li>主服务器在执行写操作的同时，将数据的变化记录到 <strong>binlog</strong> 日志文件中 (工作线程串行化完成)</li>
+<li>主从库之间通过后台的 <strong>IO线程</strong> 建立通信</li>
+<li>从服务器将读取到的 binlog 日志文件同步到自己的 <strong>relay 日志文件</strong> (<strong>os cache</strong>) 中</li>
+<li>从服务器再开启一个 <strong>SQL线程</strong> 将 relay 日志数据应用到本地数据库，完成更新从服务器中的数据。</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201017233320.png" alt="image-20200830162904809"></p>
+<p>​    在此过程中，存在以下<mark>两个问题</mark>：</p>
+<ul>
+<li>主从复制是串行化的，而工作线程是并行化执行的，导致<strong>主从数据同步存在延时</strong>的情况，延时取决于主库的写并发情况。</li>
+<li>主库刚写入数据，还未写入 binlog 时就宕机了，导致<strong>从库无法更新数据</strong>。</li>
+</ul>
+<p>​    对应的解决方案有两个：<strong>防止数据丢失问题</strong> + <strong>缓解主从同步延时问题</strong></p>
+<ol>
+<li><strong>半同步复制</strong>：在完成了<strong>主库写操作 + bin log 写入成功 + 从库读取并写入 relay log</strong>后，主库收到来自从库的确认信息，才代表主库的写操作完成。</li>
+<li><strong>并行复制</strong>：从库开启多线程并行读取 relay log 中不同库的日志，然后<strong>并行重放不同库的日志</strong>，缓解主从同步延时问题。</li>
+</ol>
+<h2 id="3-解决主从同步延时问题-★"><a href="#3-解决主从同步延时问题-★" class="headerlink" title="3. 解决主从同步延时问题(★)"></a>3. 解决主从同步延时问题(<span style="color: red">★</span>)</h2><p>​    若出现在高峰期出现以下操作失败了：插入一条数据、查询该数据、更新该数据报错。</p>
+<p>​    排查得查询从库时，从库未更新数据，没有查到主库的数据，故报错。</p>
+<ol>
+<li><strong>分库</strong>：<strong>一个主库拆分为多个主库</strong>，每个主库的写并发就减少了几倍，此时主从延迟可以忽略不计。</li>
+<li>打开 MySQL 的并行复制，但此时单库的写并发已达到上限，其实际意义不大。</li>
+<li><strong>重写操作数据库的代码</strong>，调整代码执行的顺序，<strong>插入数据后直接更新</strong>，若立马查询可能查不到。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>面试</tag>
+        <tag>MySQL</tag>
       </tags>
   </entry>
   <entry>
