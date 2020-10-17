@@ -161,8 +161,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2020-09-19 15:40" pubdate>
-        2020年9月19日 下午
+      <time datetime="2020-09-15 15:40" pubdate>
+        2020年9月15日 下午
       </time>
     </span>
   
@@ -216,10 +216,9 @@
             <h1 style="display: none">MySQL 面试题</h1>
             
             <div class="markdown-body" id="post-body">
-              <hr>
-<h4 id="1-MySQL-的-MylSAM-和-InnoDB-存储引擎的区别是啥？"><a href="#1-MySQL-的-MylSAM-和-InnoDB-存储引擎的区别是啥？" class="headerlink" title="1. MySQL 的 MylSAM 和 InnoDB 存储引擎的区别是啥？"></a>1. MySQL 的 MylSAM 和 InnoDB 存储引擎的区别是啥？</h4><p>​        <strong>MyISAM</strong> 不支持事务和外键约束，<strong>索引文件和数据文件分开</strong>，这样在内存中可以缓存更多的索引，对查询的性能会更好，适用于<strong>少量插入大量查询</strong>的场景。</p>
-<p>​        <strong>InnoDB</strong> 是现在最常用的存储引擎，是 mysql 5.5 之后的默认存储引擎。主要特点就是<strong>支持事务</strong>，走聚簇索引，<strong>强制要求有主键</strong>，支持外键约束，高并发、大数据量、高可用等相关成熟的数据库架构，**<a href="./DepotsTable.md">分库分表</a><strong>、</strong><a href="./RnWSeperate.md">读写分离</a><strong>、</strong>==主备切换==**，全部都可以基于innodb存储引擎来实现。</p>
-<h4 id="2-MySQL索引的原理和数据结构能介绍一下么？"><a href="#2-MySQL索引的原理和数据结构能介绍一下么？" class="headerlink" title="2. MySQL索引的原理和数据结构能介绍一下么？"></a>2. MySQL索引的原理和数据结构能介绍一下么？</h4><h5 id="2-1-索引的分类"><a href="#2-1-索引的分类" class="headerlink" title="2.1 索引的分类"></a>2.1 索引的分类</h5><ol>
+              <h2 id="1-MySQL-的-MylSAM-和-InnoDB-存储引擎的区别是啥？"><a href="#1-MySQL-的-MylSAM-和-InnoDB-存储引擎的区别是啥？" class="headerlink" title="1. MySQL 的 MylSAM 和 InnoDB 存储引擎的区别是啥？"></a>1. MySQL 的 MylSAM 和 InnoDB 存储引擎的区别是啥？</h2><p>​        <strong>MyISAM</strong> 不支持事务和外键约束，<strong>索引文件和数据文件分开</strong>，这样在内存中可以缓存更多的索引，对查询的性能会更好，适用于<strong>少量插入大量查询</strong>的场景。</p>
+<p>​        <strong>InnoDB</strong> 是现在最常用的存储引擎，是 mysql 5.5 之后的默认存储引擎。主要特点就是<strong>支持事务</strong>，走聚簇索引，<strong>强制要求有主键</strong>，支持外键约束，高并发、大数据量、高可用等相关成熟的数据库架构，<a href="/2020/09/17/09-17-Mysql-DepotsTable">分库分表</a>、<a href="../../../09/17/09-17-Mysql-Read-And-Write-Seperate">读写分离</a>、<mark>主备切换</mark>，全部都可以基于innodb存储引擎来实现。</p>
+<h2 id="2-MySQL索引的原理和数据结构能介绍一下么？"><a href="#2-MySQL索引的原理和数据结构能介绍一下么？" class="headerlink" title="2. MySQL索引的原理和数据结构能介绍一下么？"></a>2. MySQL索引的原理和数据结构能介绍一下么？</h2><h3 id="2-1-索引的分类"><a href="#2-1-索引的分类" class="headerlink" title="2.1 索引的分类"></a>2.1 索引的分类</h3><ol>
 <li><p>从存储结构上来划分：BTree索引（B-Tree或B+Tree索引），Hash索引，full-index全文索引，R-Tree索引</p>
 <ol start="2">
 <li>从应用层次来分：普通索引，唯一索引，复合索引</li>
@@ -231,48 +230,48 @@
 <li><strong>普通索引</strong>：即一个索引只包含单个列，一个表可以有多个单列索引</li>
 <li><strong>唯一索引</strong>：索引列的值必须唯一，但允许有空值</li>
 <li><strong>复合索引</strong>：即一个索引包含多个列</li>
-<li><strong>==聚簇索引==</strong>(聚集索引)：<strong>索引结构和数据一起存放的索引，主键索引属于聚集索引</strong>。具体细节取决于不同的实现，InnoDB的聚簇索引其实就是在同一个结构中保存了B-Tree索引(技术上来说是B+Tree)和数据行。优点是能<strong>快速定位数据</strong>，缺点是<strong>依赖于有序的数据</strong>以及<strong>更新代价大</strong>。</li>
+<li><strong><mark>聚簇索引</mark></strong>(聚集索引)：<strong>索引结构和数据一起存放的索引，主键索引属于聚集索引</strong>。具体细节取决于不同的实现，InnoDB的聚簇索引其实就是在同一个结构中保存了B-Tree索引(技术上来说是B+Tree)和数据行。优点是能<strong>快速定位数据</strong>，缺点是<strong>依赖于有序的数据</strong>以及<strong>更新代价大</strong>。</li>
 <li><strong>非聚簇索引：</strong>不是聚簇索引，<strong>即索引结构和数据分开存放的索引</strong>。</li>
 </ul>
-<h5 id="2-2-B-Tree-和-B-Tree-对比"><a href="#2-2-B-Tree-和-B-Tree-对比" class="headerlink" title="2.2 B-Tree 和 B+Tree 对比"></a>2.2 B-Tree 和 B+Tree 对比</h5><p>​    使用数据举例，分别插入 15, 56, 77, 20, 49。观察两者区别</p>
-<p>​    B-Tree: <img src="img/B%E6%A0%91.gif" srcset="/img/loading.gif" alt="B树">     B+Tree: <img src="img/B+%E6%A0%91.gif" srcset="/img/loading.gif" alt="B+树"></p>
+<h3 id="2-2-B-Tree-和-B-Tree-对比"><a href="#2-2-B-Tree-和-B-Tree-对比" class="headerlink" title="2.2 B-Tree 和 B+Tree 对比"></a>2.2 B-Tree 和 B+Tree 对比</h3><p>​    使用数据举例，分别插入 15, 56, 77, 20, 49。观察两者区别</p>
+<p>​    B-Tree: <img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201017125400.gif" srcset="/img/loading.gif" alt="B树">     B+Tree: <img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201017125452.gif" srcset="/img/loading.gif" alt="B+树"></p>
 <p>​    <strong>B-Tree 索引结构图</strong></p>
 <p>​    B-Tree能加快数据的访问速度，因为存储引擎不再需要进行全表扫描来获取数据，数据分布在各个节点之中。</p>
-<p><img src="img/image-20200830175244040.png" srcset="/img/loading.gif" alt="B-Tree"></p>
-<p>​    <strong>==B+Tree 索引结构图==</strong> (<strong>MySQL 存储引擎</strong>)</p>
-<p><img src="img/image-20200830175348540.png" srcset="/img/loading.gif" alt="B+Tree"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201017125539.png" srcset="/img/loading.gif" alt="B-Tree"></p>
+<p>​    <strong><mark>B+Tree 索引结构图</mark></strong> (<strong>MySQL 存储引擎</strong>)</p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201017125918.png" srcset="/img/loading.gif" alt="B+Tree"></p>
 <p><strong>B+Tree相对于B-Tree有几点不同</strong></p>
 <ol>
 <li>非叶子节点只存储键值信息。</li>
 <li>所有叶子节点之间都有一个链指针。</li>
 <li>数据记录都存放在叶子节点中。</li>
 </ol>
-<h5 id="2-3-MyISM-和-InnoDB-存储引擎的索引实现"><a href="#2-3-MyISM-和-InnoDB-存储引擎的索引实现" class="headerlink" title="2.3 MyISM 和 InnoDB 存储引擎的索引实现"></a>2.3 MyISM 和 InnoDB 存储引擎的索引实现</h5><ul>
+<h3 id="2-3-MyISM-和-InnoDB-存储引擎的索引实现"><a href="#2-3-MyISM-和-InnoDB-存储引擎的索引实现" class="headerlink" title="2.3 MyISM 和 InnoDB 存储引擎的索引实现"></a>2.3 MyISM 和 InnoDB 存储引擎的索引实现</h3><ul>
 <li><p>MyISM 存储引擎中的实现</p>
 <p>MyISAM 是<strong>索引文件和数据文件分开</strong>的，其中 <strong>id 为索引</strong>，<strong>data 为数据文件的物理地址</strong>。</p>
 </li>
 </ul>
-<p><img src="img/201805191452_953.png" srcset="/img/loading.gif" alt="MyISM"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201017130243.png" srcset="/img/loading.gif" alt="MyISM"></p>
 <ul>
 <li><p>InnoDB 存储引擎中的实现</p>
 <p>InnoDB 的数据文件本身就是个索引文件，<strong>id 是主键 key，data 为主键 key 数据的所在行的完整数据</strong>。</p>
 <p>此外，InnoDB 引擎会根据主键建立一个默认索引，叫做<strong>聚簇索引</strong>，故要保证主键是唯一的。</p>
-<p><img src="img/image-20200830183621936.png" srcset="/img/loading.gif" alt="InnoDB_1"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201017130326.png" srcset="/img/loading.gif" alt="InnoDB_1"></p>
 </li>
 </ul>
 <p>​    若对某个非主键的字段创建了索引，那么其 data 的值就是主键，再根据主键到聚簇索引里根据主键值再次查找到数据，即所谓的回表（<strong>二级索引</strong>）。</p>
 <p>​    查找过程：<strong>建立非主键key的索引 -&gt; 主键key -&gt; key所在行的数据</strong></p>
-<p><img src="img/image-20200830181841720.png" srcset="/img/loading.gif" alt="InnoDB_2"></p>
-<h5 id="2-4-索引的使用规则（MySQL性能优化）"><a href="#2-4-索引的使用规则（MySQL性能优化）" class="headerlink" title="2.4 索引的使用规则（MySQL性能优化）"></a>2.4 索引的使用规则（MySQL性能优化）</h5><ul>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201017130733.png" srcset="/img/loading.gif" alt="InnoDB_2"></p>
+<h3 id="2-4-索引的使用规则（MySQL性能优化）"><a href="#2-4-索引的使用规则（MySQL性能优化）" class="headerlink" title="2.4 索引的使用规则（MySQL性能优化）"></a>2.4 索引的使用规则（MySQL性能优化）</h3><ul>
 <li><p><strong>全列匹配索引</strong></p>
 <p>建立的复合索引包括了列的每个字段，同时严格按照索引顺序查询，这样查询效率是最高的。</p>
-<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs mysql"># 创建全列索引
-ALTER TABLE &lt;表名&gt; ADD INDEX &lt;索引名&gt;(col1, col2, col3);
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs sql"><span class="hljs-comment"># 创建全列索引</span>
+<span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> &lt;表名&gt; <span class="hljs-keyword">ADD</span> <span class="hljs-keyword">INDEX</span> &lt;索引名&gt;(col1, col2, col3);
 
-# 执行查询命令
-SELECT * FROM WHERE col1 &#x3D; &#39;a&#39; and col2 &#x3D; &#39;b&#39; and col3 &#x3D; &#39;c&#39;;</code></pre></div>
+<span class="hljs-comment"># 执行查询命令</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> <span class="hljs-keyword">WHERE</span> col1 = <span class="hljs-string">&#x27;a&#x27;</span> <span class="hljs-keyword">and</span> col2 = <span class="hljs-string">&#x27;b&#x27;</span> <span class="hljs-keyword">and</span> col3 = <span class="hljs-string">&#x27;c&#x27;</span>;</code></pre></div>
 </li>
-<li><p>==<strong>最左前缀法则</strong>==</p>
+<li><p><strong><mark>最左前缀法则</mark></strong></p>
 <p>若建立的是复合索引：a-&gt;b-&gt;c，索引建立顺序是从左到右，想象索引是一条桥，a 为桥头，b 为桥身，c 为桥尾，不可断开。</p>
 <p>那么有如下无效的情形</p>
 <ul>
@@ -289,10 +288,10 @@ SELECT * FROM WHERE col1 &#x3D; &#39;a&#39; and col2 &#x3D; &#39;b&#39; and col3
 <li><strong>计算</strong>，如：+、-、*、/、&lt;&gt;、is null、 is not null 等</li>
 <li>聚合函数，如：sum()、round()等</li>
 <li>手动/自动<strong>类型转换</strong>，如：id=“1”，原本id为整数类型，转换为字符串类型了</li>
-<li>索引放在<strong>范围查询右侧(与B+树结构有关)**，如：a-&gt;b-&gt;c，当 where **a=”” and b&gt;10 and ==c=””==</strong> 时，c 用不到索引。</li>
-<li>减少使用 *<em>SELECT **</em>，索引失效的同时会查询很多没必要的字段。尽量使用<strong>覆盖索引</strong>，即 <strong>select 后面的字段 = where 后面的查询条件字段</strong>。</li>
+<li>索引放在 <strong>范围查询右侧(与B+树结构有关)</strong> ，如：a-&gt;b-&gt;c，当 where <strong>a=”” and b&gt;10 and <mark>c=””</mark></strong> 时，c 用不到索引。</li>
+<li>减少使用 <strong>SELECT *</strong>，索引失效的同时会查询很多没必要的字段。尽量使用<strong>覆盖索引</strong>，即 <strong>select 后面的字段 = where 后面的查询条件字段</strong>。</li>
 <li>like <strong>两端模糊查询</strong>，即 where a like %x%，此时使用不到索引，应当<strong>仅保留右百分号(where a like x%)，可使用索引。</strong></li>
-<li>使用 *<em>order by + select **</em>，索引失效且会使用<strong>文件内排序</strong>，即在内存中复制一份一样的数据再排序，性能损耗严重。</li>
+<li>使用 <strong>order by + select *</strong>，索引失效且会使用<strong>文件内排序</strong>，即在内存中复制一份一样的数据再排序，性能损耗严重。</li>
 <li><strong>性能损耗</strong>：先排序后分组(group by)，导致索引失效性能损耗；能使用 where 就不使用 having 等。</li>
 </ul>
 </li>
@@ -303,13 +302,13 @@ SELECT * FROM WHERE col1 &#x3D; &#39;a&#39; and col2 &#x3D; &#39;b&#39; and col3
 <li><p>order by 字段不是索引字段</p>
 </li>
 <li><p>order by 字段是索引字段，但 select 中没有使用覆盖索引，如</p>
-<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs mysql">select * from test order by age asc;</code></pre></div>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs sql"><span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> <span class="hljs-keyword">test</span> <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> age <span class="hljs-keyword">asc</span>;</code></pre></div>
 </li>
 <li><p>order by 的同时存在升序与降序的排序，如</p>
-<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs mysql">select a, b from test order by a desc, b, asc;</code></pre></div>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs sql"><span class="hljs-keyword">select</span> a, b <span class="hljs-keyword">from</span> <span class="hljs-keyword">test</span> <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> a <span class="hljs-keyword">desc</span>, b, <span class="hljs-keyword">asc</span>;</code></pre></div>
 </li>
 <li><p>order by 多个字段排序时，不是按照索引的排序进行 order by，即不按照最左前缀法则，如</p>
-<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs mysql">select a, b from test order by b, a;</code></pre></div>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs sql"><span class="hljs-keyword">select</span> a, b <span class="hljs-keyword">from</span> <span class="hljs-keyword">test</span> <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> b, a;</code></pre></div>
 
 
 
@@ -317,63 +316,63 @@ SELECT * FROM WHERE col1 &#x3D; &#39;a&#39; and col2 &#x3D; &#39;b&#39; and col3
 </ul>
 </li>
 </ul>
-<h5 id="2-5-索引的缺点及使用建议"><a href="#2-5-索引的缺点及使用建议" class="headerlink" title="2.5 索引的缺点及使用建议"></a>2.5 索引的缺点及使用建议</h5><p>​    索引是有缺点的，比如常见的就是会<strong>增加磁盘消耗</strong>，因为要占用磁盘文件，同时高并发的时候频繁插入和修改索引，会导致<strong>性能损耗</strong>的。</p>
+<h3 id="2-5-索引的缺点及使用建议"><a href="#2-5-索引的缺点及使用建议" class="headerlink" title="2.5 索引的缺点及使用建议"></a>2.5 索引的缺点及使用建议</h3><p>​    索引是有缺点的，比如常见的就是会<strong>增加磁盘消耗</strong>，因为要占用磁盘文件，同时高并发的时候频繁插入和修改索引，会导致<strong>性能损耗</strong>的。</p>
 <p>​    常见做法：</p>
 <ol>
 <li><p>尽量创建<strong>少量的索引</strong>，1个表最多设置3个索引，同时选择该列的值在表中<strong>重复比例较小的字段</strong>来做索引较合适。</p>
 </li>
 <li><p>针对较长的字符串，可建立<strong>前缀索引</strong>，只需匹配有限个字符的子串即可定位所在行。</p>
-<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs mysql"># 添加前缀索引 (以前4位字符创建前缀索引)
-alter table test add index(col(4))
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs sql"><span class="hljs-comment"># 添加前缀索引 (以前4位字符创建前缀索引)</span>
+<span class="hljs-keyword">alter</span> <span class="hljs-keyword">table</span> <span class="hljs-keyword">test</span> <span class="hljs-keyword">add</span> <span class="hljs-keyword">index</span>(<span class="hljs-keyword">col</span>(<span class="hljs-number">4</span>))
 
-SELECT col FROM test WHERE col &#x3D; &quot;xxx&quot;</code></pre></div>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">col</span> <span class="hljs-keyword">FROM</span> <span class="hljs-keyword">test</span> <span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">col</span> = <span class="hljs-string">&quot;xxx&quot;</span></code></pre></div>
 
 <p>但其弊端也很明显，即<strong>无法做 group by 和 order by</strong>，页<strong>无法</strong>使用前缀索引做<strong>覆盖扫描</strong>。</p>
 </li>
 </ol>
-<h5 id="2-6-总结"><a href="#2-6-总结" class="headerlink" title="2.6 总结"></a>2.6 总结</h5><p>综上，在系统中关于索引的使用，一般就是尽量降低SQL的复杂度，然后搭配上非常简单的<strong>一个主键索引（聚簇索引）+ 少数几个联合索引</strong>，就可以覆盖一个表的所有SQL查询需求了。更加复杂的业务逻辑，让java代码里来实现就ok了。SQL越简单，后续迁移分库分表、读写分离的时候，成本越低，几乎都不用怎么改造SQL。</p>
-<h4 id="3-事务的几个特性是什么？有哪几种隔离级别？"><a href="#3-事务的几个特性是什么？有哪几种隔离级别？" class="headerlink" title="3. 事务的几个特性是什么？有哪几种隔离级别？"></a>3. 事务的几个特性是什么？有哪几种隔离级别？</h4><p><strong>面试官心理分析</strong></p>
+<h3 id="2-6-总结"><a href="#2-6-总结" class="headerlink" title="2.6 总结"></a>2.6 总结</h3><p>综上，在系统中关于索引的使用，一般就是尽量降低SQL的复杂度，然后搭配上非常简单的<strong>一个主键索引（聚簇索引）+ 少数几个联合索引</strong>，就可以覆盖一个表的所有SQL查询需求了。更加复杂的业务逻辑，让java代码里来实现就ok了。SQL越简单，后续迁移分库分表、读写分离的时候，成本越低，几乎都不用怎么改造SQL。</p>
+<h2 id="3-事务的几个特性是什么？有哪几种隔离级别？"><a href="#3-事务的几个特性是什么？有哪几种隔离级别？" class="headerlink" title="3. 事务的几个特性是什么？有哪几种隔离级别？"></a>3. 事务的几个特性是什么？有哪几种隔离级别？</h2><p><strong>面试官心理分析</strong></p>
 <p>用mysql开发的三个基本面：<strong>存储引擎、索引，事务</strong>。</p>
 <p>因为一个业务系统里，肯定要加事务保证一堆关联操作，要么一起成功要么一起失败，对不对？所以这是聊数据库必问的一个问题</p>
 <p>最最最基本的用mysql来开发，就3点：存储引擎（了解），索引（能建索引，写的SQL都用上索引），事务（了解事务的隔离级别，基于spring的事务支持在代码里加事务）</p>
 <p>存储引擎 -&gt; innodb，索引，基本按照你的SQL的需求都建了索引（可能漏了部分索引忘了建），事务（@Transactional注解，对service层统一加了事务）</p>
-<h5 id="3-1-事务的ACID"><a href="#3-1-事务的ACID" class="headerlink" title="3.1 事务的ACID"></a>3.1 事务的ACID</h5><ol>
+<h3 id="3-1-事务的ACID"><a href="#3-1-事务的ACID" class="headerlink" title="3.1 事务的ACID"></a>3.1 事务的ACID</h3><ol>
 <li>Atomic：<strong>原子性</strong>，一个事务是不可再分割的整体，要么都执行要么都不执行。</li>
 <li>Consistency：<strong>一致性</strong>，一个事务可以使数据从一个一致状态切换到另外一个一致的状态。</li>
 <li>Isolation：<strong>隔离性</strong>，一个事务不受其他事务的干扰，多个事务互相隔离的。</li>
 <li>Durability：<strong>持久性</strong>，一个事务一旦提交了，则永久的持久化到本地。</li>
 </ol>
-<p><img src="img/R3iIriZ.png" srcset="/img/loading.gif" alt="img"></p>
-<p><img src="img/UV326rr.png" srcset="/img/loading.gif" alt="img"></p>
-<p><strong>简单说，==数据库保证一致性就是由原子性、持久性、隔离性共同保证的结果==。</strong></p>
-<h5 id="3-2-事务的使用步骤"><a href="#3-2-事务的使用步骤" class="headerlink" title="3.2 事务的使用步骤"></a>3.2 事务的使用步骤</h5><ol>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201017130751.png" srcset="/img/loading.gif" alt="R3iIriZ"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201017130755.png" srcset="/img/loading.gif" alt="img"></p>
+<p><strong>简单说，<mark>数据库保证一致性就是由原子性、持久性、隔离性共同保证的结果</mark>。</strong></p>
+<h3 id="3-2-事务的使用步骤"><a href="#3-2-事务的使用步骤" class="headerlink" title="3.2 事务的使用步骤"></a>3.2 事务的使用步骤</h3><ol>
 <li><p><strong>隐式（自动）事务</strong>：没有明显的开启和结束，本身就是一条事务可以<strong>自动提交</strong>，比如insert、update、delete</p>
 </li>
 <li><p>显式事务：具有明显的开启和结束</p>
 <ul>
 <li>开启事务</li>
 </ul>
-<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs mysql">set autocommit&#x3D;0;
-start transaction;</code></pre></div>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs sql"><span class="hljs-keyword">set</span> autocommit=<span class="hljs-number">0</span>;
+<span class="hljs-keyword">start</span> <span class="hljs-keyword">transaction</span>;</code></pre></div>
 
 <ul>
 <li>编写一组逻辑 SQL 语句 (如insert、update、delete)，并设置回滚点</li>
 </ul>
-<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs mysql">insert into &lt;表名&gt; values(a, b, c);
-savepoint ‘回滚点名’;</code></pre></div>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs sql"><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> &lt;表名&gt; <span class="hljs-keyword">values</span>(a, b, c);
+<span class="hljs-keyword">savepoint</span> ‘回滚点名’;</code></pre></div>
 
 <ul>
 <li><p>结束事务</p>
 <ol>
 <li><p>提交成功</p>
-<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs mysql">commit;</code></pre></div>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs sql"><span class="hljs-keyword">commit</span>;</code></pre></div>
 </li>
 <li><p>提交失败，则回滚</p>
-<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs mysql"># 回滚
-rollback;
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs sql"><span class="hljs-comment"># 回滚</span>
+<span class="hljs-keyword">rollback</span>;
 
-# 或 回滚到指定的地方
-rollback to &#39;回滚点名&#39;;</code></pre></div>
+<span class="hljs-comment"># 或 回滚到指定的地方</span>
+<span class="hljs-keyword">rollback</span> <span class="hljs-keyword">to</span> <span class="hljs-string">&#x27;回滚点名&#x27;</span>;</code></pre></div>
 
 
 
@@ -383,12 +382,12 @@ rollback to &#39;回滚点名&#39;;</code></pre></div>
 </ul>
 </li>
 </ol>
-<h5 id="3-3-事务的隔离级别"><a href="#3-3-事务的隔离级别" class="headerlink" title="3.3 事务的隔离级别"></a>3.3 事务的隔离级别</h5><p><strong>并发问题</strong></p>
+<h3 id="3-3-事务的隔离级别"><a href="#3-3-事务的隔离级别" class="headerlink" title="3.3 事务的隔离级别"></a>3.3 事务的隔离级别</h3><p><strong>并发问题</strong></p>
 <ol>
-<li><strong>==脏读==**：一个事务读取了其他事务还未提交的数据，读到的是其他事务</strong>==更新==**的数据。</li>
-<li>**==不可重复读==**：一个事务多次读取，结果不一样。</li>
-<li><strong>==幻读==**：一个事务读取了其他事务还未提交的数据，只是读到的是其他事务</strong>==插入==**的数据。</li>
-<li><strong>==更新丢失==</strong> ： 当两个或多个事务<strong>更新同一行记录</strong>，会产生更新丢失现象。可以分为回滚覆盖和提交覆盖。<ul>
+<li><mark><strong>脏读</strong></mark>：一个事务读取了其他事务还未提交的数据，读到的是其他事务<mark><strong>更新</strong></mark>的数据。</li>
+<li><mark><strong>不可重复读</strong></mark>：一个事务多次读取，结果不一样。</li>
+<li><mark><strong>幻读</strong></mark>：一个事务读取了其他事务还未提交的数据，只是读到的是其他事务<mark><strong>插入</strong></mark>的数据。</li>
+<li><mark><strong>更新丢失</strong></mark> ： 当两个或多个事务<strong>更新同一行记录</strong>，会产生更新丢失现象。可以分为回滚覆盖和提交覆盖。<ul>
 <li>回滚覆盖 ：一个事务回滚操作，把其他事务已提交的数据给覆盖了。</li>
 <li>提交覆盖 ：一个事务提交操作，把其他事务已提交的数据给覆盖了。</li>
 </ul>
@@ -440,17 +439,17 @@ rollback to &#39;回滚点名&#39;;</code></pre></div>
 </tr>
 </tbody></table>
 <ol>
-<li><p>Read Uncommitted：<strong>读未提交 **，一个事务在执行过程中可以看到其他事务</strong>未提交的插入和更新的记录**。</p>
+<li><p>Read Uncommitted：<strong>读未提交</strong> ，一个事务在执行过程中可以看到其他事务<strong>未提交的插入和更新的记录</strong>。</p>
 </li>
-<li><p>Read Committed：<strong>读已提交</strong>，一个事务在执行过程中可以看到其他事务<strong>已提交的新插入和更新的记录</strong>。(<strong>==Oracle、SQLServer默认隔离级别==</strong>)</p>
+<li><p>Read Committed：<strong>读已提交</strong>，一个事务在执行过程中可以看到其他事务<strong>已提交的新插入和更新的记录</strong>。(<strong><mark>Oracle、SQLServer默认隔离级别</mark></strong>)</p>
 </li>
-<li><p>Read Repeatable：<strong>可重复读</strong>，一个事务在执行过程中可以看到其他事务<strong>已提交的新插入的记录(<del>看不见更新记录</del>)**。(</strong>==MySQL的默认隔离级别==**)</p>
+<li><p>Read Repeatable：<strong>可重复读</strong>，一个事务在执行过程中可以看到其他事务已提交的新插入的记录(<del>看不见更新记录</del>)。(<mark><strong>MySQL的默认隔离级别</strong></mark>)</p>
 </li>
 <li><p>Serializable：<strong>串行化</strong>，所有事务都串行起来，<strong>不允许多个事务并行操作</strong>。</p>
 </li>
 </ol>
-<h5 id="3-4-MySQL是如何实现“可重复读”这一隔离级别的？"><a href="#3-4-MySQL是如何实现“可重复读”这一隔离级别的？" class="headerlink" title="3.4 MySQL是如何实现“可重复读”这一隔离级别的？"></a>3.4 MySQL是如何实现“可重复读”这一隔离级别的？</h5><p>​    MVCC的<strong>简单理解</strong>：如下图所示，<strong>在事务1开始写操作的时候会生成该记录的快照，其他事务读操作会读取这个记录的副本，因此不会影响其他事务对此记录的读取，实现写和读并行。</strong></p>
-<p><img src="img/732QNnZ.png" srcset="/img/loading.gif" alt="img"></p>
+<h3 id="3-4-MySQL是如何实现“可重复读”这一隔离级别的？"><a href="#3-4-MySQL是如何实现“可重复读”这一隔离级别的？" class="headerlink" title="3.4 MySQL是如何实现“可重复读”这一隔离级别的？"></a>3.4 MySQL是如何实现“可重复读”这一隔离级别的？</h3><p>​    MVCC的<strong>简单理解</strong>：如下图所示，<strong>在事务1开始写操作的时候会生成该记录的快照，其他事务读操作会读取这个记录的副本，因此不会影响其他事务对此记录的读取，实现写和读并行。</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201017130803.png" srcset="/img/loading.gif" alt="img"></p>
 <p>​    </p>
 <p>​        MySQL是通过<strong>MVCC机制</strong>来实现<strong>可重复读</strong>的，即多版本并发控制 (<strong>multi-version concurrency control</strong>) 。MVCC支持读和读、读和写、写和读的并行，但为了保证一致性，写和写是无法并行的。<strong>在每次事务修改操作之前，都会在Undo日志中记录修改之前的数据状态和事务号(全局唯一)，该备份记录可以用于其他事务的读取，也可以进行必要时的数据回滚。</strong></p>
 <p>​        MVCC最大的好处是读<strong>不加锁，读写不冲突</strong>。读操作可以分为两类: <strong>快照读</strong>（Snapshot Read）与<strong>当前读</strong> （Current Read）。</p>
@@ -462,10 +461,10 @@ rollback to &#39;回滚点名&#39;;</code></pre></div>
 </ul>
 <p>  <strong>举一个记录更新的案例来讲解 MVCC 中多版本的实现：</strong></p>
 <p>  假设 F1～F6 是表中字段的名字，1～6 是其对应的数据。后面三个隐含字段分别对应该行的<strong>隐含ID(行标识)、事务号和回滚指针</strong>，如下图所示。</p>
-<p>  <img src="img/yYrAZnv.png" srcset="/img/loading.gif" alt="img"></p>
+<p>  <img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201017130811.png" srcset="/img/loading.gif" alt="img"></p>
 <ul>
 <li><p>具体的更新过程如下： 假如一条数据是刚 INSERT 的，DB_ROW_ID 为 1，其他两个字段为空。当事务1更改该行的数据值时，会进行如下操作：</p>
-<p><img src="img/v2eeAnQ.png" srcset="/img/loading.gif" alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201017130819.png" srcset="/img/loading.gif" alt="img"></p>
 </li>
 </ul>
 <ol>
@@ -473,17 +472,16 @@ rollback to &#39;回滚点名&#39;;</code></pre></div>
 </li>
 <li><p>把该行<strong>修改前的值复制到 Undo log</strong>，即上图中下面的行；</p>
 </li>
-<li><p>修改当前行的值，<strong>填写事务编号(01)**，使</strong>回滚指针指向 Undo log 中修改前的行**。</p>
+<li><p>修改当前行的值，<strong>填写事务编号(01)，使回滚指针指向 Undo log 中修改前的行</strong>。</p>
 </li>
 </ol>
 <ul>
 <li><p>接下来事务2操作， 过程与事务1相同，此时 Undo log 中会有两行记录，此时查看锁信息，会出现两条 ，并且<strong>通过回滚指针连在一起，通过当前记录的回滚指针回溯到该行创建时的初始内容</strong>，如下图所示：</p>
-<p><img src="img/3qMVZj.png" srcset="/img/loading.gif" alt="img"></p>
-<p>MVCC已经实现了读读、读写、写读并发处理，如果想进一步解决写写冲突，可以采用下面两种锁的方案，<strong>乐观锁</strong>和**悲观锁(高并发)**。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201017130827.png" srcset="/img/loading.gif" alt="img"></p>
+<p>MVCC已经实现了读读、读写、写读并发处理，如果想进一步解决写写冲突，可以采用下面两种锁的方案，<strong>乐观锁</strong> 和 <strong>悲观锁(高并发)</strong> 。</p>
 </li>
 </ul>
-<h5 id="3-5-MySql数据库锁的实现原理是什么？如果死锁了怎么办？"><a href="#3-5-MySql数据库锁的实现原理是什么？如果死锁了怎么办？" class="headerlink" title="3.5 MySql数据库锁的实现原理是什么？如果死锁了怎么办？"></a>3.5 MySql数据库锁的实现原理是什么？如果死锁了怎么办？</h5><p><strong>一、锁的分类</strong></p>
-<ol>
+<h3 id="3-5-MySql数据库锁的实现原理是什么？如果死锁了怎么办？"><a href="#3-5-MySql数据库锁的实现原理是什么？如果死锁了怎么办？" class="headerlink" title="3.5 MySql数据库锁的实现原理是什么？如果死锁了怎么办？"></a>3.5 MySql数据库锁的实现原理是什么？如果死锁了怎么办？</h3><h4 id="一、锁的分类"><a href="#一、锁的分类" class="headerlink" title="一、锁的分类"></a><strong>一、锁的分类</strong></h4><ol>
 <li>操作的粒度可分为<strong>表级锁</strong>、行级锁和<strong>页级锁</strong>。</li>
 </ol>
 <ul>
@@ -492,7 +490,7 @@ rollback to &#39;回滚点名&#39;;</code></pre></div>
 <li>页级锁：每次锁定相邻的一组记录，锁定粒度界于表锁和行锁之间，开销和加锁时间界于表锁和行锁之间，并发度一般。应用在BDB 存储引擎中。</li>
 </ul>
 <p><strong>MyISAM和InnoDB存储引擎使用的锁</strong></p>
-<p><img src="img/YRRnqeR.png" srcset="/img/loading.gif" alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201017130834.png" srcset="/img/loading.gif" alt="img"></p>
 <ol start="2">
 <li>从操作的类型可分为<strong>读锁</strong>和<strong>写锁</strong>。</li>
 </ol>
@@ -504,14 +502,13 @@ rollback to &#39;回滚点名&#39;;</code></pre></div>
 </li>
 </ul>
 <ol start="3">
-<li>从操作的性能可分为<strong>乐观锁</strong>和<strong>悲观锁</strong>。</li>
+<li>从操作的性能可分为 <strong>乐观锁</strong> 和 <strong>悲观锁</strong>。</li>
 </ol>
 <ul>
-<li>乐观锁：一般的实现方式是对记录数据版本进行比对，在数据更新<strong>提交的时候才会进行冲突检测</strong>，如果发现冲突了，则提示错误信息。(<strong>==类似 Java 的 CAS机制==</strong>)</li>
+<li>乐观锁：一般的实现方式是对记录数据版本进行比对，在数据更新<strong>提交的时候才会进行冲突检测</strong>，如果发现冲突了，则提示错误信息。(<strong><mark>类似 Java 的 CAS机制</mark></strong>)</li>
 <li>悲观锁：在对一条数据修改的时候，为了避免同时被其他人修改，<strong>在修改数据之前先锁定</strong>， 再修改的控制方式。<strong>共享锁和排他锁是悲观锁的不同实现</strong>，但都属于悲观锁范畴。</li>
 </ul>
-<p><strong>二、行锁的原理</strong></p>
-<p>​        在InnoDB引擎中，我们可以使用行锁和表锁，其中行锁又分为共享锁和排他锁。InnoDB行锁是通过对 索引数据页上的记录加锁实现的，主要实现算法有 3 种：<strong>Record Lock</strong>、<strong>Gap Lock</strong> 和 <strong>Next-key Lock</strong>。</p>
+<h4 id="二、行锁的原理"><a href="#二、行锁的原理" class="headerlink" title="二、行锁的原理"></a><strong>二、行锁的原理</strong></h4><p>​        在InnoDB引擎中，我们可以使用行锁和表锁，其中行锁又分为共享锁和排他锁。InnoDB行锁是通过对 索引数据页上的记录加锁实现的，主要实现算法有 3 种：<strong>Record Lock</strong>、<strong>Gap Lock</strong> 和 <strong>Next-key Lock</strong>。</p>
 <ul>
 <li><p>RecordLock锁：<strong>锁定单个行记录的锁</strong>。（记录锁，RC、RR隔离级别都支持）</p>
 </li>
@@ -521,8 +518,7 @@ rollback to &#39;回滚点名&#39;;</code></pre></div>
 <p>总结：在“<strong>可重复读</strong>”隔离级别，InnoDB对于记录加锁行为都是<strong>先采用Next-Key Lock</strong>，但是当SQL操作<strong>含有唯一索引时</strong>，Innodb会对Next-Key Lock进行优化，<strong>降级为RecordLock</strong>，<strong>仅锁住索引本身</strong>而非范围。</p>
 </li>
 </ul>
-<p><strong>三、死锁与解决方案</strong></p>
-<ol>
+<h4 id="三、死锁与解决方案"><a href="#三、死锁与解决方案" class="headerlink" title="三、死锁与解决方案"></a><strong>三、死锁与解决方案</strong></h4><ol>
 <li><p><strong>表锁死锁</strong></p>
 <ul>
 <li><p>产生原因： 用户A访问表A（锁住了表A），然后又访问表B；另一个用户B访问表B（锁住了表B），然后企图 访问表A；这时用户A由于用户B已经锁住表B，它必须等待用户B释放表B才能继续，同样用户B要 等用户A释放表A才能继续，这就死锁就产生了。</p>
@@ -545,7 +541,7 @@ rollback to &#39;回滚点名&#39;;</code></pre></div>
 <li><p>产生原因2： 两个事务分别想拿到对方持有的锁，互相等待，于是产生死锁。</p>
 </li>
 <li><p>解决方案2： 在同一个事务中，尽可能做到一次锁定所需要的所有资源 按照id对资源排序，然后按顺序进行处理 </p>
-<p><img src="img/vYNjQbI.png" srcset="/img/loading.gif" alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201017130842.png" srcset="/img/loading.gif" alt="img"></p>
 </li>
 </ul>
 <ol start="3">
@@ -574,11 +570,11 @@ Innodb_row_lock_waits：系统启动后到现在总共等待的次数</code></pr
 <p>如果等待次数高，而且每次等待时间长，需要分析系统中为什么会有如此多的等待，然后着手定制优化。</p>
 </li>
 </ul>
-<h5 id="3-6-总结"><a href="#3-6-总结" class="headerlink" title="3.6 总结"></a>3.6 总结</h5><p>​    <strong>事务底层实现是锁</strong>，在事务控制不了并发的情况下，可以<strong>手动加锁，保证数据一致性</strong>，用执行计划保证索引加在更新列上，禁止锁全表引起死锁，<strong>业务方面可以用MVCC机制防止重复提交</strong>，避免长事务中的数据库加锁开销。</p>
-<h4 id="4-SQL-调优的常用手段"><a href="#4-SQL-调优的常用手段" class="headerlink" title="4. SQL 调优的常用手段"></a>4. SQL 调优的常用手段</h4><p>​    首先要保持SQL简单，一般90%的SQL都建议是单表查询，<strong>join等逻辑放java代码里实现</strong>，不要放SQL里。</p>
+<h3 id="3-6-总结"><a href="#3-6-总结" class="headerlink" title="3.6 总结"></a>3.6 总结</h3><p>​    <strong>事务底层实现是锁</strong>，在事务控制不了并发的情况下，可以<strong>手动加锁，保证数据一致性</strong>，用执行计划保证索引加在更新列上，禁止锁全表引起死锁，<strong>业务方面可以用MVCC机制防止重复提交</strong>，避免长事务中的数据库加锁开销。</p>
+<h2 id="4-SQL-调优的常用手段"><a href="#4-SQL-调优的常用手段" class="headerlink" title="4. SQL 调优的常用手段"></a>4. SQL 调优的常用手段</h2><p>​    首先要保持SQL简单，一般90%的SQL都建议是单表查询，<strong>join等逻辑放java代码里实现</strong>，不要放SQL里。</p>
 <p>​    如果某个线上SQL跑的慢，首先判断<strong>SQL没有用索引或是数据库选错了索引</strong>，通过看<strong>MySQL的执行计划</strong>来添加索引。其次是考虑<strong>服务器硬件本身和死锁</strong>的问题。</p>
-<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs mysql"># 查看 SQL 语句的性能
-explain select * from &#39;表名&#39;</code></pre></div>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs sql"><span class="hljs-comment"># 查看 SQL 语句的性能</span>
+<span class="hljs-keyword">explain</span> <span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;表名&#x27;</span></code></pre></div>
 
 <p><strong>执行计划中的各个参数意义：</strong></p>
 <ul>
@@ -602,7 +598,7 @@ explain select * from &#39;表名&#39;</code></pre></div>
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/test/">test</a>
+                      <a class="hover-with-bg" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
                     
                   </div>
                 
@@ -611,6 +607,8 @@ explain select * from &#39;表名&#39;</code></pre></div>
                     <i class="iconfont icon-tags"></i>
                     
                       <a class="hover-with-bg" href="/tags/%E9%9D%A2%E8%AF%95/">面试</a>
+                    
+                      <a class="hover-with-bg" href="/tags/MySQL/">MySQL</a>
                     
                   </div>
                 
@@ -621,9 +619,9 @@ explain select * from &#39;表名&#39;</code></pre></div>
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2020/09/30/ThreadLocal/">
+                      <a href="/2020/09/17/09-17-Mysql-DepotsTable/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">多线程之 ThreadLocal</span>
+                        <span class="hidden-mobile">MySQL 之分库分表</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -631,8 +629,8 @@ explain select * from &#39;表名&#39;</code></pre></div>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2020/09/19/%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2/">
-                        <span class="hidden-mobile">我的博客</span>
+                      <a href="/2020/09/10/09-10-Hello-World/">
+                        <span class="hidden-mobile">Hello World</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -806,7 +804,7 @@ explain select * from &#39;表名&#39;</code></pre></div>
         !function(e){var n,t={},o="jinrishici-token";function i(){return document.getElementById("jinrishici-sentence")||0!=document.getElementsByClassName("jinrishici-sentence").length}function c(){t.load(function(e){var n=document.getElementById("jinrishici-sentence"),t=document.getElementsByClassName("jinrishici-sentence");if(n&&(n.innerText=e.data.content),0!==t.length)for(var o=0;o<t.length;o++)t[o].innerText=e.data.content})}function r(e,n){var t=new XMLHttpRequest;t.open("get",n),t.withCredentials=!0,t.send(),t.onreadystatechange=function(n){if(4===t.readyState){var o=JSON.parse(t.responseText);"success"===o.status?e(o):console.error("今日诗词API加载失败，错误原因："+o.errMessage)}}}t.load=function(n){return e.localStorage&&e.localStorage.getItem(o)?function(e,n){return r(e,"https://v2.jinrishici.com/one.json?client=browser-sdk/1.2&X-User-Token="+encodeURIComponent(n))}(n,e.localStorage.getItem(o)):function(n){return r(function(t){e.localStorage.setItem(o,t.token),n(t)},"https://v2.jinrishici.com/one.json?client=browser-sdk/1.2")}(n)},e.jinrishici=t,i()?c():(n=function(){i()&&c()},"loading"!=document.readyState?n():document.addEventListener?document.addEventListener("DOMContentLoaded",n):document.attachEvent("onreadystatechange",function(){"complete"==document.readyState&&n()}))}(window); 
         // 输出指定数量空格+引用
         function writeSpace(len){
-          len = (len > 15) ? (len > 31 ? 0 : 10) : len
+          len = (len > 10) ? (len > 31 ? 0 : 8) : len
           var space = ''
           for(var i = 0; i<len; i++){
             space += '&emsp;'

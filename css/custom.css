@@ -24,7 +24,6 @@
 /* 粗体样式 */
 .markdown-body strong {
   font-weight: 700;
-  /* color: rgba(0,0,0,.98); */
 }
 
 /* 代码顶栏 */
@@ -56,7 +55,7 @@
 
 /* 代码注释字体 */
 .hljs-comment, .hljs-quote {
-  font-family: "Noto Sans SC" !important;
+  font-family: "OPPO Sans SC" !important;
 }
 
 /* 代码字符串 */

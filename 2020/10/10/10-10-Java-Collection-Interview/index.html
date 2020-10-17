@@ -235,7 +235,7 @@
 <li>插入、删除数据时，LinkedList的效率比较高，因为ArrayList删除数据时索引后的元素都需要移动。</li>
 <li>LinkedList比ArrayList开销更大，因为LinkedList的节点除了存储数据，还需要存储引用。</li>
 </ul>
-<h3 id="2-Collections-和-Arrays-的-sort-实现原理"><a href="#2-Collections-和-Arrays-的-sort-实现原理" class="headerlink" title="2. Collections 和 Arrays 的 sort 实现原理"></a>2. Collections 和 Arrays 的 sort 实现原理</h3><p><strong>Collection.sort是对 <em>list</em> 进行排序</strong>，<strong>Arrays.sort 是对 <em>数组</em> 进行排序</strong>。</p>
+<h3 id="2-Collections-和-Arrays-的-sort-实现原理"><a href="#2-Collections-和-Arrays-的-sort-实现原理" class="headerlink" title="2. Collections 和 Arrays 的 sort 实现原理"></a>2. Collections 和 Arrays 的 sort 实现原理</h3><p><strong>Collection.sort是对 <mark>list</mark> 进行排序</strong>，<strong>Arrays.sort 是对 <mark>数组</mark> 进行排序</strong>。</p>
 <h4 id="Collections-sort底层实现"><a href="#Collections-sort底层实现" class="headerlink" title="Collections.sort底层实现"></a>Collections.sort底层实现</h4><p>Collections.sort方法调用了list.sort方法<br><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010152717.png" srcset="/img/loading.gif"><br>list.sort方法调用了Arrays.sort的方法<br><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010152735.png" srcset="/img/loading.gif"><br>因此，<strong>Collections.sort方法底层就是调用的Array.sort方法</strong></p>
 <h4 id="Arrays-sort底层实现"><a href="#Arrays-sort底层实现" class="headerlink" title="Arrays.sort底层实现"></a>Arrays.sort底层实现</h4><p>Arrays的sort方法，如下：<br><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010161759.png" srcset="/img/loading.gif"><br>如果比较器为null，进入sort（a）方法。如下：<br><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010162002.png" srcset="/img/loading.gif"><br>因此，Arrays的sort方法底层就是：</p>
 <ul>
@@ -401,7 +401,7 @@ boy</code></pre></div>
 
 <h3 id="9-TreeMap底层？"><a href="#9-TreeMap底层？" class="headerlink" title="9. TreeMap底层？"></a>9. TreeMap底层？</h3><ul>
 <li>TreeMap实现了 SortedMap 接口，它是有序的集合。</li>
-<li>TreeMap<strong>底层数据结构</strong>是一个==<strong>红黑树</strong>==，每个key-value都作为一个红黑树的节点。</li>
+<li>TreeMap<strong>底层数据结构</strong>是一个**<mark>红黑树</mark>**，每个key-value都作为一个红黑树的节点。</li>
 <li>如果在调用TreeMap的构造函数时没有指定比较器，则<strong>根据key执行自然排序</strong>。</li>
 </ul>
 <p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010163415.png" srcset="/img/loading.gif"></p>
@@ -451,13 +451,13 @@ boy</code></pre></div>
 <h3 id="16-Collection与Collections的区别是什么？"><a href="#16-Collection与Collections的区别是什么？" class="headerlink" title="16. Collection与Collections的区别是什么？"></a>16. Collection与Collections的区别是什么？</h3><ul>
 <li><strong>Collection<E>是Java集合框架中的基本接口</strong>，如List接口也是继承于它</li>
 </ul>
-<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs routeros">public<span class="hljs-built_in"> interface </span>List&lt;E&gt; extends Collection&lt;E&gt; &#123;</code></pre></div>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">List</span>&lt;<span class="hljs-title">E</span>&gt; <span class="hljs-keyword">extends</span> <span class="hljs-title">Collection</span>&lt;<span class="hljs-title">E</span>&gt; </span>&#123;</code></pre></div>
 
 <ul>
 <li><strong>Collections是Java集合框架提供的一个工具类</strong>，其中包含了大量用于操作或返回集合的静态方法。如下：</li>
 </ul>
-<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs php"><span class="hljs-keyword">public</span> <span class="hljs-built_in">static</span> &lt;T <span class="hljs-keyword">extends</span> Comparable<span class="hljs-meta">&lt;?</span> super T&gt;&gt; <span class="hljs-keyword">void</span> sort(<span class="hljs-keyword">List</span>&lt;T&gt; <span class="hljs-keyword">list</span>) &#123;
-    <span class="hljs-keyword">list</span>.sort(<span class="hljs-literal">null</span>);
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> &lt;T extends Comparable&lt;? <span class="hljs-keyword">super</span> T&gt;&gt; <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">sort</span><span class="hljs-params">(List&lt;T&gt; list)</span> </span>&#123;
+    list.sort(<span class="hljs-keyword">null</span>);
 &#125;</code></pre></div>
 
 <h3 id="17-如何决定使用-HashMap-还是TreeMap？"><a href="#17-如何决定使用-HashMap-还是TreeMap？" class="headerlink" title="17. 如何决定使用 HashMap 还是TreeMap？"></a>17. 如何决定使用 HashMap 还是TreeMap？</h3><p>这个点，主要考察HashMap和TreeMap的区别。</p>
@@ -483,7 +483,7 @@ System.out.println(array[<span class="hljs-number">0</span>]);</code></pre></div
 <div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java">Exception in thread <span class="hljs-string">&quot;main&quot;</span> java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to [Ljava.lang.String;
 	at Test.main(Test.java:<span class="hljs-number">14</span>)</code></pre></div>
 
-<h4 id="Array-转List"><a href="#Array-转List" class="headerlink" title="Array 转List"></a>Array 转List</h4><p>使用<strong>Arrays.asList() 把数组转换成集合</strong>时，其**底层仍是一个==数组==**！因此不能使用修改集合相关的方法，例如add方法，如下：</p>
+<h4 id="Array-转List"><a href="#Array-转List" class="headerlink" title="Array 转List"></a>Array 转List</h4><p>使用<strong>Arrays.asList() 把数组转换成集合</strong>时，其**底层仍是一个<mark>数组</mark>**！因此不能使用修改集合相关的方法，例如add方法，如下：</p>
 <div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java">String[] str = <span class="hljs-keyword">new</span> String[] &#123; <span class="hljs-string">&quot;jay&quot;</span>, <span class="hljs-string">&quot;tianluo&quot;</span> &#125;;
 List list = Arrays.asList(str);
 list.add(<span class="hljs-string">&quot;boy&quot;</span>);</code></pre></div>
@@ -499,6 +499,7 @@ list.add(<span class="hljs-string">&quot;boy&quot;</span>);</code></pre></div>
 <div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java"><span class="hljs-comment">//方式一：</span>
 ArrayList&lt; String&gt; arrayList = <span class="hljs-keyword">new</span> ArrayList&lt;String&gt;(strArray.length);
 Collections.addAll(arrayList, strArray);
+
 <span class="hljs-comment">//方式二：</span>
 ArrayList&lt;String&gt; list = <span class="hljs-keyword">new</span> ArrayList&lt;String&gt;(Arrays.asList(strArray)) ;</code></pre></div>
 
@@ -550,7 +551,7 @@ Iterator&lt;String&gt; it = list. iterator();
 <div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs awk"><span class="hljs-regexp">//</span>可以洗发现，final修饰，集合还是会被修改呢
 boy</code></pre></div>
 
-<p>嘻嘻，那么，到底怎么**==确保一个集合不能被修改==<strong>(集合不可变)呢，看以下这三个方法，即 ==**Collections.unmodifiable&lt;集合类型&gt;</strong>==</p>
+<p>嘻嘻，那么，到底怎么**<mark>确保一个集合不能被修改</mark>**(集合不可变)呢，看以下这三个方法，即 <strong><mark>Collections.unmodifiable&lt;集合类型&gt;</mark></strong></p>
 <ul>
 <li><strong>unmodifiableMap</strong></li>
 <li><strong>unmodifiableList</strong></li>
@@ -802,7 +803,7 @@ isEmpty()<span class="hljs-comment">//判断队列是否为空，为空返回tru
 
 <h3 id="34-当一个集合被作为参数传递给一个函数时，如何才可以确保函数不能修改它？"><a href="#34-当一个集合被作为参数传递给一个函数时，如何才可以确保函数不能修改它？" class="headerlink" title="34. 当一个集合被作为参数传递给一个函数时，如何才可以确保函数不能修改它？"></a>34. 当一个集合被作为参数传递给一个函数时，如何才可以确保函数不能修改它？</h3><p>这个跟之前那个不可变集合一样道理哈~</p>
 <blockquote>
-<p>在作为参数传递之前，使用==<strong>Collections.unmodifiableCollection</strong>==(Collection c)方法创建一个**==只读集合==**，这将确保改变集合的任何操作都会抛出UnsupportedOperationException。</p>
+<p>在作为参数传递之前，使用**<mark>Collections.unmodifiableCollection</mark>**(Collection c)方法创建一个**<mark>只读集合</mark>**，这将确保改变集合的任何操作都会抛出UnsupportedOperationException。</p>
 </blockquote>
 <h3 id="35-说一下HashSet的实现原理？"><a href="#35-说一下HashSet的实现原理？" class="headerlink" title="35. 说一下HashSet的实现原理？"></a>35. 说一下HashSet的实现原理？</h3><ul>
 <li><strong>不能保证元素的排列顺序</strong>，顺序有可能发生变化。</li>
@@ -866,9 +867,9 @@ isEmpty()<span class="hljs-comment">//判断队列是否为空，为空返回tru
 <p>有兴趣的朋友，可以看看我的<a href="%E6%8B%93%E5%B1%95%E6%96%87%E6%A1%A3%5C41_%E7%BA%BF%E7%A8%8B%E6%B1%A0%E8%A7%A3%E6%9E%90.md">这篇文章</a>哦~</p>
 <p><a target="_blank" rel="noopener" href="https://juejin.im/post/5d1882b1f265da1ba84aa676#heading-15">面试必备：Java线程池解析</a></p>
 <h3 id="42-HashSet-和-TreeSet-有什么区别？"><a href="#42-HashSet-和-TreeSet-有什么区别？" class="headerlink" title="42. HashSet 和 TreeSet 有什么区别？"></a>42. HashSet 和 TreeSet 有什么区别？</h3><ul>
-<li>Hashset 的底层是由**==哈希表==<strong>实现的，Treeset 底层是由==**红黑树</strong>==实现的。</li>
-<li>HashSet中的元素没有顺序，TreeSet保存的元素**==有顺序性==**（实现Comparable接口）</li>
-<li>HashSet的add()，remove()，contains()方法的时间复杂度是==<strong>O(1)</strong>==；TreeSet中，add()，remove()，contains()方法的时间复杂度是==<strong>O(logn)</strong>==</li>
+<li>Hashset 的底层是由**<mark>哈希表</mark><strong>实现的，Treeset 底层是由</strong><mark>红黑树</mark>**实现的。</li>
+<li>HashSet中的元素没有顺序，TreeSet保存的元素**<mark>有顺序性</mark>**（实现Comparable接口）</li>
+<li>HashSet的add()，remove()，contains()方法的时间复杂度是**<mark>O(1)</mark><strong>；TreeSet中，add()，remove()，contains()方法的时间复杂度是</strong><mark>O(logn)</mark>**。</li>
 </ul>
 <h3 id="43-Set里的元素是不能重复的，那么用什么方法来区分重复与否呢-是用-还是equals"><a href="#43-Set里的元素是不能重复的，那么用什么方法来区分重复与否呢-是用-还是equals" class="headerlink" title="43. Set里的元素是不能重复的，那么用什么方法来区分重复与否呢? 是用==还是equals()?"></a>43. Set里的元素是不能重复的，那么用什么方法来区分重复与否呢? 是用==还是equals()?</h3><p>元素重复与否是<strong>使用equals()方法</strong>进行判断的，这个可以跟面试官说说==和equals()的区别，hashcode()和equals</p>
 <h3 id="44-说出ArrayList-LinkedList的存储性能和特性"><a href="#44-说出ArrayList-LinkedList的存储性能和特性" class="headerlink" title="44. 说出ArrayList,LinkedList的存储性能和特性"></a>44. 说出ArrayList,LinkedList的存储性能和特性</h3><p>这道面试题，跟ArrayList,LinkedList，就是换汤不换药的~</p>
@@ -879,7 +880,7 @@ isEmpty()<span class="hljs-comment">//判断队列是否为空，为空返回tru
 </ul>
 <h3 id="45-HashMap在JDK1-7和JDK1-8中有哪些不同？"><a href="#45-HashMap在JDK1-7和JDK1-8中有哪些不同？" class="headerlink" title="45. HashMap在JDK1.7和JDK1.8中有哪些不同？"></a>45. HashMap在JDK1.7和JDK1.8中有哪些不同？</h3><p>互联网上这个答案太详细啦（来源<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/939b8a672070">Java集合必会14问</a>）<br><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010170050.png" srcset="/img/loading.gif"></p>
 <h3 id="46-ArrayList集合加入1万条数据，应该怎么提高效率"><a href="#46-ArrayList集合加入1万条数据，应该怎么提高效率" class="headerlink" title="46. ArrayList集合加入1万条数据，应该怎么提高效率"></a>46. ArrayList集合加入1万条数据，应该怎么提高效率</h3><blockquote>
-<p>因为ArrayList的底层是数组实现,并且数组的默认值是10,如果插入10000条要不断的扩容,耗费时间,所以我们调用ArrayList的==指定容量==的构造器方法ArrayList(int size) 就可以实现不扩容,就提高了性能。</p>
+<p>因为ArrayList的底层是数组实现,并且数组的默认值是10,如果插入10000条要不断的扩容,耗费时间,所以我们调用ArrayList的<mark>指定容量</mark>的构造器方法ArrayList(int size) 就可以实现不扩容,就提高了性能。</p>
 </blockquote>
 <h3 id="47-如何对Object的list排序"><a href="#47-如何对Object的list排序" class="headerlink" title="47. 如何对Object的list排序"></a>47. 如何对Object的list排序</h3><p>看例子吧，哈哈，这个跟对象排序也是一样的呢~</p>
 <div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span> </span>&#123;
@@ -961,7 +962,7 @@ isEmpty()<span class="hljs-comment">//判断队列是否为空，为空返回tru
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2020/10/12/2020-10-12-ten-sort-alogrithm/">
+                      <a href="/2020/10/12/10-12-Ten-Sort-Alogrithm/">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">十个常见的排序算法</span>
                         <span class="visible-mobile">上一篇</span>
@@ -971,7 +972,7 @@ isEmpty()<span class="hljs-comment">//判断队列是否为空，为空返回tru
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2020/10/07/2020-10-07-Study-Git-Note/">
+                      <a href="/2020/10/07/10-07-Study-Git-Note/">
                         <span class="hidden-mobile">Git 学习笔记</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
@@ -1146,7 +1147,7 @@ isEmpty()<span class="hljs-comment">//判断队列是否为空，为空返回tru
         !function(e){var n,t={},o="jinrishici-token";function i(){return document.getElementById("jinrishici-sentence")||0!=document.getElementsByClassName("jinrishici-sentence").length}function c(){t.load(function(e){var n=document.getElementById("jinrishici-sentence"),t=document.getElementsByClassName("jinrishici-sentence");if(n&&(n.innerText=e.data.content),0!==t.length)for(var o=0;o<t.length;o++)t[o].innerText=e.data.content})}function r(e,n){var t=new XMLHttpRequest;t.open("get",n),t.withCredentials=!0,t.send(),t.onreadystatechange=function(n){if(4===t.readyState){var o=JSON.parse(t.responseText);"success"===o.status?e(o):console.error("今日诗词API加载失败，错误原因："+o.errMessage)}}}t.load=function(n){return e.localStorage&&e.localStorage.getItem(o)?function(e,n){return r(e,"https://v2.jinrishici.com/one.json?client=browser-sdk/1.2&X-User-Token="+encodeURIComponent(n))}(n,e.localStorage.getItem(o)):function(n){return r(function(t){e.localStorage.setItem(o,t.token),n(t)},"https://v2.jinrishici.com/one.json?client=browser-sdk/1.2")}(n)},e.jinrishici=t,i()?c():(n=function(){i()&&c()},"loading"!=document.readyState?n():document.addEventListener?document.addEventListener("DOMContentLoaded",n):document.attachEvent("onreadystatechange",function(){"complete"==document.readyState&&n()}))}(window); 
         // 输出指定数量空格+引用
         function writeSpace(len){
-          len = (len > 15) ? (len > 31 ? 0 : 10) : len
+          len = (len > 10) ? (len > 31 ? 0 : 8) : len
           var space = ''
           for(var i = 0; i<len; i++){
             space += '&emsp;'

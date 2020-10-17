@@ -1,8 +1,224 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>我的博客</title>
+    <url>/2020/09/10/09-10-My-First-Blog/</url>
+    <content><![CDATA[<h2 id="第一章"><a href="#第一章" class="headerlink" title="第一章"></a>第一章</h2><p>内容</p>
+<h2 id="第二章"><a href="#第二章" class="headerlink" title="第二章"></a>第二章</h2><p>内容</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2>]]></content>
+      <categories>
+        <category>test</category>
+      </categories>
+      <tags>
+        <tag>test</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2020/09/10/09-10-Hello-World/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre><code class="hljs bash">$ hexo new <span class="hljs-string">&quot;My New Post&quot;</span></code></pre>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre><code class="hljs bash">$ hexo server</code></pre>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre><code class="hljs bash">$ hexo generate</code></pre>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre><code class="hljs bash">$ hexo deploy</code></pre>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>MySQL 之分库分表</title>
+    <url>/2020/09/17/09-17-Mysql-DepotsTable/</url>
+    <content><![CDATA[<h2 id="1-分库分表场景"><a href="#1-分库分表场景" class="headerlink" title="1. 分库分表场景"></a>1. 分库分表场景</h2><p>​    用户数量增大，所产生的的数据量与请求量也增多，导致单个数据库服务器扛不住。</p>
+<h2 id="2-分库分表优化及思路"><a href="#2-分库分表优化及思路" class="headerlink" title="2. 分库分表优化及思路"></a>2. 分库分表优化及思路</h2><table>
+<thead>
+<tr>
+<th>可优化点</th>
+<th align="left">分库分表前</th>
+<th align="left">分库分表方案</th>
+<th align="left">分库分表后</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>并发支撑情况</td>
+<td align="left">MySQL 单机扛不住并发</td>
+<td align="left">单机扩容成 n 个机子</td>
+<td align="left">单机可承受的并发增加了 n 倍</td>
+</tr>
+<tr>
+<td>磁盘使用情况</td>
+<td align="left">MySQL 单机磁盘容量快满了</td>
+<td align="left">将原数据库的数据用 n 个库存储</td>
+<td align="left">数据库服务器磁盘使用率大大降低</td>
+</tr>
+<tr>
+<td>SQL 执行性能</td>
+<td align="left">MySQL 单表数据量太大，SQL 语句执行慢</td>
+<td align="left">使用<strong>水平拆分</strong>的方式将单表按库数分成 n 个表</td>
+<td align="left">大大地缩短了 SQL 语句的执行时间</td>
+</tr>
+</tbody></table>
+<h2 id="3-分库分表中间件"><a href="#3-分库分表中间件" class="headerlink" title="3. 分库分表中间件"></a>3. 分库分表中间件</h2><p>系统写请求 -&gt; 中间件 -&gt; 数据库</p>
+<p>proxy 层：各个项目之间是透明的，可进行统一维护升级；缺单是需要自行部署，运维成本高。常用方案为 <strong><a href="http://www.mycat.org.cn/">Mycat</a></strong>.</p>
+<p><strong>client 层</strong>：不需部署，运维成本低，也没有代理层的二次转发，性能很高，但每个子系统需要耦合相关依赖。常用方案为 <strong><a href="https://shardingsphere.apache.org/index_zh.html">ShardingSphere</a></strong>.</p>
+<h2 id="4-两种方式拆分数据库"><a href="#4-两种方式拆分数据库" class="headerlink" title="4. 两种方式拆分数据库"></a>4. 两种方式拆分数据库</h2><ul>
+<li><mark><strong>水平拆分</strong></mark>：把单表的数据均匀地拆分到多个库的多个表里去，但是<strong>每个库的表结构都一样</strong>，所有库表的数据加起来就是全部数据，实现多个库来扛更高的并发和扩容的效果。</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201017133147.png" alt="水平拆分"></p>
+<ul>
+<li>垂直拆分：把一个含多字段的表给拆分成多个表，或者是多个库上去。一般而言，处理方案为将某表<strong>访问频率高的字段</strong>放入一个表里，<strong>访问频率较低的字段</strong>放入另一个表里去。例如：订单表 -&gt; 订单支付表、订单商品表。</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201017133225.png" alt="垂直拆分"></p>
+<p>  综上，在执行了分库分表之后，<strong>中间件可以根据你指定的某个字段值</strong>，比如说 userId，<strong>通过路由的方式对应到xx库xx表上去</strong>，实现分流的效果。</p>
+<h2 id="5-分库分表的路由方式"><a href="#5-分库分表的路由方式" class="headerlink" title="5. 分库分表的路由方式"></a>5. 分库分表的路由方式</h2><ul>
+<li><mark><strong>hash 均匀分发</strong></mark>：可平摊每个库的请求压力，但扩容较麻烦，需要提前做数据迁移。</li>
+<li>range 范围分发：每个库存储一段连续的数据，例如按照时间范围存储，易对单个库造成访问压力，需要结合实际的使用场景。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>面试</tag>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MySQL 之读写分离</title>
+    <url>/2020/09/17/09-17-Mysql-Read-And-Write-Seperate/</url>
+    <content><![CDATA[<h2 id="1-如何实现-MySQL-的读写分离"><a href="#1-如何实现-MySQL-的读写分离" class="headerlink" title="1. 如何实现 MySQL 的读写分离"></a>1. 如何实现 MySQL 的读写分离</h2><p>​    基于原生的<mark><strong>主从复制架构</strong></mark>，即一个主库，多个从库。主库以写操作，从库以读数据，同时主库数据同步到从库上。</p>
+<h2 id="2-MySQL-主从复制原理"><a href="#2-MySQL-主从复制原理" class="headerlink" title="2. MySQL 主从复制原理"></a>2. MySQL 主从复制原理</h2><ol>
+<li>主服务器在执行写操作的同时，将数据的变化记录到 <strong>binlog</strong> 日志文件中 (工作线程串行化完成)</li>
+<li>主从库之间通过后台的 <strong>IO线程</strong> 建立通信</li>
+<li>从服务器将读取到的 binlog 日志文件同步到自己的 <strong>relay 日志文件</strong> (<strong>os cache</strong>) 中</li>
+<li>从服务器再开启一个 <strong>SQL线程</strong> 将 relay 日志数据应用到本地数据库，完成更新从服务器中的数据。</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201017233320.png" alt="image-20200830162904809"></p>
+<p>​    在此过程中，存在以下<mark>两个问题</mark>：</p>
+<ul>
+<li>主从复制是串行化的，而工作线程是并行化执行的，导致<strong>主从数据同步存在延时</strong>的情况，延时取决于主库的写并发情况。</li>
+<li>主库刚写入数据，还未写入 binlog 时就宕机了，导致<strong>从库无法更新数据</strong>。</li>
+</ul>
+<p>​    对应的解决方案有两个：<strong>防止数据丢失问题</strong> + <strong>缓解主从同步延时问题</strong></p>
+<ol>
+<li><strong>半同步复制</strong>：在完成了<strong>主库写操作 + bin log 写入成功 + 从库读取并写入 relay log</strong>后，主库收到来自从库的确认信息，才代表主库的写操作完成。</li>
+<li><strong>并行复制</strong>：从库开启多线程并行读取 relay log 中不同库的日志，然后<strong>并行重放不同库的日志</strong>，缓解主从同步延时问题。</li>
+</ol>
+<h2 id="3-解决主从同步延时问题-★"><a href="#3-解决主从同步延时问题-★" class="headerlink" title="3. 解决主从同步延时问题(★)"></a>3. 解决主从同步延时问题(<span style="color: red">★</span>)</h2><p>​    若出现在高峰期出现以下操作失败了：插入一条数据、查询该数据、更新该数据报错。</p>
+<p>​    排查得查询从库时，从库未更新数据，没有查到主库的数据，故报错。</p>
+<ol>
+<li><strong>分库</strong>：<strong>一个主库拆分为多个主库</strong>，每个主库的写并发就减少了几倍，此时主从延迟可以忽略不计。</li>
+<li>打开 MySQL 的并行复制，但此时单库的写并发已达到上限，其实际意义不大。</li>
+<li><strong>重写操作数据库的代码</strong>，调整代码执行的顺序，<strong>插入数据后直接更新</strong>，若立马查询可能查不到。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>面试</tag>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>多线程之 ThreadLocal</title>
+    <url>/2020/09/30/09-30-ThreadLocal/</url>
+    <content><![CDATA[<h3 id="多线程之-ThreadLocal"><a href="#多线程之-ThreadLocal" class="headerlink" title="多线程之 ThreadLocal"></a>多线程之 ThreadLocal</h3><hr>
+<h4 id="1-ThreadLocal-简介"><a href="#1-ThreadLocal-简介" class="headerlink" title="1. ThreadLocal 简介"></a>1. ThreadLocal 简介</h4><p>​    <strong>一个线程可拥有多个 ThreadLocal</strong>，<strong>等价于Thread 的局部变量</strong>。</p>
+<p>​    ThreadLocal 提供了<strong>线程内存储私有变量</strong>的能力，这些变量不同之处在于每一个线程读取的变量是对应的<strong>互相独立的</strong>。</p>
+<p>​    通过 <strong>get 和 set 方法</strong>就可以得到当前线程对应的值，从而避免了线程安全的问题。</p>
+<p>​    ThreadLocal 的使用方法很简单，与 map 类似</p>
+<pre><code class="hljs java"><span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> ThreadLocal&lt;T&gt; sThreadLocal = <span class="hljs-keyword">new</span> ThreadLocal&lt;T&gt;();
+sThreadLocal.set()
+sThreadLocal.get()</code></pre>
+
+
+
+<h4 id="2-ThreadLocal-底层原理"><a href="#2-ThreadLocal-底层原理" class="headerlink" title="2. ThreadLocal 底层原理"></a>2. ThreadLocal 底层原理</h4><p>​        <strong>ThreadLocal内存结构图</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20200930152613.png" alt="image-20200905225631296"></p>
+<p>​    由结构图是可以看出：</p>
+<ul>
+<li>Thread对象中持有一个ThreadLocal.ThreadLocalMap 的成员变量。</li>
+<li>ThreadLocalMap内部维护了Entry数组，每个Entry代表一个完整的对象，<strong>key是 ThreadLocal 本身，value是 ThreadLocal 的泛型值</strong>。</li>
+</ul>
+<p>几段关键源码</p>
+<pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Thread</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Runnable</span> </span>&#123;
+   <span class="hljs-comment">//ThreadLocal.ThreadLocalMap是Thread的属性</span>
+   ThreadLocal.ThreadLocalMap threadLocals = <span class="hljs-keyword">null</span>;
+&#125;</code></pre>
+
+
+
+<p>ThreadLocal中的关键方法 <strong>set() 和 get()</strong></p>
+<pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">set</span><span class="hljs-params">(T value)</span> </span>&#123;
+    Thread t = Thread.currentThread(); 	<span class="hljs-comment">// 获取当前线程t</span>
+    ThreadLocalMap map = getMap(t);  	<span class="hljs-comment">// 根据当前线程获取到ThreadLocalMap</span>
+    <span class="hljs-keyword">if</span> (map != <span class="hljs-keyword">null</span>)
+        map.set(<span class="hljs-keyword">this</span>, value); 			<span class="hljs-comment">// K，V设置到ThreadLocalMap中</span>
+    <span class="hljs-keyword">else</span>
+        createMap(t, value); 			<span class="hljs-comment">// 创建一个新的ThreadLocalMap</span>
+&#125;
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> T <span class="hljs-title">get</span><span class="hljs-params">()</span> </span>&#123;
+    Thread t = Thread.currentThread();	<span class="hljs-comment">// 获取当前线程t</span>
+    ThreadLocalMap map = getMap(t);		<span class="hljs-comment">// 根据当前线程获取到ThreadLocalMap</span>
+    <span class="hljs-keyword">if</span> (map != <span class="hljs-keyword">null</span>) &#123;		            
+        <span class="hljs-comment">// 由this（即ThreadLoca对象）得到对应的Value，即ThreadLocal的泛型值</span>
+        ThreadLocalMap.Entry e = map.getEntry(<span class="hljs-keyword">this</span>);
+        <span class="hljs-keyword">if</span> (e != <span class="hljs-keyword">null</span>) &#123;
+            <span class="hljs-meta">@SuppressWarnings(&quot;unchecked&quot;)</span>
+            T result = (T)e.value; 
+            <span class="hljs-keyword">return</span> result;
+        &#125;
+    &#125;
+    <span class="hljs-keyword">return</span> setInitialValue();
+&#125;</code></pre>
+
+
+
+<h4 id="3-ThreadLocal-内存泄露问题"><a href="#3-ThreadLocal-内存泄露问题" class="headerlink" title="3. ThreadLocal 内存泄露问题"></a>3. ThreadLocal 内存泄露问题</h4><p>​        ThreadLocalMap 所使用的的 key 为 ThreadLocal 的弱引用，而 value 为强引用，这表示在垃圾回收时，key 会被清理掉而 value 则不会，这样导致 <strong>value 会一直占用</strong>，无法被 GC 回收，导致<strong>内存泄漏</strong>问题。因此在使用完 ThreadLocal 的方法后，需要手动调用 <strong><em>remove() 方法</em></strong>，<strong>清空 key 为 null 的记录</strong>。</p>
+<p><strong>ThreadLocal 引用示意图</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20200930152620.jpg" alt="img"></p>
+<p><strong>弱引用代码</strong></p>
+<pre><code class="hljs java"><span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Entry</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">WeakReference</span>&lt;<span class="hljs-title">ThreadLocal</span>&lt;?&gt;&gt; </span>&#123;
+    <span class="hljs-comment">/** The value associated with this ThreadLocal. */</span>
+	Object value;
+    
+	Entry(ThreadLocal&lt;?&gt; k, Object v) &#123;
+		<span class="hljs-keyword">super</span>(k);
+		value = v;
+	&#125;
+&#125;</code></pre>
+
+<p><strong>弱引用简介</strong></p>
+<blockquote>
+<p>如果一个对象只具有弱引用，那就类似于<strong>可有可无</strong>的生活用品。弱引用的对象拥有更短暂的生命周期。在垃圾回收器线程扫描它所管辖的内存区域的过程中，一旦发现了只具有弱引用的对象，不管当前内存空间足够与否，都会<strong>回收它的内存</strong>。</p>
+</blockquote>
+<h4 id="4-ThreadLocal的应用场景"><a href="#4-ThreadLocal的应用场景" class="headerlink" title="4. ThreadLocal的应用场景"></a>4. ThreadLocal的应用场景</h4><ul>
+<li>数据库连接池</li>
+<li>会话管理中使用</li>
+</ul>
+<h4 id="5-总结"><a href="#5-总结" class="headerlink" title="5. 总结"></a>5. 总结</h4><p>​    ThreadLocal 和 Synchronized 都是为了解决多线程中相同变量的访问冲突问题，不同的点是</p>
+<ul>
+<li>Synchronized 是通过<strong>线程等待，牺牲时间</strong>来解决访问冲突，ThreadLocal是通过<strong>每个线程单独一份存储空间，牺牲空间</strong>来解决冲突。</li>
+<li>ThreadLocal 具有 <strong><em>线程隔离</em></strong> 的效果，只有在线程内才能获取到对应的值，线程外则不能访问到想要的值。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>面试</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hexo 全局字体之思源宋体</title>
-    <url>/2020/10/01/2020-10-01-Change-Global-Font/</url>
+    <url>/2020/10/01/10-01-Change-Global-Font/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>一直想更换默认的博客文章字体，参考了众多大佬的博客设计，想换点不一样的字体。</p>
 <p>鉴于本博客主要以中文内容为主，最终选择思源宋体作为博客的正文展示，文章整体显得比较得体和大气！</p>
 <h2 id="1-Fluid-主题"><a href="#1-Fluid-主题" class="headerlink" title="1. Fluid 主题"></a>1. Fluid 主题</h2><h3 id="1-1-导入-Google-字库"><a href="#1-1-导入-Google-字库" class="headerlink" title="1.1 导入 Google 字库"></a>1.1 导入 Google 字库</h3><p>打开 Fluid 主题配置文件 <code>fluid/_config.yml</code>，在自定义 html 处引入字库</p>
@@ -46,7 +262,7 @@
   </entry>
   <entry>
     <title>Git 常用命令</title>
-    <url>/2020/10/05/2020-10-05-Git-Common-Commands/</url>
+    <url>/2020/10/05/10-05-Git-Common-Commands/</url>
     <content><![CDATA[<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201007111524.png" alt="Git常用命令"></p>
 <h1 id="Git-命令速查"><a href="#Git-命令速查" class="headerlink" title="Git 命令速查"></a>Git 命令速查</h1><h2 id="1-创建版本库"><a href="#1-创建版本库" class="headerlink" title="1. 创建版本库"></a>1. 创建版本库</h2><pre><code class="hljs bash">git <span class="hljs-built_in">clone</span> &lt;url&gt;		<span class="hljs-comment"># 克隆远程版本库</span>
 git init			<span class="hljs-comment"># 初始化本地版本库</span></code></pre>
@@ -261,7 +477,7 @@ git push -f origin &lt;branch&gt;			  <span class="hljs-comment"># 强制推送�
   </entry>
   <entry>
     <title>Git 学习笔记</title>
-    <url>/2020/10/07/2020-10-07-Study-Git-Note/</url>
+    <url>/2020/10/07/10-07-Study-Git-Note/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近发现了一个学习 Git 命令的好网站，是通过玩游戏的方式来可视化 git 命令的操作，方便上手掌握！</p>
 <p>网址：<a href="https://git.mo.mk/">https://git.mo.mk/</a></p>
 <p>参考攻略：<a href="https://www.cnblogs.com/WMCH/p/7876056.html">https://www.cnblogs.com/WMCH/p/7876056.html</a></p>
@@ -493,130 +709,407 @@ git checkout C2			<span class="hljs-comment"># 当前HEAD指向C2</span></code><
       </tags>
   </entry>
   <entry>
-    <title>多线程之 ThreadLocal</title>
-    <url>/2020/09/30/ThreadLocal/</url>
-    <content><![CDATA[<h3 id="多线程之-ThreadLocal"><a href="#多线程之-ThreadLocal" class="headerlink" title="多线程之 ThreadLocal"></a>多线程之 ThreadLocal</h3><hr>
-<h4 id="1-ThreadLocal-简介"><a href="#1-ThreadLocal-简介" class="headerlink" title="1. ThreadLocal 简介"></a>1. ThreadLocal 简介</h4><p>​    <strong>一个线程可拥有多个 ThreadLocal</strong>，<strong>等价于Thread 的局部变量</strong>。</p>
-<p>​    ThreadLocal 提供了<strong>线程内存储私有变量</strong>的能力，这些变量不同之处在于每一个线程读取的变量是对应的<strong>互相独立的</strong>。</p>
-<p>​    通过 <strong>get 和 set 方法</strong>就可以得到当前线程对应的值，从而避免了线程安全的问题。</p>
-<p>​    ThreadLocal 的使用方法很简单，与 map 类似</p>
-<pre><code class="hljs java"><span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> ThreadLocal&lt;T&gt; sThreadLocal = <span class="hljs-keyword">new</span> ThreadLocal&lt;T&gt;();
-sThreadLocal.set()
-sThreadLocal.get()</code></pre>
-
-
-
-<h4 id="2-ThreadLocal-底层原理"><a href="#2-ThreadLocal-底层原理" class="headerlink" title="2. ThreadLocal 底层原理"></a>2. ThreadLocal 底层原理</h4><p>​        <strong>ThreadLocal内存结构图</strong></p>
-<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20200930152613.png" alt="image-20200905225631296"></p>
-<p>​    由结构图是可以看出：</p>
-<ul>
-<li>Thread对象中持有一个ThreadLocal.ThreadLocalMap 的成员变量。</li>
-<li>ThreadLocalMap内部维护了Entry数组，每个Entry代表一个完整的对象，<strong>key是 ThreadLocal 本身，value是 ThreadLocal 的泛型值</strong>。</li>
-</ul>
-<p>几段关键源码</p>
-<pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Thread</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Runnable</span> </span>&#123;
-   <span class="hljs-comment">//ThreadLocal.ThreadLocalMap是Thread的属性</span>
-   ThreadLocal.ThreadLocalMap threadLocals = <span class="hljs-keyword">null</span>;
-&#125;</code></pre>
-
-
-
-<p>ThreadLocal中的关键方法 <strong>set() 和 get()</strong></p>
-<pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">set</span><span class="hljs-params">(T value)</span> </span>&#123;
-    Thread t = Thread.currentThread(); 	<span class="hljs-comment">// 获取当前线程t</span>
-    ThreadLocalMap map = getMap(t);  	<span class="hljs-comment">// 根据当前线程获取到ThreadLocalMap</span>
-    <span class="hljs-keyword">if</span> (map != <span class="hljs-keyword">null</span>)
-        map.set(<span class="hljs-keyword">this</span>, value); 			<span class="hljs-comment">// K，V设置到ThreadLocalMap中</span>
-    <span class="hljs-keyword">else</span>
-        createMap(t, value); 			<span class="hljs-comment">// 创建一个新的ThreadLocalMap</span>
-&#125;
-
-<span class="hljs-function"><span class="hljs-keyword">public</span> T <span class="hljs-title">get</span><span class="hljs-params">()</span> </span>&#123;
-    Thread t = Thread.currentThread();	<span class="hljs-comment">// 获取当前线程t</span>
-    ThreadLocalMap map = getMap(t);		<span class="hljs-comment">// 根据当前线程获取到ThreadLocalMap</span>
-    <span class="hljs-keyword">if</span> (map != <span class="hljs-keyword">null</span>) &#123;		            
-        <span class="hljs-comment">// 由this（即ThreadLoca对象）得到对应的Value，即ThreadLocal的泛型值</span>
-        ThreadLocalMap.Entry e = map.getEntry(<span class="hljs-keyword">this</span>);
-        <span class="hljs-keyword">if</span> (e != <span class="hljs-keyword">null</span>) &#123;
-            <span class="hljs-meta">@SuppressWarnings(&quot;unchecked&quot;)</span>
-            T result = (T)e.value; 
-            <span class="hljs-keyword">return</span> result;
-        &#125;
-    &#125;
-    <span class="hljs-keyword">return</span> setInitialValue();
-&#125;</code></pre>
-
-
-
-<h4 id="3-ThreadLocal-内存泄露问题"><a href="#3-ThreadLocal-内存泄露问题" class="headerlink" title="3. ThreadLocal 内存泄露问题"></a>3. ThreadLocal 内存泄露问题</h4><p>​        ThreadLocalMap 所使用的的 key 为 ThreadLocal 的弱引用，而 value 为强引用，这表示在垃圾回收时，key 会被清理掉而 value 则不会，这样导致 <strong>value 会一直占用</strong>，无法被 GC 回收，导致<strong>内存泄漏</strong>问题。因此在使用完 ThreadLocal 的方法后，需要手动调用 <strong><em>remove() 方法</em></strong>，<strong>清空 key 为 null 的记录</strong>。</p>
-<p><strong>ThreadLocal 引用示意图</strong></p>
-<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20200930152620.jpg" alt="img"></p>
-<p><strong>弱引用代码</strong></p>
-<pre><code class="hljs java"><span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Entry</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">WeakReference</span>&lt;<span class="hljs-title">ThreadLocal</span>&lt;?&gt;&gt; </span>&#123;
-    <span class="hljs-comment">/** The value associated with this ThreadLocal. */</span>
-	Object value;
-    
-	Entry(ThreadLocal&lt;?&gt; k, Object v) &#123;
-		<span class="hljs-keyword">super</span>(k);
-		value = v;
-	&#125;
-&#125;</code></pre>
-
-<p><strong>弱引用简介</strong></p>
-<blockquote>
-<p>如果一个对象只具有弱引用，那就类似于<strong>可有可无</strong>的生活用品。弱引用的对象拥有更短暂的生命周期。在垃圾回收器线程扫描它所管辖的内存区域的过程中，一旦发现了只具有弱引用的对象，不管当前内存空间足够与否，都会<strong>回收它的内存</strong>。</p>
-</blockquote>
-<h4 id="4-ThreadLocal的应用场景"><a href="#4-ThreadLocal的应用场景" class="headerlink" title="4. ThreadLocal的应用场景"></a>4. ThreadLocal的应用场景</h4><ul>
-<li>数据库连接池</li>
-<li>会话管理中使用</li>
-</ul>
-<h4 id="5-总结"><a href="#5-总结" class="headerlink" title="5. 总结"></a>5. 总结</h4><p>​    ThreadLocal 和 Synchronized 都是为了解决多线程中相同变量的访问冲突问题，不同的点是</p>
-<ul>
-<li>Synchronized 是通过<strong>线程等待，牺牲时间</strong>来解决访问冲突，ThreadLocal是通过<strong>每个线程单独一份存储空间，牺牲空间</strong>来解决冲突。</li>
-<li>ThreadLocal 具有 <strong><em>线程隔离</em></strong> 的效果，只有在线程内才能获取到对应的值，线程外则不能访问到想要的值。</li>
+    <title>记一次精简网页字体的过程</title>
+    <url>/2020/10/16/10-16-Record-Compress-Font/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><h2 id="字体选择"><a href="#字体选择" class="headerlink" title="字体选择"></a>字体选择</h2><h2 id="字体"><a href="#字体" class="headerlink" title="字体"></a>字体</h2><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="https://cyh.me/2020/04/font-minification">通过 fontTools 精简字体</a></li>
+<li><a href="https://stackoverflow.max-everyday.com/2020/02/fonttools/">Font­Tools 安装与使用简明指南</a></li>
+<li><a href="https://www.imaegoo.com/2020/chinese-font-compress/">网页中文字体压缩（woff2）、拆分、去繁体字库，提高加载速度</a></li>
+<li><a href="https://blog.csdn.net/weixin_34378922/article/details/87953858">前端字体截取</a></li>
 </ul>
 ]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
       <tags>
-        <tag>面试</tag>
+        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
-    <title>Hello World</title>
-    <url>/2020/09/19/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre><code class="hljs bash">$ hexo new <span class="hljs-string">&quot;My New Post&quot;</span></code></pre>
+    <title>MySQL 面试题</title>
+    <url>/2020/09/15/09-15-Mysql-Interview/</url>
+    <content><![CDATA[<h2 id="1-MySQL-的-MylSAM-和-InnoDB-存储引擎的区别是啥？"><a href="#1-MySQL-的-MylSAM-和-InnoDB-存储引擎的区别是啥？" class="headerlink" title="1. MySQL 的 MylSAM 和 InnoDB 存储引擎的区别是啥？"></a>1. MySQL 的 MylSAM 和 InnoDB 存储引擎的区别是啥？</h2><p>​        <strong>MyISAM</strong> 不支持事务和外键约束，<strong>索引文件和数据文件分开</strong>，这样在内存中可以缓存更多的索引，对查询的性能会更好，适用于<strong>少量插入大量查询</strong>的场景。</p>
+<p>​        <strong>InnoDB</strong> 是现在最常用的存储引擎，是 mysql 5.5 之后的默认存储引擎。主要特点就是<strong>支持事务</strong>，走聚簇索引，<strong>强制要求有主键</strong>，支持外键约束，高并发、大数据量、高可用等相关成熟的数据库架构，<a href="/2020/09/17/09-17-Mysql-DepotsTable">分库分表</a>、<a href="../../../09/17/09-17-Mysql-Read-And-Write-Seperate">读写分离</a>、<mark>主备切换</mark>，全部都可以基于innodb存储引擎来实现。</p>
+<h2 id="2-MySQL索引的原理和数据结构能介绍一下么？"><a href="#2-MySQL索引的原理和数据结构能介绍一下么？" class="headerlink" title="2. MySQL索引的原理和数据结构能介绍一下么？"></a>2. MySQL索引的原理和数据结构能介绍一下么？</h2><h3 id="2-1-索引的分类"><a href="#2-1-索引的分类" class="headerlink" title="2.1 索引的分类"></a>2.1 索引的分类</h3><ol>
+<li><p>从存储结构上来划分：BTree索引（B-Tree或B+Tree索引），Hash索引，full-index全文索引，R-Tree索引</p>
+<ol start="2">
+<li>从应用层次来分：普通索引，唯一索引，复合索引</li>
+<li>根据中数据的物理顺序与键值的逻辑（索引）顺序关系：聚集索引，非聚集索引</li>
+</ol>
+</li>
+</ol>
+<ul>
+<li><strong>普通索引</strong>：即一个索引只包含单个列，一个表可以有多个单列索引</li>
+<li><strong>唯一索引</strong>：索引列的值必须唯一，但允许有空值</li>
+<li><strong>复合索引</strong>：即一个索引包含多个列</li>
+<li><strong><mark>聚簇索引</mark></strong>(聚集索引)：<strong>索引结构和数据一起存放的索引，主键索引属于聚集索引</strong>。具体细节取决于不同的实现，InnoDB的聚簇索引其实就是在同一个结构中保存了B-Tree索引(技术上来说是B+Tree)和数据行。优点是能<strong>快速定位数据</strong>，缺点是<strong>依赖于有序的数据</strong>以及<strong>更新代价大</strong>。</li>
+<li><strong>非聚簇索引：</strong>不是聚簇索引，<strong>即索引结构和数据分开存放的索引</strong>。</li>
+</ul>
+<h3 id="2-2-B-Tree-和-B-Tree-对比"><a href="#2-2-B-Tree-和-B-Tree-对比" class="headerlink" title="2.2 B-Tree 和 B+Tree 对比"></a>2.2 B-Tree 和 B+Tree 对比</h3><p>​    使用数据举例，分别插入 15, 56, 77, 20, 49。观察两者区别</p>
+<p>​    B-Tree: <img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201017125400.gif" alt="B树">     B+Tree: <img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201017125452.gif" alt="B+树"></p>
+<p>​    <strong>B-Tree 索引结构图</strong></p>
+<p>​    B-Tree能加快数据的访问速度，因为存储引擎不再需要进行全表扫描来获取数据，数据分布在各个节点之中。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201017125539.png" alt="B-Tree"></p>
+<p>​    <strong><mark>B+Tree 索引结构图</mark></strong> (<strong>MySQL 存储引擎</strong>)</p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201017125918.png" alt="B+Tree"></p>
+<p><strong>B+Tree相对于B-Tree有几点不同</strong></p>
+<ol>
+<li>非叶子节点只存储键值信息。</li>
+<li>所有叶子节点之间都有一个链指针。</li>
+<li>数据记录都存放在叶子节点中。</li>
+</ol>
+<h3 id="2-3-MyISM-和-InnoDB-存储引擎的索引实现"><a href="#2-3-MyISM-和-InnoDB-存储引擎的索引实现" class="headerlink" title="2.3 MyISM 和 InnoDB 存储引擎的索引实现"></a>2.3 MyISM 和 InnoDB 存储引擎的索引实现</h3><ul>
+<li><p>MyISM 存储引擎中的实现</p>
+<p>MyISAM 是<strong>索引文件和数据文件分开</strong>的，其中 <strong>id 为索引</strong>，<strong>data 为数据文件的物理地址</strong>。</p>
+</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201017130243.png" alt="MyISM"></p>
+<ul>
+<li><p>InnoDB 存储引擎中的实现</p>
+<p>InnoDB 的数据文件本身就是个索引文件，<strong>id 是主键 key，data 为主键 key 数据的所在行的完整数据</strong>。</p>
+<p>此外，InnoDB 引擎会根据主键建立一个默认索引，叫做<strong>聚簇索引</strong>，故要保证主键是唯一的。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201017130326.png" alt="InnoDB_1"></p>
+</li>
+</ul>
+<p>​    若对某个非主键的字段创建了索引，那么其 data 的值就是主键，再根据主键到聚簇索引里根据主键值再次查找到数据，即所谓的回表（<strong>二级索引</strong>）。</p>
+<p>​    查找过程：<strong>建立非主键key的索引 -&gt; 主键key -&gt; key所在行的数据</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201017130733.png" alt="InnoDB_2"></p>
+<h3 id="2-4-索引的使用规则（MySQL性能优化）"><a href="#2-4-索引的使用规则（MySQL性能优化）" class="headerlink" title="2.4 索引的使用规则（MySQL性能优化）"></a>2.4 索引的使用规则（MySQL性能优化）</h3><ul>
+<li><p><strong>全列匹配索引</strong></p>
+<p>建立的复合索引包括了列的每个字段，同时严格按照索引顺序查询，这样查询效率是最高的。</p>
+<pre><code class="hljs sql"><span class="hljs-comment"># 创建全列索引</span>
+<span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> &lt;表名&gt; <span class="hljs-keyword">ADD</span> <span class="hljs-keyword">INDEX</span> &lt;索引名&gt;(col1, col2, col3);
 
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre><code class="hljs bash">$ hexo server</code></pre>
+<span class="hljs-comment"># 执行查询命令</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> <span class="hljs-keyword">WHERE</span> col1 = <span class="hljs-string">&#x27;a&#x27;</span> <span class="hljs-keyword">and</span> col2 = <span class="hljs-string">&#x27;b&#x27;</span> <span class="hljs-keyword">and</span> col3 = <span class="hljs-string">&#x27;c&#x27;</span>;</code></pre>
+</li>
+<li><p><strong><mark>最左前缀法则</mark></strong></p>
+<p>若建立的是复合索引：a-&gt;b-&gt;c，索引建立顺序是从左到右，想象索引是一条桥，a 为桥头，b 为桥身，c 为桥尾，不可断开。</p>
+<p>那么有如下无效的情形</p>
+<ul>
+<li><p>a -&gt; c：a 有效，c 无效</p>
+</li>
+<li><p>b -&gt; c：b、c 都无效</p>
+</li>
+<li><p>c：c 无效</p>
+</li>
+</ul>
+</li>
+<li><p>以下操作会导致<strong>索引失效</strong></p>
+<ul>
+<li><strong>计算</strong>，如：+、-、*、/、&lt;&gt;、is null、 is not null 等</li>
+<li>聚合函数，如：sum()、round()等</li>
+<li>手动/自动<strong>类型转换</strong>，如：id=“1”，原本id为整数类型，转换为字符串类型了</li>
+<li>索引放在 <strong>范围查询右侧(与B+树结构有关)</strong> ，如：a-&gt;b-&gt;c，当 where <strong>a=”” and b&gt;10 and <mark>c=””</mark></strong> 时，c 用不到索引。</li>
+<li>减少使用 <strong>SELECT *</strong>，索引失效的同时会查询很多没必要的字段。尽量使用<strong>覆盖索引</strong>，即 <strong>select 后面的字段 = where 后面的查询条件字段</strong>。</li>
+<li>like <strong>两端模糊查询</strong>，即 where a like %x%，此时使用不到索引，应当<strong>仅保留右百分号(where a like x%)，可使用索引。</strong></li>
+<li>使用 <strong>order by + select *</strong>，索引失效且会使用<strong>文件内排序</strong>，即在内存中复制一份一样的数据再排序，性能损耗严重。</li>
+<li><strong>性能损耗</strong>：先排序后分组(group by)，导致索引失效性能损耗；能使用 where 就不使用 having 等。</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>杜绝出现<strong>文件内排序</strong>(filesort)的情况</p>
+<ul>
+<li><p>order by 字段不是索引字段</p>
+</li>
+<li><p>order by 字段是索引字段，但 select 中没有使用覆盖索引，如</p>
+<pre><code class="hljs sql"><span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> <span class="hljs-keyword">test</span> <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> age <span class="hljs-keyword">asc</span>;</code></pre>
+</li>
+<li><p>order by 的同时存在升序与降序的排序，如</p>
+<pre><code class="hljs sql"><span class="hljs-keyword">select</span> a, b <span class="hljs-keyword">from</span> <span class="hljs-keyword">test</span> <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> a <span class="hljs-keyword">desc</span>, b, <span class="hljs-keyword">asc</span>;</code></pre>
+</li>
+<li><p>order by 多个字段排序时，不是按照索引的排序进行 order by，即不按照最左前缀法则，如</p>
+<pre><code class="hljs sql"><span class="hljs-keyword">select</span> a, b <span class="hljs-keyword">from</span> <span class="hljs-keyword">test</span> <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> b, a;</code></pre>
 
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre><code class="hljs bash">$ hexo generate</code></pre>
 
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre><code class="hljs bash">$ hexo deploy</code></pre>
 
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-5-索引的缺点及使用建议"><a href="#2-5-索引的缺点及使用建议" class="headerlink" title="2.5 索引的缺点及使用建议"></a>2.5 索引的缺点及使用建议</h3><p>​    索引是有缺点的，比如常见的就是会<strong>增加磁盘消耗</strong>，因为要占用磁盘文件，同时高并发的时候频繁插入和修改索引，会导致<strong>性能损耗</strong>的。</p>
+<p>​    常见做法：</p>
+<ol>
+<li><p>尽量创建<strong>少量的索引</strong>，1个表最多设置3个索引，同时选择该列的值在表中<strong>重复比例较小的字段</strong>来做索引较合适。</p>
+</li>
+<li><p>针对较长的字符串，可建立<strong>前缀索引</strong>，只需匹配有限个字符的子串即可定位所在行。</p>
+<pre><code class="hljs sql"><span class="hljs-comment"># 添加前缀索引 (以前4位字符创建前缀索引)</span>
+<span class="hljs-keyword">alter</span> <span class="hljs-keyword">table</span> <span class="hljs-keyword">test</span> <span class="hljs-keyword">add</span> <span class="hljs-keyword">index</span>(<span class="hljs-keyword">col</span>(<span class="hljs-number">4</span>))
+
+<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">col</span> <span class="hljs-keyword">FROM</span> <span class="hljs-keyword">test</span> <span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">col</span> = <span class="hljs-string">&quot;xxx&quot;</span></code></pre>
+
+<p>但其弊端也很明显，即<strong>无法做 group by 和 order by</strong>，页<strong>无法</strong>使用前缀索引做<strong>覆盖扫描</strong>。</p>
+</li>
+</ol>
+<h3 id="2-6-总结"><a href="#2-6-总结" class="headerlink" title="2.6 总结"></a>2.6 总结</h3><p>综上，在系统中关于索引的使用，一般就是尽量降低SQL的复杂度，然后搭配上非常简单的<strong>一个主键索引（聚簇索引）+ 少数几个联合索引</strong>，就可以覆盖一个表的所有SQL查询需求了。更加复杂的业务逻辑，让java代码里来实现就ok了。SQL越简单，后续迁移分库分表、读写分离的时候，成本越低，几乎都不用怎么改造SQL。</p>
+<h2 id="3-事务的几个特性是什么？有哪几种隔离级别？"><a href="#3-事务的几个特性是什么？有哪几种隔离级别？" class="headerlink" title="3. 事务的几个特性是什么？有哪几种隔离级别？"></a>3. 事务的几个特性是什么？有哪几种隔离级别？</h2><p><strong>面试官心理分析</strong></p>
+<p>用mysql开发的三个基本面：<strong>存储引擎、索引，事务</strong>。</p>
+<p>因为一个业务系统里，肯定要加事务保证一堆关联操作，要么一起成功要么一起失败，对不对？所以这是聊数据库必问的一个问题</p>
+<p>最最最基本的用mysql来开发，就3点：存储引擎（了解），索引（能建索引，写的SQL都用上索引），事务（了解事务的隔离级别，基于spring的事务支持在代码里加事务）</p>
+<p>存储引擎 -&gt; innodb，索引，基本按照你的SQL的需求都建了索引（可能漏了部分索引忘了建），事务（@Transactional注解，对service层统一加了事务）</p>
+<h3 id="3-1-事务的ACID"><a href="#3-1-事务的ACID" class="headerlink" title="3.1 事务的ACID"></a>3.1 事务的ACID</h3><ol>
+<li>Atomic：<strong>原子性</strong>，一个事务是不可再分割的整体，要么都执行要么都不执行。</li>
+<li>Consistency：<strong>一致性</strong>，一个事务可以使数据从一个一致状态切换到另外一个一致的状态。</li>
+<li>Isolation：<strong>隔离性</strong>，一个事务不受其他事务的干扰，多个事务互相隔离的。</li>
+<li>Durability：<strong>持久性</strong>，一个事务一旦提交了，则永久的持久化到本地。</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201017130751.png" alt="R3iIriZ"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201017130755.png" alt="img"></p>
+<p><strong>简单说，<mark>数据库保证一致性就是由原子性、持久性、隔离性共同保证的结果</mark>。</strong></p>
+<h3 id="3-2-事务的使用步骤"><a href="#3-2-事务的使用步骤" class="headerlink" title="3.2 事务的使用步骤"></a>3.2 事务的使用步骤</h3><ol>
+<li><p><strong>隐式（自动）事务</strong>：没有明显的开启和结束，本身就是一条事务可以<strong>自动提交</strong>，比如insert、update、delete</p>
+</li>
+<li><p>显式事务：具有明显的开启和结束</p>
+<ul>
+<li>开启事务</li>
+</ul>
+<pre><code class="hljs sql"><span class="hljs-keyword">set</span> autocommit=<span class="hljs-number">0</span>;
+<span class="hljs-keyword">start</span> <span class="hljs-keyword">transaction</span>;</code></pre>
+
+<ul>
+<li>编写一组逻辑 SQL 语句 (如insert、update、delete)，并设置回滚点</li>
+</ul>
+<pre><code class="hljs sql"><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> &lt;表名&gt; <span class="hljs-keyword">values</span>(a, b, c);
+<span class="hljs-keyword">savepoint</span> ‘回滚点名’;</code></pre>
+
+<ul>
+<li><p>结束事务</p>
+<ol>
+<li><p>提交成功</p>
+<pre><code class="hljs sql"><span class="hljs-keyword">commit</span>;</code></pre>
+</li>
+<li><p>提交失败，则回滚</p>
+<pre><code class="hljs sql"><span class="hljs-comment"># 回滚</span>
+<span class="hljs-keyword">rollback</span>;
+
+<span class="hljs-comment"># 或 回滚到指定的地方</span>
+<span class="hljs-keyword">rollback</span> <span class="hljs-keyword">to</span> <span class="hljs-string">&#x27;回滚点名&#x27;</span>;</code></pre>
+
+
+
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="3-3-事务的隔离级别"><a href="#3-3-事务的隔离级别" class="headerlink" title="3.3 事务的隔离级别"></a>3.3 事务的隔离级别</h3><p><strong>并发问题</strong></p>
+<ol>
+<li><mark><strong>脏读</strong></mark>：一个事务读取了其他事务还未提交的数据，读到的是其他事务<mark><strong>更新</strong></mark>的数据。</li>
+<li><mark><strong>不可重复读</strong></mark>：一个事务多次读取，结果不一样。</li>
+<li><mark><strong>幻读</strong></mark>：一个事务读取了其他事务还未提交的数据，只是读到的是其他事务<mark><strong>插入</strong></mark>的数据。</li>
+<li><mark><strong>更新丢失</strong></mark> ： 当两个或多个事务<strong>更新同一行记录</strong>，会产生更新丢失现象。可以分为回滚覆盖和提交覆盖。<ul>
+<li>回滚覆盖 ：一个事务回滚操作，把其他事务已提交的数据给覆盖了。</li>
+<li>提交覆盖 ：一个事务提交操作，把其他事务已提交的数据给覆盖了。</li>
+</ul>
+</li>
+</ol>
+<p><strong>隔离级别及可解决的并发问题</strong></p>
+<table>
+<thead>
+<tr>
+<th>事务隔离级别</th>
+<th>回滚覆盖</th>
+<th>脏读</th>
+<th>不可重复读</th>
+<th>提交覆盖</th>
+<th>幻读</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>read uncommitted:读未提交</td>
+<td>✔</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr>
+<td>read committed：读已提交</td>
+<td>✔</td>
+<td>✔</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr>
+<td>repeatable read：可重复读</td>
+<td>✔</td>
+<td>✔</td>
+<td>✔</td>
+<td>✔</td>
+<td>X</td>
+</tr>
+<tr>
+<td>serializable：串行化</td>
+<td>✔</td>
+<td>✔</td>
+<td>✔</td>
+<td>✔</td>
+<td>✔</td>
+</tr>
+</tbody></table>
+<ol>
+<li><p>Read Uncommitted：<strong>读未提交</strong> ，一个事务在执行过程中可以看到其他事务<strong>未提交的插入和更新的记录</strong>。</p>
+</li>
+<li><p>Read Committed：<strong>读已提交</strong>，一个事务在执行过程中可以看到其他事务<strong>已提交的新插入和更新的记录</strong>。(<strong><mark>Oracle、SQLServer默认隔离级别</mark></strong>)</p>
+</li>
+<li><p>Read Repeatable：<strong>可重复读</strong>，一个事务在执行过程中可以看到其他事务已提交的新插入的记录(<del>看不见更新记录</del>)。(<mark><strong>MySQL的默认隔离级别</strong></mark>)</p>
+</li>
+<li><p>Serializable：<strong>串行化</strong>，所有事务都串行起来，<strong>不允许多个事务并行操作</strong>。</p>
+</li>
+</ol>
+<h3 id="3-4-MySQL是如何实现“可重复读”这一隔离级别的？"><a href="#3-4-MySQL是如何实现“可重复读”这一隔离级别的？" class="headerlink" title="3.4 MySQL是如何实现“可重复读”这一隔离级别的？"></a>3.4 MySQL是如何实现“可重复读”这一隔离级别的？</h3><p>​    MVCC的<strong>简单理解</strong>：如下图所示，<strong>在事务1开始写操作的时候会生成该记录的快照，其他事务读操作会读取这个记录的副本，因此不会影响其他事务对此记录的读取，实现写和读并行。</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201017130803.png" alt="img"></p>
+<p>​    </p>
+<p>​        MySQL是通过<strong>MVCC机制</strong>来实现<strong>可重复读</strong>的，即多版本并发控制 (<strong>multi-version concurrency control</strong>) 。MVCC支持读和读、读和写、写和读的并行，但为了保证一致性，写和写是无法并行的。<strong>在每次事务修改操作之前，都会在Undo日志中记录修改之前的数据状态和事务号(全局唯一)，该备份记录可以用于其他事务的读取，也可以进行必要时的数据回滚。</strong></p>
+<p>​        MVCC最大的好处是读<strong>不加锁，读写不冲突</strong>。读操作可以分为两类: <strong>快照读</strong>（Snapshot Read）与<strong>当前读</strong> （Current Read）。</p>
+<ul>
+<li><p>快照读：读取的是记录的快照版本（有可能是历史版本），不用加锁。（select）</p>
+</li>
+<li><p>当前读：读取的是记录的最新版本，并且当前读返回的记录，都会加锁，保证其他事务不会再并发</p>
+</li>
+</ul>
+<p>  <strong>举一个记录更新的案例来讲解 MVCC 中多版本的实现：</strong></p>
+<p>  假设 F1～F6 是表中字段的名字，1～6 是其对应的数据。后面三个隐含字段分别对应该行的<strong>隐含ID(行标识)、事务号和回滚指针</strong>，如下图所示。</p>
+<p>  <img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201017130811.png" alt="img"></p>
+<ul>
+<li><p>具体的更新过程如下： 假如一条数据是刚 INSERT 的，DB_ROW_ID 为 1，其他两个字段为空。当事务1更改该行的数据值时，会进行如下操作：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201017130819.png" alt="img"></p>
+</li>
+</ul>
+<ol>
+<li><p>用<strong>排他锁锁定该行</strong>，<strong>并记录到 Redo log</strong>；</p>
+</li>
+<li><p>把该行<strong>修改前的值复制到 Undo log</strong>，即上图中下面的行；</p>
+</li>
+<li><p>修改当前行的值，<strong>填写事务编号(01)，使回滚指针指向 Undo log 中修改前的行</strong>。</p>
+</li>
+</ol>
+<ul>
+<li><p>接下来事务2操作， 过程与事务1相同，此时 Undo log 中会有两行记录，此时查看锁信息，会出现两条 ，并且<strong>通过回滚指针连在一起，通过当前记录的回滚指针回溯到该行创建时的初始内容</strong>，如下图所示：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201017130827.png" alt="img"></p>
+<p>MVCC已经实现了读读、读写、写读并发处理，如果想进一步解决写写冲突，可以采用下面两种锁的方案，<strong>乐观锁</strong> 和 <strong>悲观锁(高并发)</strong> 。</p>
+</li>
+</ul>
+<h3 id="3-5-MySql数据库锁的实现原理是什么？如果死锁了怎么办？"><a href="#3-5-MySql数据库锁的实现原理是什么？如果死锁了怎么办？" class="headerlink" title="3.5 MySql数据库锁的实现原理是什么？如果死锁了怎么办？"></a>3.5 MySql数据库锁的实现原理是什么？如果死锁了怎么办？</h3><h4 id="一、锁的分类"><a href="#一、锁的分类" class="headerlink" title="一、锁的分类"></a><strong>一、锁的分类</strong></h4><ol>
+<li>操作的粒度可分为<strong>表级锁</strong>、行级锁和<strong>页级锁</strong>。</li>
+</ol>
+<ul>
+<li>表级锁：每次操作锁住整张表。<strong>锁定粒度大</strong>，发生锁冲突的概率最高，并发度最低。应用在 MyISAM、InnoDB、BDB 等存储引擎中。</li>
+<li>行级锁：每次操作锁住一行数据。<strong>锁定粒度最小</strong>，发生锁冲突的概率最低，并发度最高。应用在<strong>InnoDB 存储引擎</strong>中。</li>
+<li>页级锁：每次锁定相邻的一组记录，锁定粒度界于表锁和行锁之间，开销和加锁时间界于表锁和行锁之间，并发度一般。应用在BDB 存储引擎中。</li>
+</ul>
+<p><strong>MyISAM和InnoDB存储引擎使用的锁</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201017130834.png" alt="img"></p>
+<ol start="2">
+<li>从操作的类型可分为<strong>读锁</strong>和<strong>写锁</strong>。</li>
+</ol>
+<ul>
+<li><p>读锁（S锁）：<strong>共享锁</strong>，针对同一份数据，多个读操作可以同时进行而不会互相影响。</p>
+</li>
+<li><p>写锁（X锁）：<strong>排他锁</strong>，当前写操作没有完成前，它会阻断其他写锁和读锁。</p>
+<p>备注：IS锁、IX锁：意向读锁、意向写锁，属于<strong>表级锁</strong>，S和X主要针对行级锁。在对表记录添加S或X锁之 前，会<strong>先对表添加IS或IX锁</strong>。</p>
+</li>
+</ul>
+<ol start="3">
+<li>从操作的性能可分为 <strong>乐观锁</strong> 和 <strong>悲观锁</strong>。</li>
+</ol>
+<ul>
+<li>乐观锁：一般的实现方式是对记录数据版本进行比对，在数据更新<strong>提交的时候才会进行冲突检测</strong>，如果发现冲突了，则提示错误信息。(<strong><mark>类似 Java 的 CAS机制</mark></strong>)</li>
+<li>悲观锁：在对一条数据修改的时候，为了避免同时被其他人修改，<strong>在修改数据之前先锁定</strong>， 再修改的控制方式。<strong>共享锁和排他锁是悲观锁的不同实现</strong>，但都属于悲观锁范畴。</li>
+</ul>
+<h4 id="二、行锁的原理"><a href="#二、行锁的原理" class="headerlink" title="二、行锁的原理"></a><strong>二、行锁的原理</strong></h4><p>​        在InnoDB引擎中，我们可以使用行锁和表锁，其中行锁又分为共享锁和排他锁。InnoDB行锁是通过对 索引数据页上的记录加锁实现的，主要实现算法有 3 种：<strong>Record Lock</strong>、<strong>Gap Lock</strong> 和 <strong>Next-key Lock</strong>。</p>
+<ul>
+<li><p>RecordLock锁：<strong>锁定单个行记录的锁</strong>。（记录锁，RC、RR隔离级别都支持）</p>
+</li>
+<li><p>GapLock锁：<strong>间隙锁</strong>，锁定索引记录间隙，确保索引记录的间隙不变。（范围锁，RR隔离级别支 持）</p>
+</li>
+<li><p>Next-key Lock 锁： <strong>记录锁和间隙锁组合</strong> ，同时锁住数据，并且<strong>锁住数据前后范围</strong>。（记录锁+范围锁，RR隔离级别支持）</p>
+<p>总结：在“<strong>可重复读</strong>”隔离级别，InnoDB对于记录加锁行为都是<strong>先采用Next-Key Lock</strong>，但是当SQL操作<strong>含有唯一索引时</strong>，Innodb会对Next-Key Lock进行优化，<strong>降级为RecordLock</strong>，<strong>仅锁住索引本身</strong>而非范围。</p>
+</li>
+</ul>
+<h4 id="三、死锁与解决方案"><a href="#三、死锁与解决方案" class="headerlink" title="三、死锁与解决方案"></a><strong>三、死锁与解决方案</strong></h4><ol>
+<li><p><strong>表锁死锁</strong></p>
+<ul>
+<li><p>产生原因： 用户A访问表A（锁住了表A），然后又访问表B；另一个用户B访问表B（锁住了表B），然后企图 访问表A；这时用户A由于用户B已经锁住表B，它必须等待用户B释放表B才能继续，同样用户B要 等用户A释放表A才能继续，这就死锁就产生了。</p>
+<p>即：用户A –&gt; A表（表锁）–&gt; B表（表锁）； 用户B –&gt; B表（表锁）–&gt; A表（表锁）</p>
+</li>
+<li><p>解决方案1：这种死锁比较常见，应<strong>尽量按照相同的顺序进行处理</strong> ，尽量避免同时锁定两个资源，如操作A和B两张表时，总是按先A后B的顺序处理， 必须同时锁定两个资源时，要保证在任 何时刻都应该按照相同的顺序来锁定资源。</p>
+</li>
+</ul>
+</li>
+</ol>
+<ol start="2">
+<li><p><strong>行级锁死锁</strong></p>
+<ul>
+<li>产生原因1： 如果在事务中执行了一条没有索引条件的查询，引发全表扫描，把行级锁上升为全表记录锁定（等 价于表级锁），多个这样的事务执行后，就很容易产生死锁和阻塞，最终应用系统会越来越慢，发 生阻塞或死锁。</li>
+<li>解决方案1： SQL语句中不要使用太复杂的关联多表的查询；使用explain“执行计划”对SQL语句进行分析，对于有全表扫描和全表锁定的SQL语句，建立相应的索引进行优化。</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li><p>产生原因2： 两个事务分别想拿到对方持有的锁，互相等待，于是产生死锁。</p>
+</li>
+<li><p>解决方案2： 在同一个事务中，尽可能做到一次锁定所需要的所有资源 按照id对资源排序，然后按顺序进行处理 </p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201017130842.png" alt="img"></p>
+</li>
+</ul>
+<ol start="3">
+<li><strong>共享锁转换为排他锁</strong></li>
+</ol>
+<ol start="4">
+<li><p><strong>死锁排查</strong></p>
+<p>MySQL提供了几个与锁有关的参数和命令，可以辅助我们优化锁操作，减少死锁发生。</p>
+</li>
+</ol>
+<ul>
+<li>查看死锁日志 通过 <strong>show engine innodb status\G</strong> 命令查看近期<strong>死锁日志信息</strong>。<ul>
+<li>1、查看近期死锁日志信息；</li>
+<li>2、使用explain查看下SQL执行计划</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>查看锁状态变量 通过 <strong>show status like’innodb_row_lock%‘</strong> 命令检查<strong>状态变量</strong>，分析系统中的行锁的争夺情况。</p>
+<pre><code class="hljs sql">Innodb_row_lock_current_waits：当前正在等待锁的数量
+Innodb_row_lock_time：从系统启动到现在锁定总时间长度
+Innodb_row_lock_time_avg： 每次等待锁的平均时间
+Innodb_row_lock_time_max：从系统启动到现在等待最长的一次锁的时间
+Innodb_row_lock_waits：系统启动后到现在总共等待的次数</code></pre>
+
+<p>如果等待次数高，而且每次等待时间长，需要分析系统中为什么会有如此多的等待，然后着手定制优化。</p>
+</li>
+</ul>
+<h3 id="3-6-总结"><a href="#3-6-总结" class="headerlink" title="3.6 总结"></a>3.6 总结</h3><p>​    <strong>事务底层实现是锁</strong>，在事务控制不了并发的情况下，可以<strong>手动加锁，保证数据一致性</strong>，用执行计划保证索引加在更新列上，禁止锁全表引起死锁，<strong>业务方面可以用MVCC机制防止重复提交</strong>，避免长事务中的数据库加锁开销。</p>
+<h2 id="4-SQL-调优的常用手段"><a href="#4-SQL-调优的常用手段" class="headerlink" title="4. SQL 调优的常用手段"></a>4. SQL 调优的常用手段</h2><p>​    首先要保持SQL简单，一般90%的SQL都建议是单表查询，<strong>join等逻辑放java代码里实现</strong>，不要放SQL里。</p>
+<p>​    如果某个线上SQL跑的慢，首先判断<strong>SQL没有用索引或是数据库选错了索引</strong>，通过看<strong>MySQL的执行计划</strong>来添加索引。其次是考虑<strong>服务器硬件本身和死锁</strong>的问题。</p>
+<pre><code class="hljs sql"><span class="hljs-comment"># 查看 SQL 语句的性能</span>
+<span class="hljs-keyword">explain</span> <span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;表名&#x27;</span></code></pre>
+
+<p><strong>执行计划中的各个参数意义：</strong></p>
+<ul>
+<li>table：哪个表</li>
+<li><strong>type</strong>：这个很重要，是说类型，all（全表扫描），const（读常量，最多一条记录匹配），eq_ref（走主键，一般就最多一条记录匹配），index（扫描全部索引），range（扫描部分索引）</li>
+<li>possible_keys：显示可能使用的索引</li>
+<li>key：实际使用的索引</li>
+<li>key_len：使用索引的长度</li>
+<li><strong>ref</strong>：联合索引的哪一列被用了</li>
+<li><strong>rows</strong>：一共扫描和返回了多少行</li>
+<li>extra：using filesort（需要额外进行排序），using</li>
+<li>temporary（mysql构建了临时表，比如排序的时候），using</li>
+<li>where（就是对索引扫出来的数据再次根据where来过滤出了结果）</li>
+</ul>
 ]]></content>
-  </entry>
-  <entry>
-    <title>我的博客</title>
-    <url>/2020/09/19/%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2/</url>
-    <content><![CDATA[<h2 id="第一章"><a href="#第一章" class="headerlink" title="第一章"></a>第一章</h2><p>内容</p>
-<h2 id="第二章"><a href="#第二章" class="headerlink" title="第二章"></a>第二章</h2><p>内容</p>
-<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2>]]></content>
       <categories>
-        <category>test</category>
+        <category>技术</category>
       </categories>
       <tags>
-        <tag>test</tag>
+        <tag>面试</tag>
+        <tag>MySQL</tag>
       </tags>
   </entry>
   <entry>
     <title>十个常见的排序算法</title>
-    <url>/2020/10/12/2020-10-12-ten-sort-alogrithm/</url>
+    <url>/2020/10/12/10-12-Ten-Sort-Alogrithm/</url>
     <content><![CDATA[<center style='font-size: 18px; font-weight: bold;'>常见的内部排序算法</center>
 
 <p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201012110529.png" alt="image-20201012110323047"></p>
@@ -1257,396 +1750,8 @@ sThreadLocal.get()</code></pre>
       </tags>
   </entry>
   <entry>
-    <title>MySQL 面试题</title>
-    <url>/2020/09/19/mysql/</url>
-    <content><![CDATA[<hr>
-<h4 id="1-MySQL-的-MylSAM-和-InnoDB-存储引擎的区别是啥？"><a href="#1-MySQL-的-MylSAM-和-InnoDB-存储引擎的区别是啥？" class="headerlink" title="1. MySQL 的 MylSAM 和 InnoDB 存储引擎的区别是啥？"></a>1. MySQL 的 MylSAM 和 InnoDB 存储引擎的区别是啥？</h4><p>​        <strong>MyISAM</strong> 不支持事务和外键约束，<strong>索引文件和数据文件分开</strong>，这样在内存中可以缓存更多的索引，对查询的性能会更好，适用于<strong>少量插入大量查询</strong>的场景。</p>
-<p>​        <strong>InnoDB</strong> 是现在最常用的存储引擎，是 mysql 5.5 之后的默认存储引擎。主要特点就是<strong>支持事务</strong>，走聚簇索引，<strong>强制要求有主键</strong>，支持外键约束，高并发、大数据量、高可用等相关成熟的数据库架构，**<a href="./DepotsTable.md">分库分表</a><strong>、</strong><a href="./RnWSeperate.md">读写分离</a><strong>、</strong>==主备切换==**，全部都可以基于innodb存储引擎来实现。</p>
-<h4 id="2-MySQL索引的原理和数据结构能介绍一下么？"><a href="#2-MySQL索引的原理和数据结构能介绍一下么？" class="headerlink" title="2. MySQL索引的原理和数据结构能介绍一下么？"></a>2. MySQL索引的原理和数据结构能介绍一下么？</h4><h5 id="2-1-索引的分类"><a href="#2-1-索引的分类" class="headerlink" title="2.1 索引的分类"></a>2.1 索引的分类</h5><ol>
-<li><p>从存储结构上来划分：BTree索引（B-Tree或B+Tree索引），Hash索引，full-index全文索引，R-Tree索引</p>
-<ol start="2">
-<li>从应用层次来分：普通索引，唯一索引，复合索引</li>
-<li>根据中数据的物理顺序与键值的逻辑（索引）顺序关系：聚集索引，非聚集索引</li>
-</ol>
-</li>
-</ol>
-<ul>
-<li><strong>普通索引</strong>：即一个索引只包含单个列，一个表可以有多个单列索引</li>
-<li><strong>唯一索引</strong>：索引列的值必须唯一，但允许有空值</li>
-<li><strong>复合索引</strong>：即一个索引包含多个列</li>
-<li><strong>==聚簇索引==</strong>(聚集索引)：<strong>索引结构和数据一起存放的索引，主键索引属于聚集索引</strong>。具体细节取决于不同的实现，InnoDB的聚簇索引其实就是在同一个结构中保存了B-Tree索引(技术上来说是B+Tree)和数据行。优点是能<strong>快速定位数据</strong>，缺点是<strong>依赖于有序的数据</strong>以及<strong>更新代价大</strong>。</li>
-<li><strong>非聚簇索引：</strong>不是聚簇索引，<strong>即索引结构和数据分开存放的索引</strong>。</li>
-</ul>
-<h5 id="2-2-B-Tree-和-B-Tree-对比"><a href="#2-2-B-Tree-和-B-Tree-对比" class="headerlink" title="2.2 B-Tree 和 B+Tree 对比"></a>2.2 B-Tree 和 B+Tree 对比</h5><p>​    使用数据举例，分别插入 15, 56, 77, 20, 49。观察两者区别</p>
-<p>​    B-Tree: <img src="img/B%E6%A0%91.gif" alt="B树">     B+Tree: <img src="img/B+%E6%A0%91.gif" alt="B+树"></p>
-<p>​    <strong>B-Tree 索引结构图</strong></p>
-<p>​    B-Tree能加快数据的访问速度，因为存储引擎不再需要进行全表扫描来获取数据，数据分布在各个节点之中。</p>
-<p><img src="img/image-20200830175244040.png" alt="B-Tree"></p>
-<p>​    <strong>==B+Tree 索引结构图==</strong> (<strong>MySQL 存储引擎</strong>)</p>
-<p><img src="img/image-20200830175348540.png" alt="B+Tree"></p>
-<p><strong>B+Tree相对于B-Tree有几点不同</strong></p>
-<ol>
-<li>非叶子节点只存储键值信息。</li>
-<li>所有叶子节点之间都有一个链指针。</li>
-<li>数据记录都存放在叶子节点中。</li>
-</ol>
-<h5 id="2-3-MyISM-和-InnoDB-存储引擎的索引实现"><a href="#2-3-MyISM-和-InnoDB-存储引擎的索引实现" class="headerlink" title="2.3 MyISM 和 InnoDB 存储引擎的索引实现"></a>2.3 MyISM 和 InnoDB 存储引擎的索引实现</h5><ul>
-<li><p>MyISM 存储引擎中的实现</p>
-<p>MyISAM 是<strong>索引文件和数据文件分开</strong>的，其中 <strong>id 为索引</strong>，<strong>data 为数据文件的物理地址</strong>。</p>
-</li>
-</ul>
-<p><img src="img/201805191452_953.png" alt="MyISM"></p>
-<ul>
-<li><p>InnoDB 存储引擎中的实现</p>
-<p>InnoDB 的数据文件本身就是个索引文件，<strong>id 是主键 key，data 为主键 key 数据的所在行的完整数据</strong>。</p>
-<p>此外，InnoDB 引擎会根据主键建立一个默认索引，叫做<strong>聚簇索引</strong>，故要保证主键是唯一的。</p>
-<p><img src="img/image-20200830183621936.png" alt="InnoDB_1"></p>
-</li>
-</ul>
-<p>​    若对某个非主键的字段创建了索引，那么其 data 的值就是主键，再根据主键到聚簇索引里根据主键值再次查找到数据，即所谓的回表（<strong>二级索引</strong>）。</p>
-<p>​    查找过程：<strong>建立非主键key的索引 -&gt; 主键key -&gt; key所在行的数据</strong></p>
-<p><img src="img/image-20200830181841720.png" alt="InnoDB_2"></p>
-<h5 id="2-4-索引的使用规则（MySQL性能优化）"><a href="#2-4-索引的使用规则（MySQL性能优化）" class="headerlink" title="2.4 索引的使用规则（MySQL性能优化）"></a>2.4 索引的使用规则（MySQL性能优化）</h5><ul>
-<li><p><strong>全列匹配索引</strong></p>
-<p>建立的复合索引包括了列的每个字段，同时严格按照索引顺序查询，这样查询效率是最高的。</p>
-<pre><code class="hljs mysql"># 创建全列索引
-ALTER TABLE &lt;表名&gt; ADD INDEX &lt;索引名&gt;(col1, col2, col3);
-
-# 执行查询命令
-SELECT * FROM WHERE col1 &#x3D; &#39;a&#39; and col2 &#x3D; &#39;b&#39; and col3 &#x3D; &#39;c&#39;;</code></pre>
-</li>
-<li><p>==<strong>最左前缀法则</strong>==</p>
-<p>若建立的是复合索引：a-&gt;b-&gt;c，索引建立顺序是从左到右，想象索引是一条桥，a 为桥头，b 为桥身，c 为桥尾，不可断开。</p>
-<p>那么有如下无效的情形</p>
-<ul>
-<li><p>a -&gt; c：a 有效，c 无效</p>
-</li>
-<li><p>b -&gt; c：b、c 都无效</p>
-</li>
-<li><p>c：c 无效</p>
-</li>
-</ul>
-</li>
-<li><p>以下操作会导致<strong>索引失效</strong></p>
-<ul>
-<li><strong>计算</strong>，如：+、-、*、/、&lt;&gt;、is null、 is not null 等</li>
-<li>聚合函数，如：sum()、round()等</li>
-<li>手动/自动<strong>类型转换</strong>，如：id=“1”，原本id为整数类型，转换为字符串类型了</li>
-<li>索引放在<strong>范围查询右侧(与B+树结构有关)**，如：a-&gt;b-&gt;c，当 where **a=”” and b&gt;10 and ==c=””==</strong> 时，c 用不到索引。</li>
-<li>减少使用 *<em>SELECT **</em>，索引失效的同时会查询很多没必要的字段。尽量使用<strong>覆盖索引</strong>，即 <strong>select 后面的字段 = where 后面的查询条件字段</strong>。</li>
-<li>like <strong>两端模糊查询</strong>，即 where a like %x%，此时使用不到索引，应当<strong>仅保留右百分号(where a like x%)，可使用索引。</strong></li>
-<li>使用 *<em>order by + select **</em>，索引失效且会使用<strong>文件内排序</strong>，即在内存中复制一份一样的数据再排序，性能损耗严重。</li>
-<li><strong>性能损耗</strong>：先排序后分组(group by)，导致索引失效性能损耗；能使用 where 就不使用 having 等。</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li><p>杜绝出现<strong>文件内排序</strong>(filesort)的情况</p>
-<ul>
-<li><p>order by 字段不是索引字段</p>
-</li>
-<li><p>order by 字段是索引字段，但 select 中没有使用覆盖索引，如</p>
-<pre><code class="hljs mysql">select * from test order by age asc;</code></pre>
-</li>
-<li><p>order by 的同时存在升序与降序的排序，如</p>
-<pre><code class="hljs mysql">select a, b from test order by a desc, b, asc;</code></pre>
-</li>
-<li><p>order by 多个字段排序时，不是按照索引的排序进行 order by，即不按照最左前缀法则，如</p>
-<pre><code class="hljs mysql">select a, b from test order by b, a;</code></pre>
-
-
-
-</li>
-</ul>
-</li>
-</ul>
-<h5 id="2-5-索引的缺点及使用建议"><a href="#2-5-索引的缺点及使用建议" class="headerlink" title="2.5 索引的缺点及使用建议"></a>2.5 索引的缺点及使用建议</h5><p>​    索引是有缺点的，比如常见的就是会<strong>增加磁盘消耗</strong>，因为要占用磁盘文件，同时高并发的时候频繁插入和修改索引，会导致<strong>性能损耗</strong>的。</p>
-<p>​    常见做法：</p>
-<ol>
-<li><p>尽量创建<strong>少量的索引</strong>，1个表最多设置3个索引，同时选择该列的值在表中<strong>重复比例较小的字段</strong>来做索引较合适。</p>
-</li>
-<li><p>针对较长的字符串，可建立<strong>前缀索引</strong>，只需匹配有限个字符的子串即可定位所在行。</p>
-<pre><code class="hljs mysql"># 添加前缀索引 (以前4位字符创建前缀索引)
-alter table test add index(col(4))
-
-SELECT col FROM test WHERE col &#x3D; &quot;xxx&quot;</code></pre>
-
-<p>但其弊端也很明显，即<strong>无法做 group by 和 order by</strong>，页<strong>无法</strong>使用前缀索引做<strong>覆盖扫描</strong>。</p>
-</li>
-</ol>
-<h5 id="2-6-总结"><a href="#2-6-总结" class="headerlink" title="2.6 总结"></a>2.6 总结</h5><p>综上，在系统中关于索引的使用，一般就是尽量降低SQL的复杂度，然后搭配上非常简单的<strong>一个主键索引（聚簇索引）+ 少数几个联合索引</strong>，就可以覆盖一个表的所有SQL查询需求了。更加复杂的业务逻辑，让java代码里来实现就ok了。SQL越简单，后续迁移分库分表、读写分离的时候，成本越低，几乎都不用怎么改造SQL。</p>
-<h4 id="3-事务的几个特性是什么？有哪几种隔离级别？"><a href="#3-事务的几个特性是什么？有哪几种隔离级别？" class="headerlink" title="3. 事务的几个特性是什么？有哪几种隔离级别？"></a>3. 事务的几个特性是什么？有哪几种隔离级别？</h4><p><strong>面试官心理分析</strong></p>
-<p>用mysql开发的三个基本面：<strong>存储引擎、索引，事务</strong>。</p>
-<p>因为一个业务系统里，肯定要加事务保证一堆关联操作，要么一起成功要么一起失败，对不对？所以这是聊数据库必问的一个问题</p>
-<p>最最最基本的用mysql来开发，就3点：存储引擎（了解），索引（能建索引，写的SQL都用上索引），事务（了解事务的隔离级别，基于spring的事务支持在代码里加事务）</p>
-<p>存储引擎 -&gt; innodb，索引，基本按照你的SQL的需求都建了索引（可能漏了部分索引忘了建），事务（@Transactional注解，对service层统一加了事务）</p>
-<h5 id="3-1-事务的ACID"><a href="#3-1-事务的ACID" class="headerlink" title="3.1 事务的ACID"></a>3.1 事务的ACID</h5><ol>
-<li>Atomic：<strong>原子性</strong>，一个事务是不可再分割的整体，要么都执行要么都不执行。</li>
-<li>Consistency：<strong>一致性</strong>，一个事务可以使数据从一个一致状态切换到另外一个一致的状态。</li>
-<li>Isolation：<strong>隔离性</strong>，一个事务不受其他事务的干扰，多个事务互相隔离的。</li>
-<li>Durability：<strong>持久性</strong>，一个事务一旦提交了，则永久的持久化到本地。</li>
-</ol>
-<p><img src="img/R3iIriZ.png" alt="img"></p>
-<p><img src="img/UV326rr.png" alt="img"></p>
-<p><strong>简单说，==数据库保证一致性就是由原子性、持久性、隔离性共同保证的结果==。</strong></p>
-<h5 id="3-2-事务的使用步骤"><a href="#3-2-事务的使用步骤" class="headerlink" title="3.2 事务的使用步骤"></a>3.2 事务的使用步骤</h5><ol>
-<li><p><strong>隐式（自动）事务</strong>：没有明显的开启和结束，本身就是一条事务可以<strong>自动提交</strong>，比如insert、update、delete</p>
-</li>
-<li><p>显式事务：具有明显的开启和结束</p>
-<ul>
-<li>开启事务</li>
-</ul>
-<pre><code class="hljs mysql">set autocommit&#x3D;0;
-start transaction;</code></pre>
-
-<ul>
-<li>编写一组逻辑 SQL 语句 (如insert、update、delete)，并设置回滚点</li>
-</ul>
-<pre><code class="hljs mysql">insert into &lt;表名&gt; values(a, b, c);
-savepoint ‘回滚点名’;</code></pre>
-
-<ul>
-<li><p>结束事务</p>
-<ol>
-<li><p>提交成功</p>
-<pre><code class="hljs mysql">commit;</code></pre>
-</li>
-<li><p>提交失败，则回滚</p>
-<pre><code class="hljs mysql"># 回滚
-rollback;
-
-# 或 回滚到指定的地方
-rollback to &#39;回滚点名&#39;;</code></pre>
-
-
-
-</li>
-</ol>
-</li>
-</ul>
-</li>
-</ol>
-<h5 id="3-3-事务的隔离级别"><a href="#3-3-事务的隔离级别" class="headerlink" title="3.3 事务的隔离级别"></a>3.3 事务的隔离级别</h5><p><strong>并发问题</strong></p>
-<ol>
-<li><strong>==脏读==**：一个事务读取了其他事务还未提交的数据，读到的是其他事务</strong>==更新==**的数据。</li>
-<li>**==不可重复读==**：一个事务多次读取，结果不一样。</li>
-<li><strong>==幻读==**：一个事务读取了其他事务还未提交的数据，只是读到的是其他事务</strong>==插入==**的数据。</li>
-<li><strong>==更新丢失==</strong> ： 当两个或多个事务<strong>更新同一行记录</strong>，会产生更新丢失现象。可以分为回滚覆盖和提交覆盖。<ul>
-<li>回滚覆盖 ：一个事务回滚操作，把其他事务已提交的数据给覆盖了。</li>
-<li>提交覆盖 ：一个事务提交操作，把其他事务已提交的数据给覆盖了。</li>
-</ul>
-</li>
-</ol>
-<p><strong>隔离级别及可解决的并发问题</strong></p>
-<table>
-<thead>
-<tr>
-<th>事务隔离级别</th>
-<th>回滚覆盖</th>
-<th>脏读</th>
-<th>不可重复读</th>
-<th>提交覆盖</th>
-<th>幻读</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>read uncommitted:读未提交</td>
-<td>✔</td>
-<td>X</td>
-<td>X</td>
-<td>X</td>
-<td>X</td>
-</tr>
-<tr>
-<td>read committed：读已提交</td>
-<td>✔</td>
-<td>✔</td>
-<td>X</td>
-<td>X</td>
-<td>X</td>
-</tr>
-<tr>
-<td>repeatable read：可重复读</td>
-<td>✔</td>
-<td>✔</td>
-<td>✔</td>
-<td>✔</td>
-<td>X</td>
-</tr>
-<tr>
-<td>serializable：串行化</td>
-<td>✔</td>
-<td>✔</td>
-<td>✔</td>
-<td>✔</td>
-<td>✔</td>
-</tr>
-</tbody></table>
-<ol>
-<li><p>Read Uncommitted：<strong>读未提交 **，一个事务在执行过程中可以看到其他事务</strong>未提交的插入和更新的记录**。</p>
-</li>
-<li><p>Read Committed：<strong>读已提交</strong>，一个事务在执行过程中可以看到其他事务<strong>已提交的新插入和更新的记录</strong>。(<strong>==Oracle、SQLServer默认隔离级别==</strong>)</p>
-</li>
-<li><p>Read Repeatable：<strong>可重复读</strong>，一个事务在执行过程中可以看到其他事务<strong>已提交的新插入的记录(<del>看不见更新记录</del>)**。(</strong>==MySQL的默认隔离级别==**)</p>
-</li>
-<li><p>Serializable：<strong>串行化</strong>，所有事务都串行起来，<strong>不允许多个事务并行操作</strong>。</p>
-</li>
-</ol>
-<h5 id="3-4-MySQL是如何实现“可重复读”这一隔离级别的？"><a href="#3-4-MySQL是如何实现“可重复读”这一隔离级别的？" class="headerlink" title="3.4 MySQL是如何实现“可重复读”这一隔离级别的？"></a>3.4 MySQL是如何实现“可重复读”这一隔离级别的？</h5><p>​    MVCC的<strong>简单理解</strong>：如下图所示，<strong>在事务1开始写操作的时候会生成该记录的快照，其他事务读操作会读取这个记录的副本，因此不会影响其他事务对此记录的读取，实现写和读并行。</strong></p>
-<p><img src="img/732QNnZ.png" alt="img"></p>
-<p>​    </p>
-<p>​        MySQL是通过<strong>MVCC机制</strong>来实现<strong>可重复读</strong>的，即多版本并发控制 (<strong>multi-version concurrency control</strong>) 。MVCC支持读和读、读和写、写和读的并行，但为了保证一致性，写和写是无法并行的。<strong>在每次事务修改操作之前，都会在Undo日志中记录修改之前的数据状态和事务号(全局唯一)，该备份记录可以用于其他事务的读取，也可以进行必要时的数据回滚。</strong></p>
-<p>​        MVCC最大的好处是读<strong>不加锁，读写不冲突</strong>。读操作可以分为两类: <strong>快照读</strong>（Snapshot Read）与<strong>当前读</strong> （Current Read）。</p>
-<ul>
-<li><p>快照读：读取的是记录的快照版本（有可能是历史版本），不用加锁。（select）</p>
-</li>
-<li><p>当前读：读取的是记录的最新版本，并且当前读返回的记录，都会加锁，保证其他事务不会再并发</p>
-</li>
-</ul>
-<p>  <strong>举一个记录更新的案例来讲解 MVCC 中多版本的实现：</strong></p>
-<p>  假设 F1～F6 是表中字段的名字，1～6 是其对应的数据。后面三个隐含字段分别对应该行的<strong>隐含ID(行标识)、事务号和回滚指针</strong>，如下图所示。</p>
-<p>  <img src="img/yYrAZnv.png" alt="img"></p>
-<ul>
-<li><p>具体的更新过程如下： 假如一条数据是刚 INSERT 的，DB_ROW_ID 为 1，其他两个字段为空。当事务1更改该行的数据值时，会进行如下操作：</p>
-<p><img src="img/v2eeAnQ.png" alt="img"></p>
-</li>
-</ul>
-<ol>
-<li><p>用<strong>排他锁锁定该行</strong>，<strong>并记录到 Redo log</strong>；</p>
-</li>
-<li><p>把该行<strong>修改前的值复制到 Undo log</strong>，即上图中下面的行；</p>
-</li>
-<li><p>修改当前行的值，<strong>填写事务编号(01)**，使</strong>回滚指针指向 Undo log 中修改前的行**。</p>
-</li>
-</ol>
-<ul>
-<li><p>接下来事务2操作， 过程与事务1相同，此时 Undo log 中会有两行记录，此时查看锁信息，会出现两条 ，并且<strong>通过回滚指针连在一起，通过当前记录的回滚指针回溯到该行创建时的初始内容</strong>，如下图所示：</p>
-<p><img src="img/3qMVZj.png" alt="img"></p>
-<p>MVCC已经实现了读读、读写、写读并发处理，如果想进一步解决写写冲突，可以采用下面两种锁的方案，<strong>乐观锁</strong>和**悲观锁(高并发)**。</p>
-</li>
-</ul>
-<h5 id="3-5-MySql数据库锁的实现原理是什么？如果死锁了怎么办？"><a href="#3-5-MySql数据库锁的实现原理是什么？如果死锁了怎么办？" class="headerlink" title="3.5 MySql数据库锁的实现原理是什么？如果死锁了怎么办？"></a>3.5 MySql数据库锁的实现原理是什么？如果死锁了怎么办？</h5><p><strong>一、锁的分类</strong></p>
-<ol>
-<li>操作的粒度可分为<strong>表级锁</strong>、行级锁和<strong>页级锁</strong>。</li>
-</ol>
-<ul>
-<li>表级锁：每次操作锁住整张表。<strong>锁定粒度大</strong>，发生锁冲突的概率最高，并发度最低。应用在 MyISAM、InnoDB、BDB 等存储引擎中。</li>
-<li>行级锁：每次操作锁住一行数据。<strong>锁定粒度最小</strong>，发生锁冲突的概率最低，并发度最高。应用在<strong>InnoDB 存储引擎</strong>中。</li>
-<li>页级锁：每次锁定相邻的一组记录，锁定粒度界于表锁和行锁之间，开销和加锁时间界于表锁和行锁之间，并发度一般。应用在BDB 存储引擎中。</li>
-</ul>
-<p><strong>MyISAM和InnoDB存储引擎使用的锁</strong></p>
-<p><img src="img/YRRnqeR.png" alt="img"></p>
-<ol start="2">
-<li>从操作的类型可分为<strong>读锁</strong>和<strong>写锁</strong>。</li>
-</ol>
-<ul>
-<li><p>读锁（S锁）：<strong>共享锁</strong>，针对同一份数据，多个读操作可以同时进行而不会互相影响。</p>
-</li>
-<li><p>写锁（X锁）：<strong>排他锁</strong>，当前写操作没有完成前，它会阻断其他写锁和读锁。</p>
-<p>备注：IS锁、IX锁：意向读锁、意向写锁，属于<strong>表级锁</strong>，S和X主要针对行级锁。在对表记录添加S或X锁之 前，会<strong>先对表添加IS或IX锁</strong>。</p>
-</li>
-</ul>
-<ol start="3">
-<li>从操作的性能可分为<strong>乐观锁</strong>和<strong>悲观锁</strong>。</li>
-</ol>
-<ul>
-<li>乐观锁：一般的实现方式是对记录数据版本进行比对，在数据更新<strong>提交的时候才会进行冲突检测</strong>，如果发现冲突了，则提示错误信息。(<strong>==类似 Java 的 CAS机制==</strong>)</li>
-<li>悲观锁：在对一条数据修改的时候，为了避免同时被其他人修改，<strong>在修改数据之前先锁定</strong>， 再修改的控制方式。<strong>共享锁和排他锁是悲观锁的不同实现</strong>，但都属于悲观锁范畴。</li>
-</ul>
-<p><strong>二、行锁的原理</strong></p>
-<p>​        在InnoDB引擎中，我们可以使用行锁和表锁，其中行锁又分为共享锁和排他锁。InnoDB行锁是通过对 索引数据页上的记录加锁实现的，主要实现算法有 3 种：<strong>Record Lock</strong>、<strong>Gap Lock</strong> 和 <strong>Next-key Lock</strong>。</p>
-<ul>
-<li><p>RecordLock锁：<strong>锁定单个行记录的锁</strong>。（记录锁，RC、RR隔离级别都支持）</p>
-</li>
-<li><p>GapLock锁：<strong>间隙锁</strong>，锁定索引记录间隙，确保索引记录的间隙不变。（范围锁，RR隔离级别支 持）</p>
-</li>
-<li><p>Next-key Lock 锁： <strong>记录锁和间隙锁组合</strong> ，同时锁住数据，并且<strong>锁住数据前后范围</strong>。（记录锁+范围锁，RR隔离级别支持）</p>
-<p>总结：在“<strong>可重复读</strong>”隔离级别，InnoDB对于记录加锁行为都是<strong>先采用Next-Key Lock</strong>，但是当SQL操作<strong>含有唯一索引时</strong>，Innodb会对Next-Key Lock进行优化，<strong>降级为RecordLock</strong>，<strong>仅锁住索引本身</strong>而非范围。</p>
-</li>
-</ul>
-<p><strong>三、死锁与解决方案</strong></p>
-<ol>
-<li><p><strong>表锁死锁</strong></p>
-<ul>
-<li><p>产生原因： 用户A访问表A（锁住了表A），然后又访问表B；另一个用户B访问表B（锁住了表B），然后企图 访问表A；这时用户A由于用户B已经锁住表B，它必须等待用户B释放表B才能继续，同样用户B要 等用户A释放表A才能继续，这就死锁就产生了。</p>
-<p>即：用户A –&gt; A表（表锁）–&gt; B表（表锁）； 用户B –&gt; B表（表锁）–&gt; A表（表锁）</p>
-</li>
-<li><p>解决方案1：这种死锁比较常见，应<strong>尽量按照相同的顺序进行处理</strong> ，尽量避免同时锁定两个资源，如操作A和B两张表时，总是按先A后B的顺序处理， 必须同时锁定两个资源时，要保证在任 何时刻都应该按照相同的顺序来锁定资源。</p>
-</li>
-</ul>
-</li>
-</ol>
-<ol start="2">
-<li><p><strong>行级锁死锁</strong></p>
-<ul>
-<li>产生原因1： 如果在事务中执行了一条没有索引条件的查询，引发全表扫描，把行级锁上升为全表记录锁定（等 价于表级锁），多个这样的事务执行后，就很容易产生死锁和阻塞，最终应用系统会越来越慢，发 生阻塞或死锁。</li>
-<li>解决方案1： SQL语句中不要使用太复杂的关联多表的查询；使用explain“执行计划”对SQL语句进行分析，对于有全表扫描和全表锁定的SQL语句，建立相应的索引进行优化。</li>
-</ul>
-</li>
-</ol>
-<ul>
-<li><p>产生原因2： 两个事务分别想拿到对方持有的锁，互相等待，于是产生死锁。</p>
-</li>
-<li><p>解决方案2： 在同一个事务中，尽可能做到一次锁定所需要的所有资源 按照id对资源排序，然后按顺序进行处理 </p>
-<p><img src="img/vYNjQbI.png" alt="img"></p>
-</li>
-</ul>
-<ol start="3">
-<li><strong>共享锁转换为排他锁</strong></li>
-</ol>
-<ol start="4">
-<li><p><strong>死锁排查</strong></p>
-<p>MySQL提供了几个与锁有关的参数和命令，可以辅助我们优化锁操作，减少死锁发生。</p>
-</li>
-</ol>
-<ul>
-<li>查看死锁日志 通过 <strong>show engine innodb status\G</strong> 命令查看近期<strong>死锁日志信息</strong>。<ul>
-<li>1、查看近期死锁日志信息；</li>
-<li>2、使用explain查看下SQL执行计划</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li><p>查看锁状态变量 通过 <strong>show status like’innodb_row_lock%‘</strong> 命令检查<strong>状态变量</strong>，分析系统中的行锁的争夺情况。</p>
-<pre><code class="hljs sql">Innodb_row_lock_current_waits：当前正在等待锁的数量
-Innodb_row_lock_time：从系统启动到现在锁定总时间长度
-Innodb_row_lock_time_avg： 每次等待锁的平均时间
-Innodb_row_lock_time_max：从系统启动到现在等待最长的一次锁的时间
-Innodb_row_lock_waits：系统启动后到现在总共等待的次数</code></pre>
-
-<p>如果等待次数高，而且每次等待时间长，需要分析系统中为什么会有如此多的等待，然后着手定制优化。</p>
-</li>
-</ul>
-<h5 id="3-6-总结"><a href="#3-6-总结" class="headerlink" title="3.6 总结"></a>3.6 总结</h5><p>​    <strong>事务底层实现是锁</strong>，在事务控制不了并发的情况下，可以<strong>手动加锁，保证数据一致性</strong>，用执行计划保证索引加在更新列上，禁止锁全表引起死锁，<strong>业务方面可以用MVCC机制防止重复提交</strong>，避免长事务中的数据库加锁开销。</p>
-<h4 id="4-SQL-调优的常用手段"><a href="#4-SQL-调优的常用手段" class="headerlink" title="4. SQL 调优的常用手段"></a>4. SQL 调优的常用手段</h4><p>​    首先要保持SQL简单，一般90%的SQL都建议是单表查询，<strong>join等逻辑放java代码里实现</strong>，不要放SQL里。</p>
-<p>​    如果某个线上SQL跑的慢，首先判断<strong>SQL没有用索引或是数据库选错了索引</strong>，通过看<strong>MySQL的执行计划</strong>来添加索引。其次是考虑<strong>服务器硬件本身和死锁</strong>的问题。</p>
-<pre><code class="hljs mysql"># 查看 SQL 语句的性能
-explain select * from &#39;表名&#39;</code></pre>
-
-<p><strong>执行计划中的各个参数意义：</strong></p>
-<ul>
-<li>table：哪个表</li>
-<li><strong>type</strong>：这个很重要，是说类型，all（全表扫描），const（读常量，最多一条记录匹配），eq_ref（走主键，一般就最多一条记录匹配），index（扫描全部索引），range（扫描部分索引）</li>
-<li>possible_keys：显示可能使用的索引</li>
-<li>key：实际使用的索引</li>
-<li>key_len：使用索引的长度</li>
-<li><strong>ref</strong>：联合索引的哪一列被用了</li>
-<li><strong>rows</strong>：一共扫描和返回了多少行</li>
-<li>extra：using filesort（需要额外进行排序），using</li>
-<li>temporary（mysql构建了临时表，比如排序的时候），using</li>
-<li>where（就是对索引扫出来的数据再次根据where来过滤出了结果）</li>
-</ul>
-]]></content>
-      <categories>
-        <category>test</category>
-      </categories>
-      <tags>
-        <tag>面试</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Java 集合框架整理</title>
-    <url>/2020/10/10/2020-10-10-Java-Collection-Interview/</url>
+    <url>/2020/10/10/10-10-Java-Collection-Interview/</url>
     <content><![CDATA[<center style='font-size: 18px; font-weight: bold;'>Java 集合框架一览图</center>
 
 <p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010143050.png" alt="image-20201010141215496"></p>
@@ -1666,7 +1771,7 @@ explain select * from &#39;表名&#39;</code></pre>
 <li>插入、删除数据时，LinkedList的效率比较高，因为ArrayList删除数据时索引后的元素都需要移动。</li>
 <li>LinkedList比ArrayList开销更大，因为LinkedList的节点除了存储数据，还需要存储引用。</li>
 </ul>
-<h3 id="2-Collections-和-Arrays-的-sort-实现原理"><a href="#2-Collections-和-Arrays-的-sort-实现原理" class="headerlink" title="2. Collections 和 Arrays 的 sort 实现原理"></a>2. Collections 和 Arrays 的 sort 实现原理</h3><p><strong>Collection.sort是对 <em>list</em> 进行排序</strong>，<strong>Arrays.sort 是对 <em>数组</em> 进行排序</strong>。</p>
+<h3 id="2-Collections-和-Arrays-的-sort-实现原理"><a href="#2-Collections-和-Arrays-的-sort-实现原理" class="headerlink" title="2. Collections 和 Arrays 的 sort 实现原理"></a>2. Collections 和 Arrays 的 sort 实现原理</h3><p><strong>Collection.sort是对 <mark>list</mark> 进行排序</strong>，<strong>Arrays.sort 是对 <mark>数组</mark> 进行排序</strong>。</p>
 <h4 id="Collections-sort底层实现"><a href="#Collections-sort底层实现" class="headerlink" title="Collections.sort底层实现"></a>Collections.sort底层实现</h4><p>Collections.sort方法调用了list.sort方法<br><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010152717.png"><br>list.sort方法调用了Arrays.sort的方法<br><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010152735.png"><br>因此，<strong>Collections.sort方法底层就是调用的Array.sort方法</strong></p>
 <h4 id="Arrays-sort底层实现"><a href="#Arrays-sort底层实现" class="headerlink" title="Arrays.sort底层实现"></a>Arrays.sort底层实现</h4><p>Arrays的sort方法，如下：<br><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010161759.png"><br>如果比较器为null，进入sort（a）方法。如下：<br><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010162002.png"><br>因此，Arrays的sort方法底层就是：</p>
 <ul>
@@ -1832,7 +1937,7 @@ boy</code></pre>
 
 <h3 id="9-TreeMap底层？"><a href="#9-TreeMap底层？" class="headerlink" title="9. TreeMap底层？"></a>9. TreeMap底层？</h3><ul>
 <li>TreeMap实现了 SortedMap 接口，它是有序的集合。</li>
-<li>TreeMap<strong>底层数据结构</strong>是一个==<strong>红黑树</strong>==，每个key-value都作为一个红黑树的节点。</li>
+<li>TreeMap<strong>底层数据结构</strong>是一个**<mark>红黑树</mark>**，每个key-value都作为一个红黑树的节点。</li>
 <li>如果在调用TreeMap的构造函数时没有指定比较器，则<strong>根据key执行自然排序</strong>。</li>
 </ul>
 <p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010163415.png"></p>
@@ -1882,13 +1987,13 @@ boy</code></pre>
 <h3 id="16-Collection与Collections的区别是什么？"><a href="#16-Collection与Collections的区别是什么？" class="headerlink" title="16. Collection与Collections的区别是什么？"></a>16. Collection与Collections的区别是什么？</h3><ul>
 <li><strong>Collection<E>是Java集合框架中的基本接口</strong>，如List接口也是继承于它</li>
 </ul>
-<pre><code class="hljs routeros">public<span class="hljs-built_in"> interface </span>List&lt;E&gt; extends Collection&lt;E&gt; &#123;</code></pre>
+<pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">List</span>&lt;<span class="hljs-title">E</span>&gt; <span class="hljs-keyword">extends</span> <span class="hljs-title">Collection</span>&lt;<span class="hljs-title">E</span>&gt; </span>&#123;</code></pre>
 
 <ul>
 <li><strong>Collections是Java集合框架提供的一个工具类</strong>，其中包含了大量用于操作或返回集合的静态方法。如下：</li>
 </ul>
-<pre><code class="hljs php"><span class="hljs-keyword">public</span> <span class="hljs-built_in">static</span> &lt;T <span class="hljs-keyword">extends</span> Comparable<span class="hljs-meta">&lt;?</span> super T&gt;&gt; <span class="hljs-keyword">void</span> sort(<span class="hljs-keyword">List</span>&lt;T&gt; <span class="hljs-keyword">list</span>) &#123;
-    <span class="hljs-keyword">list</span>.sort(<span class="hljs-literal">null</span>);
+<pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> &lt;T extends Comparable&lt;? <span class="hljs-keyword">super</span> T&gt;&gt; <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">sort</span><span class="hljs-params">(List&lt;T&gt; list)</span> </span>&#123;
+    list.sort(<span class="hljs-keyword">null</span>);
 &#125;</code></pre>
 
 <h3 id="17-如何决定使用-HashMap-还是TreeMap？"><a href="#17-如何决定使用-HashMap-还是TreeMap？" class="headerlink" title="17. 如何决定使用 HashMap 还是TreeMap？"></a>17. 如何决定使用 HashMap 还是TreeMap？</h3><p>这个点，主要考察HashMap和TreeMap的区别。</p>
@@ -1914,7 +2019,7 @@ System.out.println(array[<span class="hljs-number">0</span>]);</code></pre>
 <pre><code class="hljs java">Exception in thread <span class="hljs-string">&quot;main&quot;</span> java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to [Ljava.lang.String;
 	at Test.main(Test.java:<span class="hljs-number">14</span>)</code></pre>
 
-<h4 id="Array-转List"><a href="#Array-转List" class="headerlink" title="Array 转List"></a>Array 转List</h4><p>使用<strong>Arrays.asList() 把数组转换成集合</strong>时，其**底层仍是一个==数组==**！因此不能使用修改集合相关的方法，例如add方法，如下：</p>
+<h4 id="Array-转List"><a href="#Array-转List" class="headerlink" title="Array 转List"></a>Array 转List</h4><p>使用<strong>Arrays.asList() 把数组转换成集合</strong>时，其**底层仍是一个<mark>数组</mark>**！因此不能使用修改集合相关的方法，例如add方法，如下：</p>
 <pre><code class="hljs java">String[] str = <span class="hljs-keyword">new</span> String[] &#123; <span class="hljs-string">&quot;jay&quot;</span>, <span class="hljs-string">&quot;tianluo&quot;</span> &#125;;
 List list = Arrays.asList(str);
 list.add(<span class="hljs-string">&quot;boy&quot;</span>);</code></pre>
@@ -1930,6 +2035,7 @@ list.add(<span class="hljs-string">&quot;boy&quot;</span>);</code></pre>
 <pre><code class="hljs java"><span class="hljs-comment">//方式一：</span>
 ArrayList&lt; String&gt; arrayList = <span class="hljs-keyword">new</span> ArrayList&lt;String&gt;(strArray.length);
 Collections.addAll(arrayList, strArray);
+
 <span class="hljs-comment">//方式二：</span>
 ArrayList&lt;String&gt; list = <span class="hljs-keyword">new</span> ArrayList&lt;String&gt;(Arrays.asList(strArray)) ;</code></pre>
 
@@ -1981,7 +2087,7 @@ Iterator&lt;String&gt; it = list. iterator();
 <pre><code class="hljs awk"><span class="hljs-regexp">//</span>可以洗发现，final修饰，集合还是会被修改呢
 boy</code></pre>
 
-<p>嘻嘻，那么，到底怎么**==确保一个集合不能被修改==<strong>(集合不可变)呢，看以下这三个方法，即 ==**Collections.unmodifiable&lt;集合类型&gt;</strong>==</p>
+<p>嘻嘻，那么，到底怎么**<mark>确保一个集合不能被修改</mark>**(集合不可变)呢，看以下这三个方法，即 <strong><mark>Collections.unmodifiable&lt;集合类型&gt;</mark></strong></p>
 <ul>
 <li><strong>unmodifiableMap</strong></li>
 <li><strong>unmodifiableList</strong></li>
@@ -2233,7 +2339,7 @@ isEmpty()<span class="hljs-comment">//判断队列是否为空，为空返回tru
 
 <h3 id="34-当一个集合被作为参数传递给一个函数时，如何才可以确保函数不能修改它？"><a href="#34-当一个集合被作为参数传递给一个函数时，如何才可以确保函数不能修改它？" class="headerlink" title="34. 当一个集合被作为参数传递给一个函数时，如何才可以确保函数不能修改它？"></a>34. 当一个集合被作为参数传递给一个函数时，如何才可以确保函数不能修改它？</h3><p>这个跟之前那个不可变集合一样道理哈~</p>
 <blockquote>
-<p>在作为参数传递之前，使用==<strong>Collections.unmodifiableCollection</strong>==(Collection c)方法创建一个**==只读集合==**，这将确保改变集合的任何操作都会抛出UnsupportedOperationException。</p>
+<p>在作为参数传递之前，使用**<mark>Collections.unmodifiableCollection</mark>**(Collection c)方法创建一个**<mark>只读集合</mark>**，这将确保改变集合的任何操作都会抛出UnsupportedOperationException。</p>
 </blockquote>
 <h3 id="35-说一下HashSet的实现原理？"><a href="#35-说一下HashSet的实现原理？" class="headerlink" title="35. 说一下HashSet的实现原理？"></a>35. 说一下HashSet的实现原理？</h3><ul>
 <li><strong>不能保证元素的排列顺序</strong>，顺序有可能发生变化。</li>
@@ -2297,9 +2403,9 @@ isEmpty()<span class="hljs-comment">//判断队列是否为空，为空返回tru
 <p>有兴趣的朋友，可以看看我的<a href="%E6%8B%93%E5%B1%95%E6%96%87%E6%A1%A3%5C41_%E7%BA%BF%E7%A8%8B%E6%B1%A0%E8%A7%A3%E6%9E%90.md">这篇文章</a>哦~</p>
 <p><a href="https://juejin.im/post/5d1882b1f265da1ba84aa676#heading-15">面试必备：Java线程池解析</a></p>
 <h3 id="42-HashSet-和-TreeSet-有什么区别？"><a href="#42-HashSet-和-TreeSet-有什么区别？" class="headerlink" title="42. HashSet 和 TreeSet 有什么区别？"></a>42. HashSet 和 TreeSet 有什么区别？</h3><ul>
-<li>Hashset 的底层是由**==哈希表==<strong>实现的，Treeset 底层是由==**红黑树</strong>==实现的。</li>
-<li>HashSet中的元素没有顺序，TreeSet保存的元素**==有顺序性==**（实现Comparable接口）</li>
-<li>HashSet的add()，remove()，contains()方法的时间复杂度是==<strong>O(1)</strong>==；TreeSet中，add()，remove()，contains()方法的时间复杂度是==<strong>O(logn)</strong>==</li>
+<li>Hashset 的底层是由**<mark>哈希表</mark><strong>实现的，Treeset 底层是由</strong><mark>红黑树</mark>**实现的。</li>
+<li>HashSet中的元素没有顺序，TreeSet保存的元素**<mark>有顺序性</mark>**（实现Comparable接口）</li>
+<li>HashSet的add()，remove()，contains()方法的时间复杂度是**<mark>O(1)</mark><strong>；TreeSet中，add()，remove()，contains()方法的时间复杂度是</strong><mark>O(logn)</mark>**。</li>
 </ul>
 <h3 id="43-Set里的元素是不能重复的，那么用什么方法来区分重复与否呢-是用-还是equals"><a href="#43-Set里的元素是不能重复的，那么用什么方法来区分重复与否呢-是用-还是equals" class="headerlink" title="43. Set里的元素是不能重复的，那么用什么方法来区分重复与否呢? 是用==还是equals()?"></a>43. Set里的元素是不能重复的，那么用什么方法来区分重复与否呢? 是用==还是equals()?</h3><p>元素重复与否是<strong>使用equals()方法</strong>进行判断的，这个可以跟面试官说说==和equals()的区别，hashcode()和equals</p>
 <h3 id="44-说出ArrayList-LinkedList的存储性能和特性"><a href="#44-说出ArrayList-LinkedList的存储性能和特性" class="headerlink" title="44. 说出ArrayList,LinkedList的存储性能和特性"></a>44. 说出ArrayList,LinkedList的存储性能和特性</h3><p>这道面试题，跟ArrayList,LinkedList，就是换汤不换药的~</p>
@@ -2310,7 +2416,7 @@ isEmpty()<span class="hljs-comment">//判断队列是否为空，为空返回tru
 </ul>
 <h3 id="45-HashMap在JDK1-7和JDK1-8中有哪些不同？"><a href="#45-HashMap在JDK1-7和JDK1-8中有哪些不同？" class="headerlink" title="45. HashMap在JDK1.7和JDK1.8中有哪些不同？"></a>45. HashMap在JDK1.7和JDK1.8中有哪些不同？</h3><p>互联网上这个答案太详细啦（来源<a href="https://www.jianshu.com/p/939b8a672070">Java集合必会14问</a>）<br><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201010170050.png"></p>
 <h3 id="46-ArrayList集合加入1万条数据，应该怎么提高效率"><a href="#46-ArrayList集合加入1万条数据，应该怎么提高效率" class="headerlink" title="46. ArrayList集合加入1万条数据，应该怎么提高效率"></a>46. ArrayList集合加入1万条数据，应该怎么提高效率</h3><blockquote>
-<p>因为ArrayList的底层是数组实现,并且数组的默认值是10,如果插入10000条要不断的扩容,耗费时间,所以我们调用ArrayList的==指定容量==的构造器方法ArrayList(int size) 就可以实现不扩容,就提高了性能。</p>
+<p>因为ArrayList的底层是数组实现,并且数组的默认值是10,如果插入10000条要不断的扩容,耗费时间,所以我们调用ArrayList的<mark>指定容量</mark>的构造器方法ArrayList(int size) 就可以实现不扩容,就提高了性能。</p>
 </blockquote>
 <h3 id="47-如何对Object的list排序"><a href="#47-如何对Object的list排序" class="headerlink" title="47. 如何对Object的list排序"></a>47. 如何对Object的list排序</h3><p>看例子吧，哈哈，这个跟对象排序也是一样的呢~</p>
 <pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span> </span>&#123;
@@ -2369,6 +2475,871 @@ isEmpty()<span class="hljs-comment">//判断队列是否为空，为空返回tru
       <tags>
         <tag>面试</tag>
         <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MySQL 命令大全</title>
+    <url>/2020/10/17/10-17-Common-Mysql-Commands/</url>
+    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><blockquote>
+<p>源自 JavaGuide，原文地址：<a href="https://shockerli.net/post/1000-line-mysql-note/">https://shockerli.net/post/1000-line-mysql-note/</a> </p>
+</blockquote>
+<p>非常不错的总结，强烈建议保存下来，需要的时候看一看。</p>
+<h3 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h3><pre><code class="hljs sql"><span class="hljs-comment">/* Windows服务 */</span>
+<span class="hljs-comment">-- 启动MySQL</span>
+    net <span class="hljs-keyword">start</span> mysql
+<span class="hljs-comment">-- 创建Windows服务</span>
+    sc <span class="hljs-keyword">create</span> mysql binPath= mysqld_bin_path(注意：等号与值之间有空格)
+<span class="hljs-comment">/* 连接与断开服务器 */</span>
+mysql -h 地址 -P 端口 -u 用户名 -p 密码
+<span class="hljs-keyword">SHOW</span> <span class="hljs-keyword">PROCESSLIST</span> <span class="hljs-comment">-- 显示哪些线程正在运行</span>
+<span class="hljs-keyword">SHOW</span> <span class="hljs-keyword">VARIABLES</span> <span class="hljs-comment">-- 显示系统变量信息</span></code></pre>
+
+<h3 id="数据库操作"><a href="#数据库操作" class="headerlink" title="数据库操作"></a>数据库操作</h3><pre><code class="hljs sql"><span class="hljs-comment">/* 数据库操作 */</span> <span class="hljs-comment">------------------</span>
+<span class="hljs-comment">-- 查看当前数据库</span>
+    <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">DATABASE</span>();
+<span class="hljs-comment">-- 显示当前时间、用户名、数据库版本</span>
+    <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">now</span>(), <span class="hljs-keyword">user</span>(), <span class="hljs-keyword">version</span>();
+<span class="hljs-comment">-- 创建库</span>
+    <span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">DATABASE</span>[ <span class="hljs-keyword">IF</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">EXISTS</span>] 数据库名 数据库选项
+    数据库选项：
+        <span class="hljs-built_in">CHARACTER</span> <span class="hljs-keyword">SET</span> charset_name
+        <span class="hljs-keyword">COLLATE</span> collation_name
+<span class="hljs-comment">-- 查看已有库</span>
+    <span class="hljs-keyword">SHOW</span> <span class="hljs-keyword">DATABASES</span>[ <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;PATTERN&#x27;</span>]
+<span class="hljs-comment">-- 查看当前库信息</span>
+    <span class="hljs-keyword">SHOW</span> <span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">DATABASE</span> 数据库名
+<span class="hljs-comment">-- 修改库的选项信息</span>
+    <span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">DATABASE</span> 库名 选项信息
+<span class="hljs-comment">-- 删除库</span>
+    <span class="hljs-keyword">DROP</span> <span class="hljs-keyword">DATABASE</span>[ <span class="hljs-keyword">IF</span> <span class="hljs-keyword">EXISTS</span>] 数据库名
+        同时删除该数据库相关的目录及其目录内容</code></pre>
+
+<h3 id="表的操作"><a href="#表的操作" class="headerlink" title="表的操作"></a>表的操作</h3><pre><code class="hljs sql"><span class="hljs-comment">-- 创建表</span>
+    <span class="hljs-keyword">CREATE</span> [<span class="hljs-keyword">TEMPORARY</span>] <span class="hljs-keyword">TABLE</span>[ <span class="hljs-keyword">IF</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">EXISTS</span>] [库名.]表名 ( 表的结构定义 )[ 表选项]
+        每个字段必须有数据类型
+        最后一个字段后不能有逗号
+        <span class="hljs-keyword">TEMPORARY</span> 临时表，会话结束时表自动消失
+        对于字段的定义：
+            字段名 数据类型 [<span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span> | <span class="hljs-literal">NULL</span>] [<span class="hljs-keyword">DEFAULT</span> default_value] [AUTO_INCREMENT] [<span class="hljs-keyword">UNIQUE</span> [<span class="hljs-keyword">KEY</span>] | [PRIMARY] <span class="hljs-keyword">KEY</span>] [<span class="hljs-keyword">COMMENT</span> <span class="hljs-string">&#x27;string&#x27;</span>]
+<span class="hljs-comment">-- 表选项</span>
+    <span class="hljs-comment">-- 字符集</span>
+        <span class="hljs-keyword">CHARSET</span> = charset_name
+        如果表没有设定，则使用数据库字符集
+    <span class="hljs-comment">-- 存储引擎</span>
+        <span class="hljs-keyword">ENGINE</span> = engine_name
+        表在管理数据时采用的不同的数据结构，结构不同会导致处理方式、提供的特性操作等不同
+        常见的引擎：<span class="hljs-keyword">InnoDB</span> MyISAM <span class="hljs-keyword">Memory</span>/<span class="hljs-keyword">Heap</span> BDB <span class="hljs-keyword">Merge</span> Example CSV MaxDB <span class="hljs-keyword">Archive</span>
+        不同的引擎在保存表的结构和数据时采用不同的方式
+        MyISAM表文件含义：.frm表定义，.MYD表数据，.MYI表索引
+        <span class="hljs-keyword">InnoDB</span>表文件含义：.frm表定义，表空间数据和日志文件
+        <span class="hljs-keyword">SHOW</span> <span class="hljs-keyword">ENGINES</span> <span class="hljs-comment">-- 显示存储引擎的状态信息</span>
+        <span class="hljs-keyword">SHOW</span> <span class="hljs-keyword">ENGINE</span> 引擎名 &#123;<span class="hljs-keyword">LOGS</span>|<span class="hljs-keyword">STATUS</span>&#125; <span class="hljs-comment">-- 显示存储引擎的日志或状态信息</span>
+    <span class="hljs-comment">-- 自增起始数</span>
+    	AUTO_INCREMENT = 行数
+    <span class="hljs-comment">-- 数据文件目录</span>
+        <span class="hljs-keyword">DATA</span> <span class="hljs-keyword">DIRECTORY</span> = <span class="hljs-string">&#x27;目录&#x27;</span>
+    <span class="hljs-comment">-- 索引文件目录</span>
+        <span class="hljs-keyword">INDEX</span> <span class="hljs-keyword">DIRECTORY</span> = <span class="hljs-string">&#x27;目录&#x27;</span>
+    <span class="hljs-comment">-- 表注释</span>
+        <span class="hljs-keyword">COMMENT</span> = <span class="hljs-string">&#x27;string&#x27;</span>
+    <span class="hljs-comment">-- 分区选项</span>
+        <span class="hljs-keyword">PARTITION</span> <span class="hljs-keyword">BY</span> ... (详细见手册)
+<span class="hljs-comment">-- 查看所有表</span>
+    <span class="hljs-keyword">SHOW</span> <span class="hljs-keyword">TABLES</span>[ <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;pattern&#x27;</span>]
+    <span class="hljs-keyword">SHOW</span> <span class="hljs-keyword">TABLES</span> <span class="hljs-keyword">FROM</span>  库名
+<span class="hljs-comment">-- 查看表结构</span>
+    <span class="hljs-keyword">SHOW</span> <span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> 表名 （信息更详细）
+    <span class="hljs-keyword">DESC</span> 表名 / <span class="hljs-keyword">DESCRIBE</span> 表名 / <span class="hljs-keyword">EXPLAIN</span> 表名 / <span class="hljs-keyword">SHOW</span> <span class="hljs-keyword">COLUMNS</span> <span class="hljs-keyword">FROM</span> 表名 [<span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;PATTERN&#x27;</span>]
+    <span class="hljs-keyword">SHOW</span> <span class="hljs-keyword">TABLE</span> <span class="hljs-keyword">STATUS</span> [<span class="hljs-keyword">FROM</span> db_name] [<span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;pattern&#x27;</span>]
+<span class="hljs-comment">-- 修改表</span>
+    <span class="hljs-comment">-- 修改表本身的选项</span>
+        <span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> 表名 表的选项
+        eg: <span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> 表名 <span class="hljs-keyword">ENGINE</span>=MYISAM;
+    <span class="hljs-comment">-- 对表进行重命名</span>
+        <span class="hljs-keyword">RENAME</span> <span class="hljs-keyword">TABLE</span> 原表名 <span class="hljs-keyword">TO</span> 新表名
+        <span class="hljs-keyword">RENAME</span> <span class="hljs-keyword">TABLE</span> 原表名 <span class="hljs-keyword">TO</span> 库名.表名 （可将表移动到另一个数据库）
+        <span class="hljs-comment">-- RENAME可以交换两个表名</span>
+    <span class="hljs-comment">-- 修改表的字段机构（13.1.2. ALTER TABLE语法）</span>
+        <span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> 表名 操作名
+        <span class="hljs-comment">-- 操作名</span>
+            <span class="hljs-keyword">ADD</span>[ <span class="hljs-keyword">COLUMN</span>] 字段定义       <span class="hljs-comment">-- 增加字段</span>
+                <span class="hljs-keyword">AFTER</span> 字段名          <span class="hljs-comment">-- 表示增加在该字段名后面</span>
+                <span class="hljs-keyword">FIRST</span>               <span class="hljs-comment">-- 表示增加在第一个</span>
+            <span class="hljs-keyword">ADD</span> PRIMARY <span class="hljs-keyword">KEY</span>(字段名)   <span class="hljs-comment">-- 创建主键</span>
+            <span class="hljs-keyword">ADD</span> <span class="hljs-keyword">UNIQUE</span> [索引名] (字段名)<span class="hljs-comment">-- 创建唯一索引</span>
+            <span class="hljs-keyword">ADD</span> <span class="hljs-keyword">INDEX</span> [索引名] (字段名) <span class="hljs-comment">-- 创建普通索引</span>
+            <span class="hljs-keyword">DROP</span>[ <span class="hljs-keyword">COLUMN</span>] 字段名      <span class="hljs-comment">-- 删除字段</span>
+            <span class="hljs-keyword">MODIFY</span>[ <span class="hljs-keyword">COLUMN</span>] 字段名 字段属性     <span class="hljs-comment">-- 支持对字段属性进行修改，不能修改字段名(所有原有属性也需写上)</span>
+            <span class="hljs-keyword">CHANGE</span>[ <span class="hljs-keyword">COLUMN</span>] 原字段名 新字段名 字段属性      <span class="hljs-comment">-- 支持对字段名修改</span>
+            <span class="hljs-keyword">DROP</span> PRIMARY <span class="hljs-keyword">KEY</span>    <span class="hljs-comment">-- 删除主键(删除主键前需删除其AUTO_INCREMENT属性)</span>
+            <span class="hljs-keyword">DROP</span> <span class="hljs-keyword">INDEX</span> 索引名 <span class="hljs-comment">-- 删除索引</span>
+            <span class="hljs-keyword">DROP</span> <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> 外键    <span class="hljs-comment">-- 删除外键</span>
+<span class="hljs-comment">-- 删除表</span>
+    <span class="hljs-keyword">DROP</span> <span class="hljs-keyword">TABLE</span>[ <span class="hljs-keyword">IF</span> <span class="hljs-keyword">EXISTS</span>] 表名 ...
+<span class="hljs-comment">-- 清空表数据</span>
+    <span class="hljs-keyword">TRUNCATE</span> [<span class="hljs-keyword">TABLE</span>] 表名
+<span class="hljs-comment">-- 复制表结构</span>
+    <span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> 表名 <span class="hljs-keyword">LIKE</span> 要复制的表名
+<span class="hljs-comment">-- 复制表结构和数据</span>
+    <span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> 表名 [<span class="hljs-keyword">AS</span>] <span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> 要复制的表名
+<span class="hljs-comment">-- 检查表是否有错误</span>
+    <span class="hljs-keyword">CHECK</span> <span class="hljs-keyword">TABLE</span> tbl_name [, tbl_name] ... [<span class="hljs-keyword">option</span>] ...
+<span class="hljs-comment">-- 优化表</span>
+    <span class="hljs-keyword">OPTIMIZE</span> [<span class="hljs-keyword">LOCAL</span> | <span class="hljs-keyword">NO_WRITE_TO_BINLOG</span>] <span class="hljs-keyword">TABLE</span> tbl_name [, tbl_name] ...
+<span class="hljs-comment">-- 修复表</span>
+    <span class="hljs-keyword">REPAIR</span> [<span class="hljs-keyword">LOCAL</span> | <span class="hljs-keyword">NO_WRITE_TO_BINLOG</span>] <span class="hljs-keyword">TABLE</span> tbl_name [, tbl_name] ... [<span class="hljs-keyword">QUICK</span>] [<span class="hljs-keyword">EXTENDED</span>] [USE_FRM]
+<span class="hljs-comment">-- 分析表</span>
+    <span class="hljs-keyword">ANALYZE</span> [<span class="hljs-keyword">LOCAL</span> | <span class="hljs-keyword">NO_WRITE_TO_BINLOG</span>] <span class="hljs-keyword">TABLE</span> tbl_name [, tbl_name] ...</code></pre>
+
+<h3 id="数据操作"><a href="#数据操作" class="headerlink" title="数据操作"></a>数据操作</h3><pre><code class="hljs sql"><span class="hljs-comment">/* 数据操作 */</span> <span class="hljs-comment">------------------</span>
+<span class="hljs-comment">-- 增</span>
+    <span class="hljs-keyword">INSERT</span> [<span class="hljs-keyword">INTO</span>] 表名 [(字段列表)] <span class="hljs-keyword">VALUES</span> (值列表)[, (值列表), ...]
+        <span class="hljs-comment">-- 如果要插入的值列表包含所有字段并且顺序一致，则可以省略字段列表。</span>
+        <span class="hljs-comment">-- 可同时插入多条数据记录！</span>
+        <span class="hljs-keyword">REPLACE</span> 与 <span class="hljs-keyword">INSERT</span> 完全一样，可互换。
+    <span class="hljs-keyword">INSERT</span> [<span class="hljs-keyword">INTO</span>] 表名 <span class="hljs-keyword">SET</span> 字段名=值[, 字段名=值, ...]
+<span class="hljs-comment">-- 查</span>
+    <span class="hljs-keyword">SELECT</span> 字段列表 <span class="hljs-keyword">FROM</span> 表名[ 其他子句]
+        <span class="hljs-comment">-- 可来自多个表的多个字段</span>
+        <span class="hljs-comment">-- 其他子句可以不使用</span>
+        <span class="hljs-comment">-- 字段列表可以用*代替，表示所有字段</span>
+<span class="hljs-comment">-- 删</span>
+    <span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">FROM</span> 表名[ 删除条件子句]
+        没有条件子句，则会删除全部
+<span class="hljs-comment">-- 改</span>
+    <span class="hljs-keyword">UPDATE</span> 表名 <span class="hljs-keyword">SET</span> 字段名=新值[, 字段名=新值] [更新条件]</code></pre>
+
+<h3 id="字符集编码"><a href="#字符集编码" class="headerlink" title="字符集编码"></a>字符集编码</h3><pre><code class="hljs sql"><span class="hljs-comment">/* 字符集编码 */</span> <span class="hljs-comment">------------------</span>
+<span class="hljs-comment">-- MySQL、数据库、表、字段均可设置编码</span>
+<span class="hljs-comment">-- 数据编码与客户端编码不需一致</span>
+<span class="hljs-keyword">SHOW</span> <span class="hljs-keyword">VARIABLES</span> <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;character_set_%&#x27;</span>   <span class="hljs-comment">-- 查看所有字符集编码项</span>
+    character_set_client        客户端向服务器发送数据时使用的编码
+    character_set_results       服务器端将结果返回给客户端所使用的编码
+    character_set_connection    连接层编码
+<span class="hljs-keyword">SET</span> 变量名 = 变量值
+    <span class="hljs-keyword">SET</span> character_set_client = gbk;
+    <span class="hljs-keyword">SET</span> character_set_results = gbk;
+    <span class="hljs-keyword">SET</span> character_set_connection = gbk;
+<span class="hljs-keyword">SET</span> <span class="hljs-keyword">NAMES</span> GBK;  <span class="hljs-comment">-- 相当于完成以上三个设置</span>
+<span class="hljs-comment">-- 校对集</span>
+    校对集用以排序
+    <span class="hljs-keyword">SHOW</span> <span class="hljs-built_in">CHARACTER</span> <span class="hljs-keyword">SET</span> [<span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;pattern&#x27;</span>]/<span class="hljs-keyword">SHOW</span> <span class="hljs-keyword">CHARSET</span> [<span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;pattern&#x27;</span>]   查看所有字符集
+    <span class="hljs-keyword">SHOW</span> <span class="hljs-keyword">COLLATION</span> [<span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;pattern&#x27;</span>]     查看所有校对集
+    <span class="hljs-keyword">CHARSET</span> 字符集编码     设置字符集编码
+    <span class="hljs-keyword">COLLATE</span> 校对集编码     设置校对集编码</code></pre>
+
+<h3 id="数据类型-列类型"><a href="#数据类型-列类型" class="headerlink" title="数据类型(列类型)"></a>数据类型(列类型)</h3><pre><code class="hljs sql"><span class="hljs-comment">/* 数据类型（列类型） */</span> <span class="hljs-comment">------------------</span>
+1. 数值类型
+<span class="hljs-comment">-- a. 整型 ----------</span>
+    类型         字节     范围（有符号位）
+    tinyint     1字节    -128 ~ 127      无符号位：0 ~ 255
+    smallint    2字节    -32768 ~ 32767
+    mediumint   3字节    -8388608 ~ 8388607
+    int         4字节
+    bigint      8字节
+    int(M)  M表示总位数
+    - 默认存在符号位，unsigned 属性修改
+    - 显示宽度，如果某个数不够定义字段时设置的位数，则前面以0补填，zerofill 属性修改
+        例：int(5)   插入一个数&#x27;123&#x27;，补填后为&#x27;00123&#x27;
+    - 在满足要求的情况下，越小越好。
+    - 1表示bool值真，0表示bool值假。MySQL没有布尔类型，通过整型0和1表示。常用tinyint(1)表示布尔型。
+<span class="hljs-comment">-- b. 浮点型 ----------</span>
+    类型             字节     范围
+    float(单精度)     4字节
+    double(双精度)    8字节
+    浮点型既支持符号位 unsigned 属性，也支持显示宽度 zerofill 属性。
+        不同于整型，前后均会补填0.
+    定义浮点型时，需指定总位数和小数位数。
+        float(M, D)     double(M, D)
+        M表示总位数，D表示小数位数。
+        M和D的大小会决定浮点数的范围。不同于整型的固定范围。
+        M既表示总位数（不包括小数点和正负号），也表示显示宽度（所有显示符号均包括）。
+        支持科学计数法表示。
+        浮点数表示近似值。
+<span class="hljs-comment">-- c. 定点数 ----------</span>
+    decimal <span class="hljs-comment">-- 可变长度</span>
+    decimal(M, D)   M也表示总位数，D表示小数位数。
+    保存一个精确的数值，不会发生数据的改变，不同于浮点数的四舍五入。
+    将浮点数转换为字符串来保存，每9位数字保存为4个字节。
+2. 字符串类型
+<span class="hljs-comment">-- a. char, varchar ----------</span>
+    char    定长字符串，速度快，但浪费空间
+    varchar 变长字符串，速度慢，但节省空间
+    M表示能存储的最大长度，此长度是字符数，非字节数。
+    不同的编码，所占用的空间不同。
+    char,最多255个字符，与编码无关。
+    varchar,最多65535字符，与编码有关。
+    一条有效记录最大不能超过65535个字节。
+        utf8 最大为21844个字符，gbk 最大为32766个字符，latin1 最大为65532个字符
+    varchar 是变长的，需要利用存储空间保存 varchar 的长度，如果数据小于255个字节，则采用一个字节来保存长度，反之需要两个字节来保存。
+    varchar 的最大有效长度由最大行大小和使用的字符集确定。
+    最大有效长度是65532字节，因为在varchar存字符串时，第一个字节是空的，不存在任何数据，然后还需两个字节来存放字符串的长度，所以有效长度是65535-1-2=65532字节。
+    例：若一个表定义为 CREATE TABLE tb(c1 int, c2 char(30), c3 varchar(N)) charset=utf8; 问N的最大值是多少？ 答：(65535-1-2-4-30*3)/3
+<span class="hljs-comment">-- b. blob, text ----------</span>
+    blob 二进制字符串（字节字符串）
+        tinyblob, blob, mediumblob, longblob
+    text 非二进制字符串（字符字符串）
+        tinytext, text, mediumtext, longtext
+    text 在定义时，不需要定义长度，也不会计算总长度。
+    text 类型在定义时，不可给default值
+<span class="hljs-comment">-- c. binary, varbinary ----------</span>
+    类似于char和varchar，用于保存二进制字符串，也就是保存字节字符串而非字符字符串。
+    char, varchar, text 对应 binary, varbinary, blob.
+3. 日期时间类型
+    一般用整型保存时间戳，因为PHP可以很方便的将时间戳进行格式化。
+    datetime    8字节    日期及时间     1000-01-01 00:00:00 到 9999-12-31 23:59:59
+    date        3字节    日期         1000-01-01 到 9999-12-31
+    timestamp   4字节    时间戳        19700101000000 到 2038-01-19 03:14:07
+    time        3字节    时间         -838:59:59 到 838:59:59
+    year        1字节    年份         1901 - 2155
+datetime    YYYY-MM-DD hh:mm:ss
+timestamp   YY-MM-DD hh:mm:ss
+            YYYYMMDDhhmmss
+            YYMMDDhhmmss
+            YYYYMMDDhhmmss
+            YYMMDDhhmmss
+date        YYYY-MM-DD
+            YY-MM-DD
+            YYYYMMDD
+            YYMMDD
+            YYYYMMDD
+            YYMMDD
+time        hh:mm:ss
+            hhmmss
+            hhmmss
+year        YYYY
+            YY
+            YYYY
+            YY
+4. 枚举和集合
+<span class="hljs-comment">-- 枚举(enum) ----------</span>
+enum(val1, val2, val3...)
+    在已知的值中进行单选。最大数量为65535.
+    枚举值在保存时，以2个字节的整型(smallint)保存。每个枚举值，按保存的位置顺序，从1开始逐一递增。
+    表现为字符串类型，存储却是整型。
+    NULL值的索引是NULL。
+    空字符串错误值的索引值是0。
+<span class="hljs-comment">-- 集合（set） ----------</span>
+<span class="hljs-keyword">set</span>(val1, val2, val3...)
+    <span class="hljs-keyword">create</span> <span class="hljs-keyword">table</span> tab ( gender <span class="hljs-keyword">set</span>(<span class="hljs-string">&#x27;男&#x27;</span>, <span class="hljs-string">&#x27;女&#x27;</span>, <span class="hljs-string">&#x27;无&#x27;</span>) );
+    <span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> tab <span class="hljs-keyword">values</span> (<span class="hljs-string">&#x27;男, 女&#x27;</span>);
+    最多可以有64个不同的成员。以bigint存储，共8个字节。采取位运算的形式。
+    当创建表时，<span class="hljs-keyword">SET</span>成员值的尾部空格将自动被删除。</code></pre>
+
+<h3 id="列属性-列约束"><a href="#列属性-列约束" class="headerlink" title="列属性(列约束)"></a>列属性(列约束)</h3><pre><code class="hljs sql"><span class="hljs-comment">/* 列属性（列约束） */</span> <span class="hljs-comment">------------------</span>
+1. PRIMARY 主键
+    - 能唯一标识记录的字段，可以作为主键。
+    - 一个表只能有一个主键。
+    - 主键具有唯一性。
+    - 声明字段时，用 primary key 标识。
+        也可以在字段列表之后声明
+            例：<span class="hljs-keyword">create</span> <span class="hljs-keyword">table</span> tab ( <span class="hljs-keyword">id</span> <span class="hljs-built_in">int</span>, stu <span class="hljs-built_in">varchar</span>(<span class="hljs-number">10</span>), primary <span class="hljs-keyword">key</span> (<span class="hljs-keyword">id</span>));
+    - 主键字段的值不能为null。
+    - 主键可以由多个字段共同组成。此时需要在字段列表后声明的方法。
+        例：<span class="hljs-keyword">create</span> <span class="hljs-keyword">table</span> tab ( <span class="hljs-keyword">id</span> <span class="hljs-built_in">int</span>, stu <span class="hljs-built_in">varchar</span>(<span class="hljs-number">10</span>), age <span class="hljs-built_in">int</span>, primary <span class="hljs-keyword">key</span> (stu, age));
+2. UNIQUE 唯一索引（唯一约束）
+    使得某字段的值也不能重复。
+3. NULL 约束
+    null不是数据类型，是列的一个属性。
+    表示当前列是否可以为null，表示什么都没有。
+    null, 允许为空。默认。
+    not null, 不允许为空。
+    <span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> tab <span class="hljs-keyword">values</span> (<span class="hljs-literal">null</span>, <span class="hljs-string">&#x27;val&#x27;</span>);
+        <span class="hljs-comment">-- 此时表示将第一个字段的值设为null, 取决于该字段是否允许为null</span>
+4. DEFAULT 默认值属性
+    当前字段的默认值。
+    <span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> tab <span class="hljs-keyword">values</span> (<span class="hljs-keyword">default</span>, <span class="hljs-string">&#x27;val&#x27;</span>);    <span class="hljs-comment">-- 此时表示强制使用默认值。</span>
+    <span class="hljs-keyword">create</span> <span class="hljs-keyword">table</span> tab ( add_time <span class="hljs-built_in">timestamp</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">current_timestamp</span> );
+        <span class="hljs-comment">-- 表示将当前时间的时间戳设为默认值。</span>
+        current_date, current_time
+5. AUTO_INCREMENT 自动增长约束
+    自动增长必须为索引（主键或unique）
+    只能存在一个字段为自动增长。
+    默认为1开始自动增长。可以通过表属性 auto_increment = x进行设置，或 <span class="hljs-keyword">alter</span> <span class="hljs-keyword">table</span> tbl auto_increment = x;
+6. <span class="hljs-keyword">COMMENT</span> 注释
+    例：<span class="hljs-keyword">create</span> <span class="hljs-keyword">table</span> tab ( <span class="hljs-keyword">id</span> <span class="hljs-built_in">int</span> ) <span class="hljs-keyword">comment</span> <span class="hljs-string">&#x27;注释内容&#x27;</span>;
+7. FOREIGN KEY 外键约束
+    用于限制主表与从表数据完整性。
+    <span class="hljs-keyword">alter</span> <span class="hljs-keyword">table</span> t1 <span class="hljs-keyword">add</span> <span class="hljs-keyword">constraint</span> <span class="hljs-string">`t1_t2_fk`</span> <span class="hljs-keyword">foreign</span> <span class="hljs-keyword">key</span> (t1_id) <span class="hljs-keyword">references</span> t2(<span class="hljs-keyword">id</span>);
+        <span class="hljs-comment">-- 将表t1的t1_id外键关联到表t2的id字段。</span>
+        <span class="hljs-comment">-- 每个外键都有一个名字，可以通过 constraint 指定</span>
+    存在外键的表，称之为从表（子表），外键指向的表，称之为主表（父表）。
+    作用：保持数据一致性，完整性，主要目的是控制存储在外键表（从表）中的数据。
+    MySQL中，可以对InnoDB引擎使用外键约束：
+    语法：
+    foreign key (外键字段） references 主表名 (关联字段) [主表记录删除时的动作] [主表记录更新时的动作]
+    此时需要检测一个从表的外键需要约束为主表的已存在的值。外键在没有关联的情况下，可以设置为null.前提是该外键列，没有not null。
+    可以不指定主表记录更改或更新时的动作，那么此时主表的操作被拒绝。
+    如果指定了 on <span class="hljs-keyword">update</span> 或 <span class="hljs-keyword">on</span> <span class="hljs-keyword">delete</span>：在删除或更新时，有如下几个操作可以选择：
+    <span class="hljs-number">1.</span> <span class="hljs-keyword">cascade</span>，级联操作。主表数据被更新（主键值更新），从表也被更新（外键值更新）。主表记录被删除，从表相关记录也被删除。
+    <span class="hljs-number">2.</span> <span class="hljs-keyword">set</span> <span class="hljs-literal">null</span>，设置为<span class="hljs-literal">null</span>。主表数据被更新（主键值更新），从表的外键被设置为<span class="hljs-literal">null</span>。主表记录被删除，从表相关记录外键被设置成<span class="hljs-literal">null</span>。但注意，要求该外键列，没有<span class="hljs-keyword">not</span> <span class="hljs-literal">null</span>属性约束。
+    <span class="hljs-number">3.</span> restrict，拒绝父表删除和更新。
+    注意，外键只被<span class="hljs-keyword">InnoDB</span>存储引擎所支持。其他引擎是不支持的。
+</code></pre>
+
+<h3 id="建表规范"><a href="#建表规范" class="headerlink" title="建表规范"></a>建表规范</h3><pre><code class="hljs sql"><span class="hljs-comment">/* 建表规范 */</span> <span class="hljs-comment">------------------</span>
+    <span class="hljs-comment">-- Normal Format, NF</span>
+        - 每个表保存一个实体信息
+        - 每个具有一个ID字段作为主键
+        - ID主键 + 原子表
+    <span class="hljs-comment">-- 1NF, 第一范式</span>
+        字段不能再分，就满足第一范式。
+    <span class="hljs-comment">-- 2NF, 第二范式</span>
+        满足第一范式的前提下，不能出现部分依赖。
+        消除复合主键就可以避免部分依赖。增加单列关键字。
+    <span class="hljs-comment">-- 3NF, 第三范式</span>
+        满足第二范式的前提下，不能出现传递依赖。
+        某个字段依赖于主键，而有其他字段依赖于该字段。这就是传递依赖。
+        将一个实体信息的数据放在一个表内实现。</code></pre>
+
+<h3 id="SELECT"><a href="#SELECT" class="headerlink" title="SELECT"></a>SELECT</h3><pre><code class="hljs sql"><span class="hljs-comment">/* SELECT */</span> <span class="hljs-comment">------------------</span>
+<span class="hljs-keyword">SELECT</span> [<span class="hljs-keyword">ALL</span>|<span class="hljs-keyword">DISTINCT</span>] select_expr <span class="hljs-keyword">FROM</span> -&gt; <span class="hljs-keyword">WHERE</span> -&gt; <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> [合计函数] -&gt; <span class="hljs-keyword">HAVING</span> -&gt; <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> -&gt; <span class="hljs-keyword">LIMIT</span>
+a. select_expr
+    <span class="hljs-comment">-- 可以用 * 表示所有字段。</span>
+        <span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> tb;
+    <span class="hljs-comment">-- 可以使用表达式（计算公式、函数调用、字段也是个表达式）</span>
+        <span class="hljs-keyword">select</span> stu, <span class="hljs-number">29</span>+<span class="hljs-number">25</span>, <span class="hljs-keyword">now</span>() <span class="hljs-keyword">from</span> tb;
+    <span class="hljs-comment">-- 可以为每个列使用别名。适用于简化列标识，避免多个列标识符重复。</span>
+        - 使用 as 关键字，也可省略 as.
+        <span class="hljs-keyword">select</span> stu+<span class="hljs-number">10</span> <span class="hljs-keyword">as</span> add10 <span class="hljs-keyword">from</span> tb;
+b. FROM 子句
+    用于标识查询来源。
+    <span class="hljs-comment">-- 可以为表起别名。使用as关键字。</span>
+        <span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> tb1 <span class="hljs-keyword">AS</span> tt, tb2 <span class="hljs-keyword">AS</span> bb;
+    <span class="hljs-comment">-- from子句后，可以同时出现多个表。</span>
+        <span class="hljs-comment">-- 多个表会横向叠加到一起，而数据会形成一个笛卡尔积。</span>
+        <span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> tb1, tb2;
+    <span class="hljs-comment">-- 向优化符提示如何选择索引</span>
+        <span class="hljs-keyword">USE</span> <span class="hljs-keyword">INDEX</span>、<span class="hljs-keyword">IGNORE</span> <span class="hljs-keyword">INDEX</span>、<span class="hljs-keyword">FORCE</span> <span class="hljs-keyword">INDEX</span>
+        <span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> table1 <span class="hljs-keyword">USE</span> <span class="hljs-keyword">INDEX</span> (key1,key2) <span class="hljs-keyword">WHERE</span> key1=<span class="hljs-number">1</span> <span class="hljs-keyword">AND</span> key2=<span class="hljs-number">2</span> <span class="hljs-keyword">AND</span> key3=<span class="hljs-number">3</span>;
+        <span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> table1 <span class="hljs-keyword">IGNORE</span> <span class="hljs-keyword">INDEX</span> (key3) <span class="hljs-keyword">WHERE</span> key1=<span class="hljs-number">1</span> <span class="hljs-keyword">AND</span> key2=<span class="hljs-number">2</span> <span class="hljs-keyword">AND</span> key3=<span class="hljs-number">3</span>;
+c. WHERE 子句
+    <span class="hljs-comment">-- 从from获得的数据源中进行筛选。</span>
+    <span class="hljs-comment">-- 整型1表示真，0表示假。</span>
+    <span class="hljs-comment">-- 表达式由运算符和运算数组成。</span>
+        <span class="hljs-comment">-- 运算数：变量（字段）、值、函数返回值</span>
+        <span class="hljs-comment">-- 运算符：</span>
+            =, &lt;=&gt;, &lt;&gt;, !=, &lt;=, &lt;, &gt;=, &gt;, !, &amp;&amp;, ||,
+            in (not) null, (not) like, (not) in, (not) between and, is (not), and, or, not, xor
+            is/is not 加上ture/false/unknown，检验某个值的真假
+            &lt;=&gt;与&lt;&gt;功能相同，&lt;=&gt;可用于null比较
+d. GROUP BY 子句, 分组子句
+    GROUP BY 字段/别名 [排序方式]
+    分组后会进行排序。升序：ASC，降序：DESC
+    以下[合计函数]需配合 GROUP BY 使用：
+    count 返回不同的非NULL值数目  count(*)、count(字段)
+    sum 求和
+    max 求最大值
+    min 求最小值
+    avg 求平均值
+    group_concat 返回带有来自一个组的连接的非NULL值的字符串结果。组内字符串连接。
+e. HAVING 子句，条件子句
+    与 where 功能、用法相同，执行时机不同。
+    where 在开始时执行检测数据，对原数据进行过滤。
+    having 对筛选出的结果再次进行过滤。
+    having 字段必须是查询出来的，where 字段必须是数据表存在的。
+    where 不可以使用字段的别名，having 可以。因为执行WHERE代码时，可能尚未确定列值。
+    where 不可以使用合计函数。一般需用合计函数才会用 having
+    SQL标准要求HAVING必须引用GROUP BY子句中的列或用于合计函数中的列。
+f. ORDER BY 子句，排序子句
+    order by 排序字段/别名 排序方式 [,排序字段/别名 排序方式]...
+    升序：ASC，降序：DESC
+    支持多个字段的排序。
+g. LIMIT 子句，限制结果数量子句
+    仅对处理好的结果进行数量限制。将处理好的结果的看作是一个集合，按照记录出现的顺序，索引从0开始。
+    limit 起始位置, 获取条数
+    省略第一个参数，表示从索引0开始。limit 获取条数
+h. DISTINCT, ALL 选项
+    distinct 去除重复记录
+    默认为 all, 全部记录</code></pre>
+
+<h3 id="UNION"><a href="#UNION" class="headerlink" title="UNION"></a>UNION</h3><pre><code class="hljs sql"><span class="hljs-comment">/* UNION */</span> <span class="hljs-comment">------------------</span>
+    将多个<span class="hljs-keyword">select</span>查询的结果组合成一个结果集合。
+    <span class="hljs-keyword">SELECT</span> ... <span class="hljs-keyword">UNION</span> [<span class="hljs-keyword">ALL</span>|<span class="hljs-keyword">DISTINCT</span>] <span class="hljs-keyword">SELECT</span> ...
+    默认 <span class="hljs-keyword">DISTINCT</span> 方式，即所有返回的行都是唯一的
+    建议，对每个<span class="hljs-keyword">SELECT</span>查询加上小括号包裹。
+    <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> 排序时，需加上 <span class="hljs-keyword">LIMIT</span> 进行结合。
+    需要各<span class="hljs-keyword">select</span>查询的字段数量一样。
+    每个<span class="hljs-keyword">select</span>查询的字段列表(数量、类型)应一致，因为结果中的字段名以第一条<span class="hljs-keyword">select</span>语句为准。</code></pre>
+
+<h3 id="子查询"><a href="#子查询" class="headerlink" title="子查询"></a>子查询</h3><pre><code class="hljs sql"><span class="hljs-comment">/* 子查询 */</span> <span class="hljs-comment">------------------</span>
+    - 子查询需用括号包裹。
+<span class="hljs-comment">-- from型</span>
+    from后要求是一个表，必须给子查询结果取个别名。
+    - 简化每个查询内的条件。
+    - from型需将结果生成一个临时表格，可用以原表的锁定的释放。
+    - 子查询返回一个表，表型子查询。
+    <span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> (<span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> tb <span class="hljs-keyword">where</span> <span class="hljs-keyword">id</span>&gt;<span class="hljs-number">0</span>) <span class="hljs-keyword">as</span> subfrom <span class="hljs-keyword">where</span> <span class="hljs-keyword">id</span>&gt;<span class="hljs-number">1</span>;
+<span class="hljs-comment">-- where型</span>
+    - 子查询返回一个值，标量子查询。
+    - 不需要给子查询取别名。
+    - where子查询内的表，不能直接用以更新。
+    <span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> tb <span class="hljs-keyword">where</span> money = (<span class="hljs-keyword">select</span> <span class="hljs-keyword">max</span>(money) <span class="hljs-keyword">from</span> tb);
+    <span class="hljs-comment">-- 列子查询</span>
+        如果子查询结果返回的是一列。
+        使用 in 或 not in 完成查询
+        exists 和 not exists 条件
+            如果子查询返回数据，则返回1或0。常用于判断条件。
+            <span class="hljs-keyword">select</span> column1 <span class="hljs-keyword">from</span> t1 <span class="hljs-keyword">where</span> <span class="hljs-keyword">exists</span> (<span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> t2);
+    <span class="hljs-comment">-- 行子查询</span>
+        查询条件是一个行。
+        <span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> t1 <span class="hljs-keyword">where</span> (<span class="hljs-keyword">id</span>, gender) <span class="hljs-keyword">in</span> (<span class="hljs-keyword">select</span> <span class="hljs-keyword">id</span>, gender <span class="hljs-keyword">from</span> t2);
+        行构造符：(col1, col2, ...) 或 ROW(col1, col2, ...)
+        行构造符通常用于与对能返回两个或两个以上列的子查询进行比较。
+    <span class="hljs-comment">-- 特殊运算符</span>
+    != all()    相当于 not in
+    = some()    相当于 in。any 是 some 的别名
+    != some()   不等同于 not in，不等于其中某一个。
+    all, some 可以配合其他运算符一起使用。</code></pre>
+
+<h3 id="连接查询-join"><a href="#连接查询-join" class="headerlink" title="连接查询(join)"></a>连接查询(join)</h3><pre><code class="hljs sql"><span class="hljs-comment">/* 连接查询(join) */</span> <span class="hljs-comment">------------------</span>
+    将多个表的字段进行连接，可以指定连接条件。
+<span class="hljs-comment">-- 内连接(inner join)</span>
+    - 默认就是内连接，可省略inner。
+    - 只有数据存在时才能发送连接。即连接结果不能出现空行。
+    on 表示连接条件。其条件表达式与where类似。也可以省略条件（表示条件永远为真）
+    也可用where表示连接条件。
+    还有 using, 但需字段名相同。 using(字段名)
+    <span class="hljs-comment">-- 交叉连接 cross join</span>
+        即，没有条件的内连接。
+        <span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> tb1 <span class="hljs-keyword">cross</span> <span class="hljs-keyword">join</span> tb2;
+<span class="hljs-comment">-- 外连接(outer join)</span>
+    - 如果数据不存在，也会出现在连接结果中。
+    <span class="hljs-comment">-- 左外连接 left join</span>
+        如果数据不存在，左表记录会出现，而右表为null填充
+    <span class="hljs-comment">-- 右外连接 right join</span>
+        如果数据不存在，右表记录会出现，而左表为null填充
+<span class="hljs-comment">-- 自然连接(natural join)</span>
+    自动判断连接条件完成连接。
+    相当于省略了using，会自动查找相同字段名。
+    natural join
+    natural left join
+    natural right join
+<span class="hljs-keyword">select</span> info.id, info.name, info.stu_num, extra_info.hobby, extra_info.sex <span class="hljs-keyword">from</span> info, extra_info <span class="hljs-keyword">where</span> info.stu_num = extra_info.stu_id;</code></pre>
+
+<h3 id="TRUNCATE"><a href="#TRUNCATE" class="headerlink" title="TRUNCATE"></a>TRUNCATE</h3><pre><code class="hljs sql"><span class="hljs-comment">/* TRUNCATE */</span> <span class="hljs-comment">------------------</span>
+<span class="hljs-keyword">TRUNCATE</span> [<span class="hljs-keyword">TABLE</span>] tbl_name
+清空数据
+删除重建表
+区别：
+<span class="hljs-number">1</span>，<span class="hljs-keyword">truncate</span> 是删除表再创建，<span class="hljs-keyword">delete</span> 是逐条删除
+<span class="hljs-number">2</span>，<span class="hljs-keyword">truncate</span> 重置auto_increment的值。而<span class="hljs-keyword">delete</span>不会
+<span class="hljs-number">3</span>，<span class="hljs-keyword">truncate</span> 不知道删除了几条，而<span class="hljs-keyword">delete</span>知道。
+<span class="hljs-number">4</span>，当被用于带分区的表时，<span class="hljs-keyword">truncate</span> 会保留分区</code></pre>
+
+<h3 id="备份与还原"><a href="#备份与还原" class="headerlink" title="备份与还原"></a>备份与还原</h3><pre><code class="hljs sql"><span class="hljs-comment">/* 备份与还原 */</span> <span class="hljs-comment">------------------</span>
+备份，将数据的结构与表内数据保存起来。
+利用 mysqldump 指令完成。
+<span class="hljs-comment">-- 导出</span>
+mysqldump [options] db_name [tables]
+mysqldump [options] <span class="hljs-comment">---database DB1 [DB2 DB3...]</span>
+mysqldump [options] <span class="hljs-comment">--all--database</span>
+1. 导出一张表
+　　mysqldump -u用户名 -p密码 库名 表名 &gt; 文件名(D:/a.sql)
+2. 导出多张表
+　　mysqldump -u用户名 -p密码 库名 表1 表2 表3 &gt; 文件名(D:/a.sql)
+3. 导出所有表
+　　mysqldump -u用户名 -p密码 库名 &gt; 文件名(D:/a.sql)
+4. 导出一个库
+　　mysqldump -u用户名 -p密码 <span class="hljs-comment">--lock-all-tables --database 库名 &gt; 文件名(D:/a.sql)</span>
+可以-w携带WHERE条件
+<span class="hljs-comment">-- 导入</span>
+1. 在登录mysql的情况下：
+　　source  备份文件
+2. 在不登录的情况下
+　　mysql -u用户名 -p密码 库名 &lt; 备份文件</code></pre>
+
+<h3 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h3><pre><code class="hljs sql">什么是视图：
+    视图是一个虚拟表，其内容由查询定义。同真实的表一样，视图包含一系列带有名称的列和行数据。但是，视图并不在数据库中以存储的数据值集形式存在。行和列数据来自由定义视图的查询所引用的表，并且在引用视图时动态生成。
+    视图具有表结构文件，但不存在数据文件。
+    对其中所引用的基础表来说，视图的作用类似于筛选。定义视图的筛选可以来自当前或其它数据库的一个或多个表，或者其它视图。通过视图进行查询没有任何限制，通过它们进行数据修改时的限制也很少。
+    视图是存储在数据库中的查询的sql语句，它主要出于两种原因：安全原因，视图可以隐藏一些数据，如：社会保险基金表，可以用视图只显示姓名，地址，而不显示社会保险号和工资数等，另一原因是可使复杂的查询易于理解和使用。
+<span class="hljs-comment">-- 创建视图</span>
+<span class="hljs-keyword">CREATE</span> [<span class="hljs-keyword">OR</span> <span class="hljs-keyword">REPLACE</span>] [ALGORITHM = &#123;UNDEFINED | <span class="hljs-keyword">MERGE</span> | TEMPTABLE&#125;] <span class="hljs-keyword">VIEW</span> view_name [(column_list)] <span class="hljs-keyword">AS</span> select_statement
+    - 视图名必须唯一，同时不能与表重名。
+    - 视图可以使用<span class="hljs-keyword">select</span>语句查询到的列名，也可以自己指定相应的列名。
+    - 可以指定视图执行的算法，通过ALGORITHM指定。
+    - column_list如果存在，则数目必须等于<span class="hljs-keyword">SELECT</span>语句检索的列数
+<span class="hljs-comment">-- 查看结构</span>
+    <span class="hljs-keyword">SHOW</span> <span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">VIEW</span> view_name
+<span class="hljs-comment">-- 删除视图</span>
+    - 删除视图后，数据依然存在。
+    - 可同时删除多个视图。
+    <span class="hljs-keyword">DROP</span> <span class="hljs-keyword">VIEW</span> [<span class="hljs-keyword">IF</span> <span class="hljs-keyword">EXISTS</span>] view_name ...
+<span class="hljs-comment">-- 修改视图结构</span>
+    - 一般不修改视图，因为不是所有的更新视图都会映射到表上。
+    <span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">VIEW</span> view_name [(column_list)] <span class="hljs-keyword">AS</span> select_statement
+<span class="hljs-comment">-- 视图作用</span>
+    <span class="hljs-number">1.</span> 简化业务逻辑
+    <span class="hljs-number">2.</span> 对客户端隐藏真实的表结构
+<span class="hljs-comment">-- 视图算法(ALGORITHM)</span>
+    <span class="hljs-keyword">MERGE</span>       合并
+        将视图的查询语句，与外部查询需要先合并再执行！
+    TEMPTABLE   临时表
+        将视图执行完毕后，形成临时表，再做外层查询！
+    UNDEFINED   未定义(默认)，指的是MySQL自主去选择相应的算法。</code></pre>
+
+<h3 id="事务-transaction"><a href="#事务-transaction" class="headerlink" title="事务(transaction)"></a>事务(transaction)</h3><pre><code class="hljs sql">事务是指逻辑上的一组操作，组成这组操作的各个单元，要不全成功要不全失败。
+    - 支持连续SQL的集体成功或集体撤销。
+    - 事务是数据库在数据完整性方面的一个功能。
+    - 需要利用 InnoDB 或 BDB 存储引擎，对自动提交的特性支持完成。
+    - InnoDB被称为事务安全型引擎。
+<span class="hljs-comment">-- 事务开启</span>
+    <span class="hljs-keyword">START</span> <span class="hljs-keyword">TRANSACTION</span>; 或者 <span class="hljs-keyword">BEGIN</span>;
+    开启事务后，所有被执行的SQL语句均被认作当前事务内的SQL语句。
+<span class="hljs-comment">-- 事务提交</span>
+    <span class="hljs-keyword">COMMIT</span>;
+<span class="hljs-comment">-- 事务回滚</span>
+    <span class="hljs-keyword">ROLLBACK</span>;
+    如果部分操作发生问题，映射到事务开启前。
+<span class="hljs-comment">-- 事务的特性</span>
+    1. 原子性（Atomicity）
+        事务是一个不可分割的工作单位，事务中的操作要么都发生，要么都不发生。
+    2. 一致性（Consistency）
+        事务前后数据的完整性必须保持一致。
+        - 事务开始和结束时，外部数据一致
+        - 在整个事务过程中，操作是连续的
+    3. 隔离性（Isolation）
+        多个用户并发访问数据库时，一个用户的事务不能被其它用户的事物所干扰，多个并发事务之间的数据要相互隔离。
+    4. 持久性（Durability）
+        一个事务一旦被提交，它对数据库中的数据改变就是永久性的。
+<span class="hljs-comment">-- 事务的实现</span>
+    1. 要求是事务支持的表类型
+    2. 执行一组相关的操作前开启事务
+    3. 整组操作完成后，都成功，则提交；如果存在失败，选择回滚，则会回到事务开始的备份点。
+<span class="hljs-comment">-- 事务的原理</span>
+    利用InnoDB的自动提交(autocommit)特性完成。
+    普通的MySQL执行语句后，当前的数据提交操作均可被其他客户端可见。
+    而事务是暂时关闭“自动提交”机制，需要<span class="hljs-keyword">commit</span>提交持久化数据操作。
+<span class="hljs-comment">-- 注意</span>
+    <span class="hljs-number">1.</span> 数据定义语言（<span class="hljs-keyword">DDL</span>）语句不能被回滚，比如创建或取消数据库的语句，和创建、取消或更改表或存储的子程序的语句。
+    <span class="hljs-number">2.</span> 事务不能被嵌套
+<span class="hljs-comment">-- 保存点</span>
+    <span class="hljs-keyword">SAVEPOINT</span> 保存点名称 <span class="hljs-comment">-- 设置一个事务保存点</span>
+    <span class="hljs-keyword">ROLLBACK</span> <span class="hljs-keyword">TO</span> <span class="hljs-keyword">SAVEPOINT</span> 保存点名称 <span class="hljs-comment">-- 回滚到保存点</span>
+    <span class="hljs-keyword">RELEASE</span> <span class="hljs-keyword">SAVEPOINT</span> 保存点名称 <span class="hljs-comment">-- 删除保存点</span>
+<span class="hljs-comment">-- InnoDB自动提交特性设置</span>
+    <span class="hljs-keyword">SET</span> autocommit = <span class="hljs-number">0</span>|<span class="hljs-number">1</span>;   0表示关闭自动提交，1表示开启自动提交。
+    - 如果关闭了，那普通操作的结果对其他客户端也不可见，需要<span class="hljs-keyword">commit</span>提交后才能持久化数据操作。
+    - 也可以关闭自动提交来开启事务。但与<span class="hljs-keyword">START</span> <span class="hljs-keyword">TRANSACTION</span>不同的是，
+        <span class="hljs-keyword">SET</span> autocommit是永久改变服务器的设置，直到下次再次修改该设置。(针对当前连接)
+        而<span class="hljs-keyword">START</span> <span class="hljs-keyword">TRANSACTION</span>记录开启前的状态，而一旦事务提交或回滚后就需要再次开启事务。(针对当前事务)
+</code></pre>
+
+<h3 id="锁表"><a href="#锁表" class="headerlink" title="锁表"></a>锁表</h3><pre><code class="hljs sql"><span class="hljs-comment">/* 锁表 */</span>
+表锁定只用于防止其它客户端进行不正当地读取和写入
+MyISAM 支持表锁，InnoDB 支持行锁
+<span class="hljs-comment">-- 锁定</span>
+    <span class="hljs-keyword">LOCK</span> <span class="hljs-keyword">TABLES</span> tbl_name [<span class="hljs-keyword">AS</span> <span class="hljs-keyword">alias</span>]
+<span class="hljs-comment">-- 解锁</span>
+    <span class="hljs-keyword">UNLOCK</span> <span class="hljs-keyword">TABLES</span></code></pre>
+
+<h3 id="触发器"><a href="#触发器" class="headerlink" title="触发器"></a>触发器</h3><pre><code class="hljs sql"><span class="hljs-comment">/* 触发器 */</span> <span class="hljs-comment">------------------</span>
+    触发程序是与表有关的命名数据库对象，当该表出现特定事件时，将激活该对象
+    监听：记录的增加、修改、删除。
+<span class="hljs-comment">-- 创建触发器</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TRIGGER</span> trigger_name trigger_time trigger_event <span class="hljs-keyword">ON</span> tbl_name <span class="hljs-keyword">FOR</span> <span class="hljs-keyword">EACH</span> <span class="hljs-keyword">ROW</span> trigger_stmt
+    参数：
+    trigger_time是触发程序的动作时间。它可以是 <span class="hljs-keyword">before</span> 或 <span class="hljs-keyword">after</span>，以指明触发程序是在激活它的语句之前或之后触发。
+    trigger_event指明了激活触发程序的语句的类型
+        <span class="hljs-keyword">INSERT</span>：将新行插入表时激活触发程序
+        <span class="hljs-keyword">UPDATE</span>：更改某一行时激活触发程序
+        <span class="hljs-keyword">DELETE</span>：从表中删除某一行时激活触发程序
+    tbl_name：监听的表，必须是永久性的表，不能将触发程序与<span class="hljs-keyword">TEMPORARY</span>表或视图关联起来。
+    trigger_stmt：当触发程序激活时执行的语句。执行多个语句，可使用BEGIN...END复合语句结构
+<span class="hljs-comment">-- 删除</span>
+<span class="hljs-keyword">DROP</span> <span class="hljs-keyword">TRIGGER</span> [schema_name.]trigger_name
+可以使用<span class="hljs-keyword">old</span>和<span class="hljs-keyword">new</span>代替旧的和新的数据
+    更新操作，更新前是<span class="hljs-keyword">old</span>，更新后是new.
+    删除操作，只有old.
+    增加操作，只有new.
+<span class="hljs-comment">-- 注意</span>
+    <span class="hljs-number">1.</span> 对于具有相同触发程序动作时间和事件的给定表，不能有两个触发程序。
+<span class="hljs-comment">-- 字符连接函数</span>
+<span class="hljs-keyword">concat</span>(str1,str2,...])
+<span class="hljs-keyword">concat_ws</span>(separator,str1,str2,...)
+<span class="hljs-comment">-- 分支语句</span>
+<span class="hljs-keyword">if</span> 条件 <span class="hljs-keyword">then</span>
+    执行语句
+elseif 条件 <span class="hljs-keyword">then</span>
+    执行语句
+<span class="hljs-keyword">else</span>
+    执行语句
+<span class="hljs-keyword">end</span> <span class="hljs-keyword">if</span>;
+<span class="hljs-comment">-- 修改最外层语句结束符</span>
+delimiter 自定义结束符号
+    SQL语句
+自定义结束符号
+delimiter ;     <span class="hljs-comment">-- 修改回原来的分号</span>
+<span class="hljs-comment">-- 语句块包裹</span>
+<span class="hljs-keyword">begin</span>
+    语句块
+<span class="hljs-keyword">end</span>
+<span class="hljs-comment">-- 特殊的执行</span>
+<span class="hljs-number">1.</span> 只要添加记录，就会触发程序。
+<span class="hljs-number">2.</span> <span class="hljs-keyword">Insert</span> <span class="hljs-keyword">into</span> <span class="hljs-keyword">on</span> <span class="hljs-keyword">duplicate</span> <span class="hljs-keyword">key</span> <span class="hljs-keyword">update</span> 语法会触发：
+    如果没有重复记录，会触发 <span class="hljs-keyword">before</span> <span class="hljs-keyword">insert</span>, <span class="hljs-keyword">after</span> <span class="hljs-keyword">insert</span>;
+    如果有重复记录并更新，会触发 before <span class="hljs-keyword">insert</span>, <span class="hljs-keyword">before</span> <span class="hljs-keyword">update</span>, <span class="hljs-keyword">after</span> <span class="hljs-keyword">update</span>;
+    如果有重复记录但是没有发生更新，则触发 before <span class="hljs-keyword">insert</span>, <span class="hljs-keyword">before</span> <span class="hljs-keyword">update</span>
+<span class="hljs-number">3.</span> <span class="hljs-keyword">Replace</span> 语法 如果有记录，则执行 <span class="hljs-keyword">before</span> <span class="hljs-keyword">insert</span>, <span class="hljs-keyword">before</span> <span class="hljs-keyword">delete</span>, <span class="hljs-keyword">after</span> <span class="hljs-keyword">delete</span>, <span class="hljs-keyword">after</span> <span class="hljs-keyword">insert</span></code></pre>
+
+<h3 id="SQL编程"><a href="#SQL编程" class="headerlink" title="SQL编程"></a>SQL编程</h3><pre><code class="hljs sql"><span class="hljs-comment">/* SQL编程 */</span> <span class="hljs-comment">------------------</span>
+<span class="hljs-comment">--// 局部变量 ----------</span>
+<span class="hljs-comment">-- 变量声明</span>
+    <span class="hljs-keyword">declare</span> var_name[,...] <span class="hljs-keyword">type</span> [<span class="hljs-keyword">default</span> <span class="hljs-keyword">value</span>]
+    这个语句被用来声明局部变量。要给变量提供一个默认值，请包含一个<span class="hljs-keyword">default</span>子句。值可以被指定为一个表达式，不需要为一个常数。如果没有<span class="hljs-keyword">default</span>子句，初始值为<span class="hljs-literal">null</span>。
+<span class="hljs-comment">-- 赋值</span>
+    使用 <span class="hljs-keyword">set</span> 和 <span class="hljs-keyword">select</span> <span class="hljs-keyword">into</span> 语句为变量赋值。
+    - 注意：在函数内是可以使用全局变量（用户自定义的变量）
+<span class="hljs-comment">--// 全局变量 ----------</span>
+<span class="hljs-comment">-- 定义、赋值</span>
+<span class="hljs-keyword">set</span> 语句可以定义并为变量赋值。
+<span class="hljs-keyword">set</span> @<span class="hljs-keyword">var</span> = <span class="hljs-keyword">value</span>;
+也可以使用<span class="hljs-keyword">select</span> <span class="hljs-keyword">into</span>语句为变量初始化并赋值。这样要求<span class="hljs-keyword">select</span>语句只能返回一行，但是可以是多个字段，就意味着同时为多个变量进行赋值，变量的数量需要与查询的列数一致。
+还可以把赋值语句看作一个表达式，通过<span class="hljs-keyword">select</span>执行完成。此时为了避免=被当作关系运算符看待，使用:=代替。（<span class="hljs-keyword">set</span>语句可以使用= 和 :=）。
+<span class="hljs-keyword">select</span> @<span class="hljs-keyword">var</span>:=<span class="hljs-number">20</span>;
+<span class="hljs-keyword">select</span> @v1:=<span class="hljs-keyword">id</span>, @v2=<span class="hljs-keyword">name</span> <span class="hljs-keyword">from</span> t1 <span class="hljs-keyword">limit</span> <span class="hljs-number">1</span>;
+<span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> tbl_name <span class="hljs-keyword">where</span> @<span class="hljs-keyword">var</span>:=<span class="hljs-number">30</span>;
+<span class="hljs-keyword">select</span> <span class="hljs-keyword">into</span> 可以将表中查询获得的数据赋给变量。
+    -| <span class="hljs-keyword">select</span> <span class="hljs-keyword">max</span>(height) <span class="hljs-keyword">into</span> @max_height <span class="hljs-keyword">from</span> tb;
+<span class="hljs-comment">-- 自定义变量名</span>
+为了避免<span class="hljs-keyword">select</span>语句中，用户自定义的变量与系统标识符（通常是字段名）冲突，用户自定义变量在变量名前使用@作为开始符号。
+@<span class="hljs-keyword">var</span>=<span class="hljs-number">10</span>;
+    - 变量被定义后，在整个会话周期都有效（登录到退出）
+<span class="hljs-comment">--// 控制结构 ----------</span>
+<span class="hljs-comment">-- if语句</span>
+if search_condition then
+    statement_list   
+[elseif search_condition then
+    statement_list]
+...
+[else
+    statement_list]
+<span class="hljs-keyword">end</span> <span class="hljs-keyword">if</span>;
+<span class="hljs-comment">-- case语句</span>
+CASE value WHEN [compare-value] THEN result
+[WHEN [compare-value] THEN result ...]
+[ELSE result]
+<span class="hljs-keyword">END</span>
+<span class="hljs-comment">-- while循环</span>
+[begin_label:] <span class="hljs-keyword">while</span> search_condition <span class="hljs-keyword">do</span>
+    statement_list
+<span class="hljs-keyword">end</span> <span class="hljs-keyword">while</span> [end_label];
+- 如果需要在循环内提前终止 while循环，则需要使用标签；标签需要成对出现。
+    <span class="hljs-comment">-- 退出循环</span>
+        退出整个循环 leave
+        退出当前循环 iterate
+        通过退出的标签决定退出哪个循环
+<span class="hljs-comment">--// 内置函数 ----------</span>
+<span class="hljs-comment">-- 数值函数</span>
+abs(x)          <span class="hljs-comment">-- 绝对值 abs(-10.9) = 10</span>
+format(x, d)    <span class="hljs-comment">-- 格式化千分位数值 format(1234567.456, 2) = 1,234,567.46</span>
+ceil(x)         <span class="hljs-comment">-- 向上取整 ceil(10.1) = 11</span>
+floor(x)        <span class="hljs-comment">-- 向下取整 floor (10.1) = 10</span>
+round(x)        <span class="hljs-comment">-- 四舍五入去整</span>
+mod(m, n)       <span class="hljs-comment">-- m%n m mod n 求余 10%3=1</span>
+pi()            <span class="hljs-comment">-- 获得圆周率</span>
+pow(m, n)       <span class="hljs-comment">-- m^n</span>
+sqrt(x)         <span class="hljs-comment">-- 算术平方根</span>
+rand()          <span class="hljs-comment">-- 随机数</span>
+<span class="hljs-keyword">truncate</span>(x, d)  <span class="hljs-comment">-- 截取d位小数</span>
+<span class="hljs-comment">-- 时间日期函数</span>
+<span class="hljs-keyword">now</span>(), <span class="hljs-keyword">current_timestamp</span>();     <span class="hljs-comment">-- 当前日期时间</span>
+current_date();                 <span class="hljs-comment">-- 当前日期</span>
+current_time();                 <span class="hljs-comment">-- 当前时间</span>
+date(&#x27;yyyy-mm-dd hh:ii:ss&#x27;);    <span class="hljs-comment">-- 获取日期部分</span>
+time(&#x27;yyyy-mm-dd hh:ii:ss&#x27;);    <span class="hljs-comment">-- 获取时间部分</span>
+date_format(&#x27;yyyy-mm-dd hh:ii:ss&#x27;, &#x27;%d %y %a %d %m %b %j&#x27;); <span class="hljs-comment">-- 格式化时间</span>
+unix_timestamp();               <span class="hljs-comment">-- 获得unix时间戳</span>
+from_unixtime();                <span class="hljs-comment">-- 从时间戳获得时间</span>
+<span class="hljs-comment">-- 字符串函数</span>
+length(string)          <span class="hljs-comment">-- string长度，字节</span>
+char_length(string)     <span class="hljs-comment">-- string的字符个数</span>
+substring(str, position [,length])      <span class="hljs-comment">-- 从str的position开始,取length个字符</span>
+<span class="hljs-keyword">replace</span>(<span class="hljs-keyword">str</span> ,search_str ,replace_str)   <span class="hljs-comment">-- 在str中用replace_str替换search_str</span>
+<span class="hljs-keyword">instr</span>(<span class="hljs-keyword">string</span> ,<span class="hljs-keyword">substring</span>)    <span class="hljs-comment">-- 返回substring首次在string中出现的位置</span>
+<span class="hljs-keyword">concat</span>(<span class="hljs-keyword">string</span> [,...])   <span class="hljs-comment">-- 连接字串</span>
+<span class="hljs-keyword">charset</span>(<span class="hljs-keyword">str</span>)            <span class="hljs-comment">-- 返回字串字符集</span>
+<span class="hljs-keyword">lcase</span>(<span class="hljs-keyword">string</span>)           <span class="hljs-comment">-- 转换成小写</span>
+<span class="hljs-keyword">left</span>(<span class="hljs-keyword">string</span>, <span class="hljs-keyword">length</span>)    <span class="hljs-comment">-- 从string2中的左边起取length个字符</span>
+<span class="hljs-keyword">load_file</span>(file_name)    <span class="hljs-comment">-- 从文件读取内容</span>
+<span class="hljs-keyword">locate</span>(<span class="hljs-keyword">substring</span>, <span class="hljs-keyword">string</span> [,start_position]) <span class="hljs-comment">-- 同instr,但可指定开始位置</span>
+<span class="hljs-keyword">lpad</span>(<span class="hljs-keyword">string</span>, <span class="hljs-keyword">length</span>, <span class="hljs-keyword">pad</span>)   <span class="hljs-comment">-- 重复用pad加在string开头,直到字串长度为length</span>
+<span class="hljs-keyword">ltrim</span>(<span class="hljs-keyword">string</span>)           <span class="hljs-comment">-- 去除前端空格</span>
+<span class="hljs-keyword">repeat</span>(<span class="hljs-keyword">string</span>, <span class="hljs-keyword">count</span>)   <span class="hljs-comment">-- 重复count次</span>
+rpad(<span class="hljs-keyword">string</span>, <span class="hljs-keyword">length</span>, <span class="hljs-keyword">pad</span>)   <span class="hljs-comment">--在str后用pad补充,直到长度为length</span>
+<span class="hljs-keyword">rtrim</span>(<span class="hljs-keyword">string</span>)           <span class="hljs-comment">-- 去除后端空格</span>
+<span class="hljs-keyword">strcmp</span>(string1 ,string2)    <span class="hljs-comment">-- 逐字符比较两字串大小</span>
+<span class="hljs-comment">-- 流程函数</span>
+<span class="hljs-keyword">case</span> <span class="hljs-keyword">when</span> [condition] <span class="hljs-keyword">then</span> <span class="hljs-keyword">result</span> [<span class="hljs-keyword">when</span> [condition] <span class="hljs-keyword">then</span> <span class="hljs-keyword">result</span> ...] [<span class="hljs-keyword">else</span> <span class="hljs-keyword">result</span>] <span class="hljs-keyword">end</span>   多分支
+<span class="hljs-keyword">if</span>(expr1,expr2,expr3)  双分支。
+<span class="hljs-comment">-- 聚合函数</span>
+<span class="hljs-keyword">count</span>()
+<span class="hljs-keyword">sum</span>();
+max();
+min();
+avg();
+group_concat()
+<span class="hljs-comment">-- 其他常用函数</span>
+md5();
+default();
+<span class="hljs-comment">--// 存储函数，自定义函数 ----------</span>
+<span class="hljs-comment">-- 新建</span>
+    <span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">FUNCTION</span> function_name (参数列表) <span class="hljs-keyword">RETURNS</span> 返回值类型
+        函数体
+    - 函数名，应该合法的标识符，并且不应该与已有的关键字冲突。
+    - 一个函数应该属于某个数据库，可以使用db_name.funciton_name的形式执行当前函数所属数据库，否则为当前数据库。
+    - 参数部分，由<span class="hljs-string">&quot;参数名&quot;</span>和<span class="hljs-string">&quot;参数类型&quot;</span>组成。多个参数用逗号隔开。
+    - 函数体由多条可用的mysql语句，流程控制，变量声明等语句构成。
+    - 多条语句应该使用 begin...end 语句块包含。
+    - 一定要有 <span class="hljs-keyword">return</span> 返回值语句。
+<span class="hljs-comment">-- 删除</span>
+    <span class="hljs-keyword">DROP</span> <span class="hljs-keyword">FUNCTION</span> [<span class="hljs-keyword">IF</span> <span class="hljs-keyword">EXISTS</span>] function_name;
+<span class="hljs-comment">-- 查看</span>
+    <span class="hljs-keyword">SHOW</span> <span class="hljs-keyword">FUNCTION</span> <span class="hljs-keyword">STATUS</span> <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;partten&#x27;</span>
+    <span class="hljs-keyword">SHOW</span> <span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">FUNCTION</span> function_name;
+<span class="hljs-comment">-- 修改</span>
+    <span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">FUNCTION</span> function_name 函数选项
+<span class="hljs-comment">--// 存储过程，自定义功能 ----------</span>
+<span class="hljs-comment">-- 定义</span>
+存储存储过程 是一段代码（过程），存储在数据库中的<span class="hljs-keyword">sql</span>组成。
+一个存储过程通常用于完成一段业务逻辑，例如报名，交班费，订单入库等。
+而一个函数通常专注与某个功能，视为其他程序服务的，需要在其他语句中调用函数才可以，而存储过程不能被其他调用，是自己执行 通过<span class="hljs-keyword">call</span>执行。
+<span class="hljs-comment">-- 创建</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">PROCEDURE</span> sp_name (参数列表)
+    过程体
+参数列表：不同于函数的参数列表，需要指明参数类型
+<span class="hljs-keyword">IN</span>，表示输入型
+<span class="hljs-keyword">OUT</span>，表示输出型
+INOUT，表示混合型
+注意，没有返回值。</code></pre>
+
+<h3 id="存储过程"><a href="#存储过程" class="headerlink" title="存储过程"></a>存储过程</h3><pre><code class="hljs sql"><span class="hljs-comment">/* 存储过程 */</span> <span class="hljs-comment">------------------</span>
+存储过程是一段可执行性代码的集合。相比函数，更偏向于业务逻辑。
+调用：<span class="hljs-keyword">CALL</span> 过程名
+<span class="hljs-comment">-- 注意</span>
+- 没有返回值。
+- 只能单独调用，不可夹杂在其他语句中
+<span class="hljs-comment">-- 参数</span>
+<span class="hljs-keyword">IN</span>|<span class="hljs-keyword">OUT</span>|INOUT 参数名 数据类型
+<span class="hljs-keyword">IN</span>      输入：在调用过程中，将数据输入到过程体内部的参数
+<span class="hljs-keyword">OUT</span>     输出：在调用过程中，将过程体处理完的结果返回到客户端
+INOUT   输入输出：既可输入，也可输出
+<span class="hljs-comment">-- 语法</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">PROCEDURE</span> 过程名 (参数列表)
+<span class="hljs-keyword">BEGIN</span>
+    过程体
+<span class="hljs-keyword">END</span></code></pre>
+
+<h3 id="用户和权限管理"><a href="#用户和权限管理" class="headerlink" title="用户和权限管理"></a>用户和权限管理</h3><pre><code class="hljs sql"><span class="hljs-comment">/* 用户和权限管理 */</span> <span class="hljs-comment">------------------</span>
+<span class="hljs-comment">-- root密码重置</span>
+1. 停止MySQL服务
+2.  [Linux] /usr/local/mysql/bin/safe_mysqld <span class="hljs-comment">--skip-grant-tables &amp;</span>
+    [Windows] mysqld <span class="hljs-comment">--skip-grant-tables</span>
+3. <span class="hljs-keyword">use</span> mysql;
+4. <span class="hljs-keyword">UPDATE</span> <span class="hljs-string">`user`</span> <span class="hljs-keyword">SET</span> <span class="hljs-keyword">PASSWORD</span>=<span class="hljs-keyword">PASSWORD</span>(<span class="hljs-string">&quot;密码&quot;</span>) <span class="hljs-keyword">WHERE</span> <span class="hljs-string">`user`</span> = <span class="hljs-string">&quot;root&quot;</span>;
+5. <span class="hljs-keyword">FLUSH</span> <span class="hljs-keyword">PRIVILEGES</span>;
+用户信息表：mysql.user
+<span class="hljs-comment">-- 刷新权限</span>
+<span class="hljs-keyword">FLUSH</span> <span class="hljs-keyword">PRIVILEGES</span>;
+<span class="hljs-comment">-- 增加用户</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">USER</span> 用户名 <span class="hljs-keyword">IDENTIFIED</span> <span class="hljs-keyword">BY</span> [<span class="hljs-keyword">PASSWORD</span>] 密码(字符串)
+    - 必须拥有mysql数据库的全局<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">USER</span>权限，或拥有<span class="hljs-keyword">INSERT</span>权限。
+    - 只能创建用户，不能赋予权限。
+    - 用户名，注意引号：如 <span class="hljs-string">&#x27;user_name&#x27;</span>@<span class="hljs-string">&#x27;192.168.1.1&#x27;</span>
+    - 密码也需引号，纯数字密码也要加引号
+    - 要在纯文本中指定密码，需忽略<span class="hljs-keyword">PASSWORD</span>关键词。要把密码指定为由<span class="hljs-keyword">PASSWORD</span>()函数返回的混编值，需包含关键字<span class="hljs-keyword">PASSWORD</span>
+<span class="hljs-comment">-- 重命名用户</span>
+<span class="hljs-keyword">RENAME</span> <span class="hljs-keyword">USER</span> old_user <span class="hljs-keyword">TO</span> new_user
+<span class="hljs-comment">-- 设置密码</span>
+<span class="hljs-keyword">SET</span> <span class="hljs-keyword">PASSWORD</span> = <span class="hljs-keyword">PASSWORD</span>(<span class="hljs-string">&#x27;密码&#x27;</span>)  <span class="hljs-comment">-- 为当前用户设置密码</span>
+<span class="hljs-keyword">SET</span> <span class="hljs-keyword">PASSWORD</span> <span class="hljs-keyword">FOR</span> 用户名 = <span class="hljs-keyword">PASSWORD</span>(<span class="hljs-string">&#x27;密码&#x27;</span>) <span class="hljs-comment">-- 为指定用户设置密码</span>
+<span class="hljs-comment">-- 删除用户</span>
+<span class="hljs-keyword">DROP</span> <span class="hljs-keyword">USER</span> 用户名
+<span class="hljs-comment">-- 分配权限/添加用户</span>
+<span class="hljs-keyword">GRANT</span> 权限列表 <span class="hljs-keyword">ON</span> 表名 <span class="hljs-keyword">TO</span> 用户名 [<span class="hljs-keyword">IDENTIFIED</span> <span class="hljs-keyword">BY</span> [<span class="hljs-keyword">PASSWORD</span>] <span class="hljs-string">&#x27;password&#x27;</span>]
+    - <span class="hljs-keyword">all</span> <span class="hljs-keyword">privileges</span> 表示所有权限
+    - *.* 表示所有库的所有表
+    - 库名.表名 表示某库下面的某表
+    <span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">ALL</span> <span class="hljs-keyword">PRIVILEGES</span> <span class="hljs-keyword">ON</span> <span class="hljs-string">`pms`</span>.* <span class="hljs-keyword">TO</span> <span class="hljs-string">&#x27;pms&#x27;</span>@<span class="hljs-string">&#x27;%&#x27;</span> <span class="hljs-keyword">IDENTIFIED</span> <span class="hljs-keyword">BY</span> <span class="hljs-string">&#x27;pms0817&#x27;</span>;
+<span class="hljs-comment">-- 查看权限</span>
+<span class="hljs-keyword">SHOW</span> <span class="hljs-keyword">GRANTS</span> <span class="hljs-keyword">FOR</span> 用户名
+    <span class="hljs-comment">-- 查看当前用户权限</span>
+    <span class="hljs-keyword">SHOW</span> <span class="hljs-keyword">GRANTS</span>; 或 <span class="hljs-keyword">SHOW</span> <span class="hljs-keyword">GRANTS</span> <span class="hljs-keyword">FOR</span> <span class="hljs-keyword">CURRENT_USER</span>; 或 <span class="hljs-keyword">SHOW</span> <span class="hljs-keyword">GRANTS</span> <span class="hljs-keyword">FOR</span> <span class="hljs-keyword">CURRENT_USER</span>();
+<span class="hljs-comment">-- 撤消权限</span>
+<span class="hljs-keyword">REVOKE</span> 权限列表 <span class="hljs-keyword">ON</span> 表名 <span class="hljs-keyword">FROM</span> 用户名
+<span class="hljs-keyword">REVOKE</span> <span class="hljs-keyword">ALL</span> <span class="hljs-keyword">PRIVILEGES</span>, <span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">OPTION</span> <span class="hljs-keyword">FROM</span> 用户名   <span class="hljs-comment">-- 撤销所有权限</span>
+<span class="hljs-comment">-- 权限层级</span>
+<span class="hljs-comment">-- 要使用GRANT或REVOKE，您必须拥有GRANT OPTION权限，并且您必须用于您正在授予或撤销的权限。</span>
+全局层级：全局权限适用于一个给定服务器中的所有数据库，mysql.user
+    <span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">ALL</span> <span class="hljs-keyword">ON</span> *.*和 <span class="hljs-keyword">REVOKE</span> <span class="hljs-keyword">ALL</span> <span class="hljs-keyword">ON</span> *.*只授予和撤销全局权限。
+数据库层级：数据库权限适用于一个给定数据库中的所有目标，mysql.db, mysql.host
+    <span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">ALL</span> <span class="hljs-keyword">ON</span> db_name.*和<span class="hljs-keyword">REVOKE</span> <span class="hljs-keyword">ALL</span> <span class="hljs-keyword">ON</span> db_name.*只授予和撤销数据库权限。
+表层级：表权限适用于一个给定表中的所有列，mysql.talbes_priv
+    <span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">ALL</span> <span class="hljs-keyword">ON</span> db_name.tbl_name和<span class="hljs-keyword">REVOKE</span> <span class="hljs-keyword">ALL</span> <span class="hljs-keyword">ON</span> db_name.tbl_name只授予和撤销表权限。
+列层级：列权限适用于一个给定表中的单一列，mysql.columns_priv
+    当使用<span class="hljs-keyword">REVOKE</span>时，您必须指定与被授权列相同的列。
+<span class="hljs-comment">-- 权限列表</span>
+<span class="hljs-keyword">ALL</span> [<span class="hljs-keyword">PRIVILEGES</span>]    <span class="hljs-comment">-- 设置除GRANT OPTION之外的所有简单权限</span>
+<span class="hljs-keyword">ALTER</span>   <span class="hljs-comment">-- 允许使用ALTER TABLE</span>
+<span class="hljs-keyword">ALTER</span> ROUTINE   <span class="hljs-comment">-- 更改或取消已存储的子程序</span>
+<span class="hljs-keyword">CREATE</span>  <span class="hljs-comment">-- 允许使用CREATE TABLE</span>
+<span class="hljs-keyword">CREATE</span> ROUTINE  <span class="hljs-comment">-- 创建已存储的子程序</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TEMPORARY</span> <span class="hljs-keyword">TABLES</span>     <span class="hljs-comment">-- 允许使用CREATE TEMPORARY TABLE</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">USER</span>     <span class="hljs-comment">-- 允许使用CREATE USER, DROP USER, RENAME USER和REVOKE ALL PRIVILEGES。</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">VIEW</span>     <span class="hljs-comment">-- 允许使用CREATE VIEW</span>
+<span class="hljs-keyword">DELETE</span>  <span class="hljs-comment">-- 允许使用DELETE</span>
+<span class="hljs-keyword">DROP</span>    <span class="hljs-comment">-- 允许使用DROP TABLE</span>
+<span class="hljs-keyword">EXECUTE</span>     <span class="hljs-comment">-- 允许用户运行已存储的子程序</span>
+<span class="hljs-keyword">FILE</span>    <span class="hljs-comment">-- 允许使用SELECT...INTO OUTFILE和LOAD DATA INFILE</span>
+<span class="hljs-keyword">INDEX</span>   <span class="hljs-comment">-- 允许使用CREATE INDEX和DROP INDEX</span>
+<span class="hljs-keyword">INSERT</span>  <span class="hljs-comment">-- 允许使用INSERT</span>
+<span class="hljs-keyword">LOCK</span> <span class="hljs-keyword">TABLES</span>     <span class="hljs-comment">-- 允许对您拥有SELECT权限的表使用LOCK TABLES</span>
+PROCESS     <span class="hljs-comment">-- 允许使用SHOW FULL PROCESSLIST</span>
+<span class="hljs-keyword">REFERENCES</span>  <span class="hljs-comment">-- 未被实施</span>
+RELOAD  <span class="hljs-comment">-- 允许使用FLUSH</span>
+<span class="hljs-keyword">REPLICATION</span> <span class="hljs-keyword">CLIENT</span>  <span class="hljs-comment">-- 允许用户询问从属服务器或主服务器的地址</span>
+<span class="hljs-keyword">REPLICATION</span> <span class="hljs-keyword">SLAVE</span>   <span class="hljs-comment">-- 用于复制型从属服务器（从主服务器中读取二进制日志事件）</span>
+<span class="hljs-keyword">SELECT</span>  <span class="hljs-comment">-- 允许使用SELECT</span>
+<span class="hljs-keyword">SHOW</span> <span class="hljs-keyword">DATABASES</span>  <span class="hljs-comment">-- 显示所有数据库</span>
+<span class="hljs-keyword">SHOW</span> <span class="hljs-keyword">VIEW</span>   <span class="hljs-comment">-- 允许使用SHOW CREATE VIEW</span>
+<span class="hljs-keyword">SHUTDOWN</span>    <span class="hljs-comment">-- 允许使用mysqladmin shutdown</span>
+SUPER   <span class="hljs-comment">-- 允许使用CHANGE MASTER, KILL, PURGE MASTER LOGS和SET GLOBAL语句，mysqladmin debug命令；允许您连接（一次），即使已达到max_connections。</span>
+<span class="hljs-keyword">UPDATE</span>  <span class="hljs-comment">-- 允许使用UPDATE</span>
+<span class="hljs-keyword">USAGE</span>   <span class="hljs-comment">-- “无权限”的同义词</span>
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">OPTION</span>    <span class="hljs-comment">-- 允许授予权限</span></code></pre>
+
+<h3 id="表维护"><a href="#表维护" class="headerlink" title="表维护"></a>表维护</h3><pre><code class="hljs sql"><span class="hljs-comment">/* 表维护 */</span>
+<span class="hljs-comment">-- 分析和存储表的关键字分布</span>
+<span class="hljs-keyword">ANALYZE</span> [<span class="hljs-keyword">LOCAL</span> | <span class="hljs-keyword">NO_WRITE_TO_BINLOG</span>] <span class="hljs-keyword">TABLE</span> 表名 ...
+<span class="hljs-comment">-- 检查一个或多个表是否有错误</span>
+<span class="hljs-keyword">CHECK</span> <span class="hljs-keyword">TABLE</span> tbl_name [, tbl_name] ... [<span class="hljs-keyword">option</span>] ...
+<span class="hljs-keyword">option</span> = &#123;<span class="hljs-keyword">QUICK</span> | <span class="hljs-keyword">FAST</span> | <span class="hljs-keyword">MEDIUM</span> | <span class="hljs-keyword">EXTENDED</span> | <span class="hljs-keyword">CHANGED</span>&#125;
+<span class="hljs-comment">-- 整理数据文件的碎片</span>
+<span class="hljs-keyword">OPTIMIZE</span> [<span class="hljs-keyword">LOCAL</span> | <span class="hljs-keyword">NO_WRITE_TO_BINLOG</span>] <span class="hljs-keyword">TABLE</span> tbl_name [, tbl_name] ...</code></pre>
+
+<h3 id="杂项"><a href="#杂项" class="headerlink" title="杂项"></a>杂项</h3><pre><code class="hljs sql"><span class="hljs-comment">/* 杂项 */</span> <span class="hljs-comment">------------------</span>
+1. 可用反引号（`）为标识符（库名、表名、字段名、索引、别名）包裹，以避免与关键字重名！中文也可以作为标识符！
+2. 每个库目录存在一个保存当前数据库的选项文件db.opt。
+3. 注释：
+    单行注释 <span class="hljs-comment"># 注释内容</span>
+    多行注释 <span class="hljs-comment">/* 注释内容 */</span>
+    单行注释 <span class="hljs-comment">-- 注释内容     (标准SQL注释风格，要求双破折号后加一空格符（空格、TAB、换行等）)</span>
+4. 模式通配符：
+    _   任意单个字符
+    %   任意多个字符，甚至包括零字符
+    单引号需要进行转义 \&#x27;
+5. CMD命令行内的语句结束符可以为 &quot;;&quot;, &quot;\G&quot;, &quot;\g&quot;，仅影响显示结果。其他地方还是用分号结束。delimiter 可修改当前对话的语句结束符。
+6. SQL对大小写不敏感
+7. 清除已有语句：\c</code></pre>
+
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>面试</tag>
+        <tag>MySQL</tag>
       </tags>
   </entry>
 </search>

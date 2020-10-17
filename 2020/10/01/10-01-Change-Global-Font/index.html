@@ -19,10 +19,23 @@
   <meta name="description" content="">
   <meta name="author" content="Lin">
   <meta name="keywords" content="">
-  <title>归档 - Vin</title>
+  <title>Hexo 全局字体之思源宋体 - Vin</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/androidstudio.min.css" />
+    
+  
+
+  
 
 
 <!-- 主题依赖的图标库，不要自行修改 -->
@@ -49,7 +62,7 @@
 
 
 <body>
-  <header style="height: 60vh;">
+  <header style="height: 70vh;">
     <!-- 页面顶部蒙版布局 -->
 <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
@@ -142,6 +155,44 @@
             </span>
 
             
+              <!-- 文章元数据(标题，时间，分类...)布局 -->
+<div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-10-01 00:14" pubdate>
+        2020年10月1日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      325 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      4
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
           </div>
           
         </div>
@@ -151,105 +202,124 @@
 
   <main>
     
-      <div class="container nopadding-md">
-        <div class="py-5" id="board"
-          >
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
-                <!-- 归档页 -->
+      <!-- 文章页面模板 -->
 
 
-<div class="list-group">
-  <p class="h4">共计 13 篇文章</p>
-  <hr>
-  
-    
-      
-      <p class="h5">2020</p>
-    
-    <a href="/2020/10/17/10-17-Common-Mysql-Commands/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">MySQL 命令大全</span>
-      <time style="float: right;">10-17</time>
-    </a>
-  
-    
-    <a href="/2020/10/16/10-16-Record-Compress-Font/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">记一次精简网页字体的过程</span>
-      <time style="float: right;">10-16</time>
-    </a>
-  
-    
-    <a href="/2020/10/12/10-12-Ten-Sort-Alogrithm/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">十个常见的排序算法</span>
-      <time style="float: right;">10-12</time>
-    </a>
-  
-    
-    <a href="/2020/10/10/10-10-Java-Collection-Interview/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Java 集合框架整理</span>
-      <time style="float: right;">10-10</time>
-    </a>
-  
-    
-    <a href="/2020/10/07/10-07-Study-Git-Note/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Git 学习笔记</span>
-      <time style="float: right;">10-07</time>
-    </a>
-  
-    
-    <a href="/2020/10/05/10-05-Git-Common-Commands/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Git 常用命令</span>
-      <time style="float: right;">10-05</time>
-    </a>
-  
-    
-    <a href="/2020/10/01/10-01-Change-Global-Font/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Hexo 全局字体之思源宋体</span>
-      <time style="float: right;">10-01</time>
-    </a>
-  
-    
-    <a href="/2020/09/30/09-30-ThreadLocal/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">多线程之 ThreadLocal</span>
-      <time style="float: right;">09-30</time>
-    </a>
-  
-    
-    <a href="/2020/09/17/09-17-Mysql-Read-And-Write-Seperate/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">MySQL 之读写分离</span>
-      <time style="float: right;">09-17</time>
-    </a>
-  
-    
-    <a href="/2020/09/17/09-17-Mysql-DepotsTable/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">MySQL 之分库分表</span>
-      <time style="float: right;">09-17</time>
-    </a>
-  
-</div>
-<!-- 分页组件 -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto" id="post">
+            <!-- SEO header -->
+            <h1 style="display: none">Hexo 全局字体之思源宋体</h1>
+            
+            <div class="markdown-body" id="post-body">
+              <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>一直想更换默认的博客文章字体，参考了众多大佬的博客设计，想换点不一样的字体。</p>
+<p>鉴于本博客主要以中文内容为主，最终选择思源宋体作为博客的正文展示，文章整体显得比较得体和大气！</p>
+<h2 id="1-Fluid-主题"><a href="#1-Fluid-主题" class="headerlink" title="1. Fluid 主题"></a>1. Fluid 主题</h2><h3 id="1-1-导入-Google-字库"><a href="#1-1-导入-Google-字库" class="headerlink" title="1.1 导入 Google 字库"></a>1.1 导入 Google 字库</h3><p>打开 Fluid 主题配置文件 <code>fluid/_config.yml</code>，在自定义 html 处引入字库</p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs yaml"><span class="hljs-attr">custom_html:</span> 
+    <span class="hljs-string">&#x27;&lt;link rel=&quot;stylesheet&quot; href=&quot;https://fonts.googleapis.com/css?family=Noto+Serif+SC&quot;&gt;&#x27;</span></code></pre></div>
 
-  <nav aria-label="navigation">
-    <span class="pagination" id="pagination">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/2020/page/2/">2</a><a class="extend next" rel="next" href="/archives/2020/page/2/"><i class="iconfont icon-arrowright"></i></a>
-    </span>
-  </nav>
-  
-  <script>
-    for (ele of document.getElementById("pagination").getElementsByTagName("a")) {
-      ele.href += '#board';
-    }
-  </script>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201003214436.png" srcset="/img/loading.gif" alt="image-20201003214432936"></p>
+<h3 id="1-2-配置全局字体"><a href="#1-2-配置全局字体" class="headerlink" title="1.2 配置全局字体"></a>1.2 配置全局字体</h3><p>同时设置 <code>font_family</code> 为 <strong>Noto Serif SC</strong></p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs yaml"><span class="hljs-attr">font:</span>  <span class="hljs-comment"># 主题字体配置</span>
+  <span class="hljs-attr">font_size:</span> <span class="hljs-string">18px</span>                   <span class="hljs-comment"># 全局字号</span>
+  <span class="hljs-attr">font_family:</span> <span class="hljs-string">&quot;Noto Serif SC&quot;</span>      <span class="hljs-comment"># 全局字体</span>
+  <span class="hljs-attr">code_font_size:</span> <span class="hljs-string">18px</span>              <span class="hljs-comment"># 代码的字号</span></code></pre></div>
 
 
 
-              </div>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201003214334.png" srcset="/img/loading.gif" alt="image-20201003214331716"></p>
+<h2 id="2-Butterfly-主题"><a href="#2-Butterfly-主题" class="headerlink" title="2. Butterfly 主题"></a>2. Butterfly 主题</h2><p>​    更换 Butterfly 主题的字库可以仅在<code>_config.yml</code>中设置，也可按照下面的方法进行魔改。</p>
+<h3 id="2-1-导入-Google-字库"><a href="#2-1-导入-Google-字库" class="headerlink" title="2.1 导入 Google 字库"></a>2.1 导入 Google 字库</h3><p>打开文件 <code>layout/includes/additional-js.pug</code>，把如下代码复制到顶部</p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs routeros">link(<span class="hljs-attribute">rel</span>=<span class="hljs-string">&quot;stylesheet&quot;</span>, <span class="hljs-attribute">href</span>=<span class="hljs-string">&quot;https://fonts.googleapis.com/css?family=Noto+Serif+SC&quot;</span>)</code></pre></div>
+
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201001002937.png" srcset="/img/loading.gif" alt="image-20201001002932977"></p>
+<h3 id="2-2-配置全局字体"><a href="#2-2-配置全局字体" class="headerlink" title="2.2 配置全局字体"></a>2.2 配置全局字体</h3><p>打开文件 <code>source/css/var.styl</code>，替换相应的代码</p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs stylus"><span class="hljs-variable">$dafault</span>-<span class="hljs-attribute">font-family</span> = <span class="hljs-string">&#x27;Noto Serif SC&#x27;</span>, serif</code></pre></div>
+
+
+
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201001002945.png" srcset="/img/loading.gif" alt="image-20201001002944343"></p>
+<p>完成上述两个步骤，字体替换完成！:)</p>
+<h2 id="3-参考"><a href="#3-参考" class="headerlink" title="3. 参考"></a>3. 参考</h2><p>感谢博主的分享😀</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://blog.shenshilei.site/post/29e3">Butterfly主题更换思源宋体</a></li>
+</ul>
+
             </div>
-          </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Hexo/">Hexo</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Butterfly/">Butterfly</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Fluid/">Fluid</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/10/05/10-05-Git-Common-Commands/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Git 常用命令</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/09/30/09-30-ThreadLocal/">
+                        <span class="hidden-mobile">多线程之 ThreadLocal</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
         </div>
       </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <!-- 目录模板 -->
+<div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
     
   </main>
 
@@ -360,6 +430,31 @@
 
 
 
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '#post-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
 
 <!-- 打字机特效 -->
 
@@ -394,7 +489,7 @@
   
     <script>
       // 非首页 则输出文章标题
-      var strs = "归档&nbsp;";
+      var strs = "Hexo 全局字体之思源宋体&nbsp;";
       startTyping(strs);
     </script>
   
@@ -414,6 +509,20 @@
   </script>
 
 
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
 
 
 

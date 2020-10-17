@@ -1,0 +1,599 @@
+<!-- 全局页面布局模板 -->
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+<!-- 页面 <head> 模板 -->
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Lin">
+  <meta name="keywords" content="">
+  <title>多线程之 ThreadLocal - Vin</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/androidstudio.min.css" />
+    
+  
+
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_pf9vaxs7x7b.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+
+
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <!-- 页面顶部蒙版布局 -->
+<nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Vin's Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner intro-2" id="background" parallax=true
+         style="background: url('https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20201001115214.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container page-header text-center fade-in-up">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <!-- 文章元数据(标题，时间，分类...)布局 -->
+<div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-09-30 15:20" pubdate>
+        2020年9月30日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      748 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      9
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      <!-- 文章页面模板 -->
+
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto" id="post">
+            <!-- SEO header -->
+            <h1 style="display: none">多线程之 ThreadLocal</h1>
+            
+            <div class="markdown-body" id="post-body">
+              <h3 id="多线程之-ThreadLocal"><a href="#多线程之-ThreadLocal" class="headerlink" title="多线程之 ThreadLocal"></a>多线程之 ThreadLocal</h3><hr>
+<h4 id="1-ThreadLocal-简介"><a href="#1-ThreadLocal-简介" class="headerlink" title="1. ThreadLocal 简介"></a>1. ThreadLocal 简介</h4><p>​    <strong>一个线程可拥有多个 ThreadLocal</strong>，<strong>等价于Thread 的局部变量</strong>。</p>
+<p>​    ThreadLocal 提供了<strong>线程内存储私有变量</strong>的能力，这些变量不同之处在于每一个线程读取的变量是对应的<strong>互相独立的</strong>。</p>
+<p>​    通过 <strong>get 和 set 方法</strong>就可以得到当前线程对应的值，从而避免了线程安全的问题。</p>
+<p>​    ThreadLocal 的使用方法很简单，与 map 类似</p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java"><span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> ThreadLocal&lt;T&gt; sThreadLocal = <span class="hljs-keyword">new</span> ThreadLocal&lt;T&gt;();
+sThreadLocal.set()
+sThreadLocal.get()</code></pre></div>
+
+
+
+<h4 id="2-ThreadLocal-底层原理"><a href="#2-ThreadLocal-底层原理" class="headerlink" title="2. ThreadLocal 底层原理"></a>2. ThreadLocal 底层原理</h4><p>​        <strong>ThreadLocal内存结构图</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20200930152613.png" srcset="/img/loading.gif" alt="image-20200905225631296"></p>
+<p>​    由结构图是可以看出：</p>
+<ul>
+<li>Thread对象中持有一个ThreadLocal.ThreadLocalMap 的成员变量。</li>
+<li>ThreadLocalMap内部维护了Entry数组，每个Entry代表一个完整的对象，<strong>key是 ThreadLocal 本身，value是 ThreadLocal 的泛型值</strong>。</li>
+</ul>
+<p>几段关键源码</p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Thread</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Runnable</span> </span>&#123;
+   <span class="hljs-comment">//ThreadLocal.ThreadLocalMap是Thread的属性</span>
+   ThreadLocal.ThreadLocalMap threadLocals = <span class="hljs-keyword">null</span>;
+&#125;</code></pre></div>
+
+
+
+<p>ThreadLocal中的关键方法 <strong>set() 和 get()</strong></p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">set</span><span class="hljs-params">(T value)</span> </span>&#123;
+    Thread t = Thread.currentThread(); 	<span class="hljs-comment">// 获取当前线程t</span>
+    ThreadLocalMap map = getMap(t);  	<span class="hljs-comment">// 根据当前线程获取到ThreadLocalMap</span>
+    <span class="hljs-keyword">if</span> (map != <span class="hljs-keyword">null</span>)
+        map.set(<span class="hljs-keyword">this</span>, value); 			<span class="hljs-comment">// K，V设置到ThreadLocalMap中</span>
+    <span class="hljs-keyword">else</span>
+        createMap(t, value); 			<span class="hljs-comment">// 创建一个新的ThreadLocalMap</span>
+&#125;
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> T <span class="hljs-title">get</span><span class="hljs-params">()</span> </span>&#123;
+    Thread t = Thread.currentThread();	<span class="hljs-comment">// 获取当前线程t</span>
+    ThreadLocalMap map = getMap(t);		<span class="hljs-comment">// 根据当前线程获取到ThreadLocalMap</span>
+    <span class="hljs-keyword">if</span> (map != <span class="hljs-keyword">null</span>) &#123;		            
+        <span class="hljs-comment">// 由this（即ThreadLoca对象）得到对应的Value，即ThreadLocal的泛型值</span>
+        ThreadLocalMap.Entry e = map.getEntry(<span class="hljs-keyword">this</span>);
+        <span class="hljs-keyword">if</span> (e != <span class="hljs-keyword">null</span>) &#123;
+            <span class="hljs-meta">@SuppressWarnings(&quot;unchecked&quot;)</span>
+            T result = (T)e.value; 
+            <span class="hljs-keyword">return</span> result;
+        &#125;
+    &#125;
+    <span class="hljs-keyword">return</span> setInitialValue();
+&#125;</code></pre></div>
+
+
+
+<h4 id="3-ThreadLocal-内存泄露问题"><a href="#3-ThreadLocal-内存泄露问题" class="headerlink" title="3. ThreadLocal 内存泄露问题"></a>3. ThreadLocal 内存泄露问题</h4><p>​        ThreadLocalMap 所使用的的 key 为 ThreadLocal 的弱引用，而 value 为强引用，这表示在垃圾回收时，key 会被清理掉而 value 则不会，这样导致 <strong>value 会一直占用</strong>，无法被 GC 回收，导致<strong>内存泄漏</strong>问题。因此在使用完 ThreadLocal 的方法后，需要手动调用 <strong><em>remove() 方法</em></strong>，<strong>清空 key 为 null 的记录</strong>。</p>
+<p><strong>ThreadLocal 引用示意图</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/img/2020/20200930152620.jpg" srcset="/img/loading.gif" alt="img"></p>
+<p><strong>弱引用代码</strong></p>
+<div class="hljs"><pre class="hljs-wrap"><code data-rel="Code" class="hljs java"><span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Entry</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">WeakReference</span>&lt;<span class="hljs-title">ThreadLocal</span>&lt;?&gt;&gt; </span>&#123;
+    <span class="hljs-comment">/** The value associated with this ThreadLocal. */</span>
+	Object value;
+    
+	Entry(ThreadLocal&lt;?&gt; k, Object v) &#123;
+		<span class="hljs-keyword">super</span>(k);
+		value = v;
+	&#125;
+&#125;</code></pre></div>
+
+<p><strong>弱引用简介</strong></p>
+<blockquote>
+<p>如果一个对象只具有弱引用，那就类似于<strong>可有可无</strong>的生活用品。弱引用的对象拥有更短暂的生命周期。在垃圾回收器线程扫描它所管辖的内存区域的过程中，一旦发现了只具有弱引用的对象，不管当前内存空间足够与否，都会<strong>回收它的内存</strong>。</p>
+</blockquote>
+<h4 id="4-ThreadLocal的应用场景"><a href="#4-ThreadLocal的应用场景" class="headerlink" title="4. ThreadLocal的应用场景"></a>4. ThreadLocal的应用场景</h4><ul>
+<li>数据库连接池</li>
+<li>会话管理中使用</li>
+</ul>
+<h4 id="5-总结"><a href="#5-总结" class="headerlink" title="5. 总结"></a>5. 总结</h4><p>​    ThreadLocal 和 Synchronized 都是为了解决多线程中相同变量的访问冲突问题，不同的点是</p>
+<ul>
+<li>Synchronized 是通过<strong>线程等待，牺牲时间</strong>来解决访问冲突，ThreadLocal是通过<strong>每个线程单独一份存储空间，牺牲空间</strong>来解决冲突。</li>
+<li>ThreadLocal 具有 <strong><em>线程隔离</em></strong> 的效果，只有在线程内才能获取到对应的值，线程外则不能访问到想要的值。</li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Java/">Java</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E9%9D%A2%E8%AF%95/">面试</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/10/01/10-01-Change-Global-Font/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Hexo 全局字体之思源宋体</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/09/17/09-17-Mysql-Read-And-Write-Seperate/">
+                        <span class="hidden-mobile">MySQL 之读写分离</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <!-- 目录模板 -->
+<div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  <!-- 回到顶部 -->
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <!-- 搜索框布局 -->
+<div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  <!-- 自定义 html -->
+  
+    <div class="col-lg-7 mx-auto nopadding-md">
+      <div class="container custom mx-auto">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/css/font.css">
+      </div>
+    </div>
+  
+
+  <!-- 页脚模板布局 -->
+<footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <p>©2020 by Lin</p>
+      <span>驱动</span>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener">Hexo</a>
+      <span>|&nbsp;主题</span>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">Fluid</a>
+    </div>
+    <!-- 统计模块 -->
+
+
+    <!-- 备案信息 -->
+
+
+    
+
+    <!-- 一言-言语的魅力 -->
+    <div>
+      <p style="font-size: 18px; font-weight: bold;" id="hitokoto">:D 获取中...</p>
+      <script>
+        fetch('https://v1.hitokoto.cn')
+          .then(response => response.json())
+          .then(data => {
+            const hitokoto = document.getElementById('hitokoto')
+            hitokoto.innerText = data.hitokoto
+            })
+            .catch(console.error)
+      </script>
+    </div>
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<!-- 引入第三方 js -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '#post-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+<!-- 打字机特效 -->
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+    <script type="text/javascript">
+        !function(e){var n,t={},o="jinrishici-token";function i(){return document.getElementById("jinrishici-sentence")||0!=document.getElementsByClassName("jinrishici-sentence").length}function c(){t.load(function(e){var n=document.getElementById("jinrishici-sentence"),t=document.getElementsByClassName("jinrishici-sentence");if(n&&(n.innerText=e.data.content),0!==t.length)for(var o=0;o<t.length;o++)t[o].innerText=e.data.content})}function r(e,n){var t=new XMLHttpRequest;t.open("get",n),t.withCredentials=!0,t.send(),t.onreadystatechange=function(n){if(4===t.readyState){var o=JSON.parse(t.responseText);"success"===o.status?e(o):console.error("今日诗词API加载失败，错误原因："+o.errMessage)}}}t.load=function(n){return e.localStorage&&e.localStorage.getItem(o)?function(e,n){return r(e,"https://v2.jinrishici.com/one.json?client=browser-sdk/1.2&X-User-Token="+encodeURIComponent(n))}(n,e.localStorage.getItem(o)):function(n){return r(function(t){e.localStorage.setItem(o,t.token),n(t)},"https://v2.jinrishici.com/one.json?client=browser-sdk/1.2")}(n)},e.jinrishici=t,i()?c():(n=function(){i()&&c()},"loading"!=document.readyState?n():document.addEventListener?document.addEventListener("DOMContentLoaded",n):document.attachEvent("onreadystatechange",function(){"complete"==document.readyState&&n()}))}(window); 
+        // 输出指定数量空格+引用
+        function writeSpace(len){
+          len = (len > 10) ? (len > 31 ? 0 : 8) : len
+          var space = ''
+          for(var i = 0; i<len; i++){
+            space += '&emsp;'
+          }
+          return space+"——";
+        }
+
+        // 执行打字机动效
+        function startTyping(strs){
+          var typed = new Typed('#subtitle', {
+          strings: ['  ', strs],
+          cursorChar: "_",
+          typeSpeed: 50,
+          loop: false,
+          });
+          typed.stop();
+          $(document).ready(function () {
+            $(".typed-cursor").addClass("h2");
+            typed.start();
+          }); 
+        }
+    </script>
+  
+    <script>
+      // 非首页 则输出文章标题
+      var strs = "多线程之 ThreadLocal&nbsp;";
+      startTyping(strs);
+    </script>
+  
+
+<!-- 标题锚点 -->
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+<!-- 鼠标点击特效模板 -->
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/gh/vin9712/cdnRes@cdn/blog/hexo/js/mouse-fireworks.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

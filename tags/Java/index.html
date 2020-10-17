@@ -169,13 +169,13 @@
       
       <p class="h5">2020</p>
     
-    <a href="/2020/10/12/2020-10-12-ten-sort-alogrithm/" class="list-group-item list-group-item-action">
+    <a href="/2020/10/12/10-12-Ten-Sort-Alogrithm/" class="list-group-item list-group-item-action">
       <span class="archive-post-title">十个常见的排序算法</span>
       <time style="float: right;">10-12</time>
     </a>
   
     
-    <a href="/2020/10/10/2020-10-10-Java-Collection-Interview/" class="list-group-item list-group-item-action">
+    <a href="/2020/10/10/10-10-Java-Collection-Interview/" class="list-group-item list-group-item-action">
       <span class="archive-post-title">Java 集合框架整理</span>
       <time style="float: right;">10-10</time>
     </a>
@@ -308,7 +308,7 @@
         !function(e){var n,t={},o="jinrishici-token";function i(){return document.getElementById("jinrishici-sentence")||0!=document.getElementsByClassName("jinrishici-sentence").length}function c(){t.load(function(e){var n=document.getElementById("jinrishici-sentence"),t=document.getElementsByClassName("jinrishici-sentence");if(n&&(n.innerText=e.data.content),0!==t.length)for(var o=0;o<t.length;o++)t[o].innerText=e.data.content})}function r(e,n){var t=new XMLHttpRequest;t.open("get",n),t.withCredentials=!0,t.send(),t.onreadystatechange=function(n){if(4===t.readyState){var o=JSON.parse(t.responseText);"success"===o.status?e(o):console.error("今日诗词API加载失败，错误原因："+o.errMessage)}}}t.load=function(n){return e.localStorage&&e.localStorage.getItem(o)?function(e,n){return r(e,"https://v2.jinrishici.com/one.json?client=browser-sdk/1.2&X-User-Token="+encodeURIComponent(n))}(n,e.localStorage.getItem(o)):function(n){return r(function(t){e.localStorage.setItem(o,t.token),n(t)},"https://v2.jinrishici.com/one.json?client=browser-sdk/1.2")}(n)},e.jinrishici=t,i()?c():(n=function(){i()&&c()},"loading"!=document.readyState?n():document.addEventListener?document.addEventListener("DOMContentLoaded",n):document.attachEvent("onreadystatechange",function(){"complete"==document.readyState&&n()}))}(window); 
         // 输出指定数量空格+引用
         function writeSpace(len){
-          len = (len > 15) ? (len > 31 ? 0 : 10) : len
+          len = (len > 10) ? (len > 31 ? 0 : 8) : len
           var space = ''
           for(var i = 0; i<len; i++){
             space += '&emsp;'
